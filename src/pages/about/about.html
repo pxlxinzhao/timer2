@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      About
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ul>
+    <li *ngFor="let category of categories;" class="categories-list">
+      <h4>{{category}} </h4>
+      <ul>
+        <li *ngFor="let key of records | keys">
+          {{key | dateFromMilli}}: {{records[key]}}
+          <button (click)="deleteRecord(key)">Delete</button>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</ion-content>
