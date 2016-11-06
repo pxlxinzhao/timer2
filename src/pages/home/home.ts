@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
+import { Dialogs } from 'ionic-native';
 
 @Component({
   selector: 'page-home',
@@ -19,8 +20,27 @@ export class HomePage {
   seconds: any = "00";
   miniSeconds: any = "000";
 
+  title: string = "";
+
   constructor(public navCtrl: NavController) {
 
+  }
+
+  showDialog(){
+    let self = this;
+
+    Dialogs.prompt('Enter a title', 'New Record', ['Ok','Cancel'], '')
+      .then(function(result) {
+        var input = result.input1;
+        // no button = 0, 'OK' = 1, 'Cancel' = 2
+        var btnIndex = result.buttonIndex;
+
+        if(btnIndex === 1){
+          self.title = input;
+          console.log('input', input);
+          self.toggleTimer();
+        }
+      });
   }
 
   toggleTimer(){
@@ -59,7 +79,10 @@ export class HomePage {
       }
 
       var storedRecords = JSON.parse(window.localStorage['records']);
-      storedRecords[new Date().getTime()] = self.timeCounter;
+      storedRecords[new Date().getTime()] = {
+        duration: self.timeCounter,
+        title: self.title
+      }
 
       window.localStorage['records'] = JSON.stringify(storedRecords);
     }

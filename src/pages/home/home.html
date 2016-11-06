@@ -4,10 +4,32 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <label>{{timeCounter}}</label>
-  <button ion-button (click)="toggleTimer()">
-    <span *ngIf="!isCounting">Start timer</span>
-    <span *ngIf="isCounting">Stop timer</span>
-  </button>
+<ion-content padding >
+  <div class="main-timer-container">{{timeCounter}}</div>
+  <div class="main-button-container">
+    <button ion-button (click)="isCounting ? toggleTimer() : showDialog()">
+      <span *ngIf="!isCounting">Start</span>
+      <span *ngIf="isCounting">Stop</span>
+    </button>
+  </div>
+  <div class="main-button-container">
+    <button ion-button (click)="toggleTimer()">
+      <span>Quick Start</span>
+    </button>
+  </div>
+  <div class="main-button-container">
+    <button ion-button>
+      <span>Pause</span>
+    </button>
+  </div>
+  <div class="main-button-container">
+    <button ion-button>
+      <span>Resume</span>
+    </button>
+  </div>
+  <div class="main-button-container">
+    <button ion-button>
+      <span>Stop</span>
+    </button>
+  </div>
 </ion-content>

@@ -9,41 +9,40 @@ import { Helper } from '../helper/helper';
 })
 export class AboutPage {
 
-  categories: string[] = [];
-  records: any = {};
-  helper: Helper;
+  categories:string[] = [];
+  records:any = {};
+  helper:Helper;
 
-  constructor(public navCtrl: NavController, helper: Helper) {
+  constructor(public navCtrl:NavController, helper:Helper) {
     this.helper = helper;
 
-    if (!window.localStorage['categories']){
+    if (!window.localStorage['categories']) {
       window.localStorage['categories'] = JSON.stringify(['Default']);
     }
     this.categories = JSON.parse(window.localStorage['categories']);
 
-    if (window.localStorage['records']){
-      this.records = JSON.parse(window.localStorage['records']);
-    }
+    this.refresh();
   }
 
-  addRecord(name: string, record:string){
-    if(this.records[name]){
+  addRecord(name:string, record:string) {
+    if (this.records[name]) {
       console.info('Record ' + name + ' already exists');
-    }else{
+    } else {
       this.records[name] = record;
     }
   }
 
-  ionViewWillEnter(){
-    if (window.localStorage['records']){
-      this.records = JSON.parse(window.localStorage['records']);
-    }
+  ionViewWillEnter() {
+    this.refresh();
   }
 
-  deleteRecord(id){
+  deleteRecord(id) {
     this.helper.delete('records', id);
+    this.refresh();
+  }
 
-    if (window.localStorage['records']){
+  refresh(){
+    if (window.localStorage['records']) {
       this.records = JSON.parse(window.localStorage['records']);
     }
   }

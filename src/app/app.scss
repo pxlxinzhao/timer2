@@ -14,3 +14,24 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+// home page
+.main-timer-container {
+  text-align: center;
+  font-size: 5rem;
+}
+
+.main-button-container{
+  text-align: center;
+  margin-top: 20px;
+  button {
+    width: 120px;
+    margin: auto;
+  }
+}
+
+
+//about page
+.categories-list {
+  list-style-type: none;
+}

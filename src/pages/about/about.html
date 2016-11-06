@@ -7,12 +7,14 @@
 </ion-header>
 
 <ion-content padding>
-  <ul>
-    <li *ngFor="let category of categories;" class="categories-list">
+  <ul class="categories-list">
+    <li *ngFor="let category of categories;" >
       <h4>{{category}} </h4>
       <ul>
         <li *ngFor="let key of records | keys">
-          {{key | dateFromMilli}}: {{records[key]}}
+          Created On: {{key | dateFromMilli}} <br>
+          Title: {{records[key].title}} <br>
+          Duration: {{records[key].duration}} <br>
           <button (click)="deleteRecord(key)">Delete</button>
         </li>
       </ul>
