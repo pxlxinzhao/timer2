@@ -9,10 +9,7 @@ import { Dialogs } from 'ionic-native';
 })
 export class HomePage {
 
-  timeBase: any = null;
   interval: any = null;
-  isCounting: boolean = false;
-
   timeCounter: string = "00:00:00:000";
 
   hours: any = "00"
@@ -21,9 +18,97 @@ export class HomePage {
   miniSeconds: any = "000";
 
   title: string = "";
+  timeElapsed: number = 0;
+  isCounting: boolean = false;
+  isPaused: boolean = false;
+  isStarted: boolean = false;
 
   constructor(public navCtrl: NavController) {
 
+  }
+
+  start(){
+    this.isPaused = false;
+    this.isCounting = true;
+    this.isStarted = true;
+    let self = this;
+    this.interval = setInterval(function () {
+      self.timeElapsed++;
+      self.updateTimeCounter();
+    }, 1)
+  }
+
+  pause(){
+    this.isPaused = true;
+    this.isCounting = false;
+    clearInterval(this.interval);
+  }
+
+  resume(){
+    this.start();
+  }
+
+  stop(){
+    this.isPaused = false;
+    this.isCounting = false;
+    clearInterval(this.interval);
+
+    this.isStarted = false;
+    this.timeElapsed = 0;
+    this.storeRecords();
+  }
+
+  storeRecords(){
+    if (!window.localStorage['records']){
+      window.localStorage['records'] = JSON.stringify({});
+    }
+
+    var storedRecords = JSON.parse(window.localStorage['records']);
+    storedRecords[new Date().getTime()] = {
+      duration: this.timeCounter,
+      title: this.title
+    }
+
+    window.localStorage['records'] = JSON.stringify(storedRecords);
+  }
+
+  updateTimeCounter() {
+    let t = this.timeElapsed;
+
+    this.hours = Math.floor(t/3600000);
+    this.minutes = Math.floor(t%3600000/60000);
+    this.seconds = Math.floor(t%60000/1000);
+    this.miniSeconds = t%1000;
+
+    this.hours += "";
+    this.minutes += "";
+    this.seconds += "";
+    this.miniSeconds += "";
+
+    this.prependZeros();
+    this.timeCounter = this.hours + ":" + this.minutes + ":" + this.seconds + ":" + this.miniSeconds;
+  }
+
+  prependZeros(){
+    this.hours = this.makeIt2Digits(this.hours);
+    this.minutes = this.makeIt2Digits(this.minutes);
+    this.seconds = this.makeIt2Digits(this.seconds);
+    this.miniSeconds = this.makeIt3Digits(this.miniSeconds);
+  }
+
+  makeIt2Digits(it){
+    if (it.length === 1){
+      it = "0" + it;
+    }
+    return it;
+  }
+
+  makeIt3Digits(it){
+    it = this.makeIt2Digits(it);
+    if (it.length === 2){
+      it = "0" + it;
+    }
+    return it;
   }
 
   showDialog(){
@@ -37,81 +122,8 @@ export class HomePage {
 
         if(btnIndex === 1){
           self.title = input;
-          console.log('input', input);
-          self.toggleTimer();
+          self.start();
         }
       });
-  }
-
-  toggleTimer(){
-    let self = this;
-
-    if (!self.isCounting){
-      self.isCounting = true;
-      self.timeBase = new Date().getTime();
-
-      this.interval = setInterval(function(){
-
-        let currentTime = new Date().getTime();
-        let diff = currentTime - self.timeBase;
-
-        self.hours = Math.floor(diff/3600000);
-        self.minutes = Math.floor(diff%3600000/60000);
-        self.seconds = Math.floor(diff%60000/1000);
-        self.miniSeconds = diff%1000;
-
-        self.hours += "";
-        self.minutes += "";
-        self.seconds += "";
-        self.miniSeconds += "";
-
-
-        updateTimeCounter();
-      }, 1)
-    }else{
-      clearInterval(this.interval);
-
-      self.isCounting = false;
-      self.timeBase = null;
-
-      if (!window.localStorage['records']){
-        window.localStorage['records'] = JSON.stringify({});
-      }
-
-      var storedRecords = JSON.parse(window.localStorage['records']);
-      storedRecords[new Date().getTime()] = {
-        duration: self.timeCounter,
-        title: self.title
-      }
-
-      window.localStorage['records'] = JSON.stringify(storedRecords);
-    }
-
-    function updateTimeCounter() {
-      prependZeros();
-      self.timeCounter = self.hours + ":" + self.minutes + ":" + self.seconds + ":" + self.miniSeconds;
-    }
-
-    function prependZeros(){
-      self.hours = makeIt2Digits(self.hours);
-      self.minutes = makeIt2Digits(self.minutes);
-      self.seconds = makeIt2Digits(self.seconds);
-      self.miniSeconds = makeIt3Digits(self.miniSeconds);
-    }
-
-    function makeIt2Digits(it){
-      if (it.length === 1){
-        it = "0" + it;
-      }
-      return it;
-    }
-
-    function makeIt3Digits(it){
-      it = makeIt2Digits(it);
-      if (it.length === 2){
-        it = "0" + it;
-      }
-      return it;
-    }
   }
 }

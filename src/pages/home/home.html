@@ -7,28 +7,27 @@
 <ion-content padding >
   <div class="main-timer-container">{{timeCounter}}</div>
   <div class="main-button-container">
-    <button ion-button (click)="isCounting ? toggleTimer() : showDialog()">
-      <span *ngIf="!isCounting">Start</span>
-      <span *ngIf="isCounting">Stop</span>
+    <button ion-button (click)="showDialog()" [disabled]="isCounting || isPaused">
+      <span>Start</span>
     </button>
   </div>
   <div class="main-button-container">
-    <button ion-button (click)="toggleTimer()">
+    <button ion-button (click)="start()" [disabled]="isCounting || isPaused">
       <span>Quick Start</span>
     </button>
   </div>
   <div class="main-button-container">
-    <button ion-button>
+    <button ion-button (click)="pause()" [disabled]="!isCounting">
       <span>Pause</span>
     </button>
   </div>
   <div class="main-button-container">
-    <button ion-button>
+    <button ion-button (click)="resume()" [disabled]="isCounting || timeElapsed === 0">
       <span>Resume</span>
     </button>
   </div>
   <div class="main-button-container">
-    <button ion-button>
+    <button ion-button (click)="stop()" [disabled]="!isStarted">
       <span>Stop</span>
     </button>
   </div>
