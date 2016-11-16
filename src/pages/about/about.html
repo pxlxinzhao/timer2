@@ -7,17 +7,31 @@
 </ion-header>
 
 <ion-content padding>
-  <ul class="categories-list">
-    <li *ngFor="let category of categories;" >
-      <h4>{{category}} </h4>
-      <ul>
-        <li *ngFor="let key of records | keys">
-          Created On: {{key | dateFromMilli}} <br>
-          Title: {{records[key].title}} <br>
-          Duration: {{records[key].duration}} <br>
-          <button (click)="deleteRecord(key)">Delete</button>
-        </li>
-      </ul>
-    </li>
-  </ul>
+
+  <ion-card *ngFor="let key of records | keys">
+    <!--<ion-card-title></ion-card-title>-->
+    <ion-card-header>
+      <span class="hoverable"> {{records[key].title || "Default Title"}} </span>
+
+      <span class="right hoverable" >
+        <small></small>
+        <ion-icon name="remove-circle" (click)="deleteRecord(key)"></ion-icon>
+      </span>
+      </ion-card-header>
+    <ion-card-content>
+      <div style= "margin: auto; text-align: center; font-size: 2rem">
+        <strong>
+          {{records[key].duration}}
+        </strong>
+      </div>
+
+      <div>
+        <small class="right" style="color: #666">
+          {{key | dateFromMilli}}
+        </small>
+      </div>
+
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>
