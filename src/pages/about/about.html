@@ -11,7 +11,9 @@
   <ion-card *ngFor="let key of records | keys">
     <!--<ion-card-title></ion-card-title>-->
     <ion-card-header>
-      <span class="hoverable"> {{records[key].title || "Default Title"}} </span>
+      <span class="hoverable" (click)="setTitleKey(key)"> {{records[key].title || "Default Title"}} </span>
+      <input type="text" [hidden]="idForTitleChanging !== key"
+             [(ngModel)]="titles[key]" (focusout)="changeTitle()" (keyup.enter)="changeTitle()"/>
 
       <span class="right hoverable" >
         <small></small>
