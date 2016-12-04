@@ -10,7 +10,8 @@ import { Dialogs } from 'ionic-native';
 export class HomePage {
 
   interval: any = null;
-  timeCounter: string = "00:00:00:000";
+  timeCounter: string = "00:00:00";
+    //+ ":000";
 
   hours: any = "00"
   minutes: any = "00";
@@ -33,9 +34,9 @@ export class HomePage {
     this.isStarted = true;
     let self = this;
     this.interval = setInterval(function () {
-      self.timeElapsed++;
+      self.timeElapsed += 1000;;
       self.updateTimeCounter();
-    }, 1)
+    }, 1000)
   }
 
   pause(){
@@ -66,7 +67,8 @@ export class HomePage {
     var storedRecords = JSON.parse(window.localStorage['records']);
     storedRecords[new Date().getTime()] = {
       duration: this.timeCounter,
-      title: this.title
+      title: this.title,
+      category: 'Default category'
     }
 
     window.localStorage['records'] = JSON.stringify(storedRecords);
@@ -86,7 +88,8 @@ export class HomePage {
     this.miniSeconds += "";
 
     this.prependZeros();
-    this.timeCounter = this.hours + ":" + this.minutes + ":" + this.seconds + ":" + this.miniSeconds;
+    this.timeCounter = this.hours + ":" + this.minutes + ":" + this.seconds
+      //+ ":" + this.miniSeconds;
   }
 
   prependZeros(){
@@ -113,7 +116,7 @@ export class HomePage {
 
   showDialog(){
     let self = this;
-
+    console.log('prompt dialog');
     Dialogs.prompt('Enter a title', 'New Record', ['Ok','Cancel'], '')
       .then(function(result) {
         var input = result.input1;

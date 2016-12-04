@@ -15,4 +15,15 @@ export class Helper {
 
     window.localStorage[table] = JSON.stringify(records);
   }
+
+  update(table, id, attr, value){
+    let records = JSON.parse(window.localStorage[table]);
+
+    if (records[id]){
+      records[id][attr] = value;
+    }
+
+    window.localStorage[table] = JSON.stringify(records);
+  }
+
 }

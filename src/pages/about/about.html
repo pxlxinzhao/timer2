@@ -8,32 +8,51 @@
 
 <ion-content padding>
 
-  <ion-card *ngFor="let key of records | keys">
-    <!--<ion-card-title></ion-card-title>-->
-    <ion-card-header>
-      <span class="hoverable" (click)="setTitleKey(key)"> {{records[key].title || "Default Title"}} </span>
-      <input type="text" [hidden]="idForTitleChanging !== key"
-             [(ngModel)]="titles[key]" (focusout)="changeTitle()" (keyup.enter)="changeTitle()"/>
+  <ion-row>
+    <ion-col width-25>
+      <strong>Categories </strong>
+      <ul class="category-list">
+        <li *ngFor="let c of categories" class="hoverable" (click)="changeCategory(c)">
+          {{c}}
+        </li>
+      </ul>
+    </ion-col>
 
-      <span class="right hoverable" >
-        <small></small>
-        <ion-icon name="remove-circle" (click)="deleteRecord(key)"></ion-icon>
-      </span>
-      </ion-card-header>
-    <ion-card-content>
-      <div style= "margin: auto; text-align: center; font-size: 2rem">
-        <strong>
-          {{records[key].duration}}
-        </strong>
-      </div>
+    <ion-col width-75>
+      <ion-card *ngFor="let key of records | keys">
+        <!--<ion-card-title></ion-card-title>-->
+        <ion-card-header>
 
-      <div>
-        <small class="right" style="color: #666">
-          {{key | dateFromMilli}}
-        </small>
-      </div>
+          <span class="hoverable" (click)="setTitleKey(key)" [hidden]="idForTitleChanging === key">
+            {{records[key].title || "Default Title"}}
+          </span>
 
-    </ion-card-content>
-  </ion-card>
+          <input type="text" [hidden]="idForTitleChanging !== key"
+                 [(ngModel)]="titles[key]" (focusout)="changeTitle()" (keyup.enter)="changeTitle()"/>
+
+          <span class="right hoverable" >
+            <ion-icon name="remove-circle" (click)="deleteRecord(key)"></ion-icon>
+          </span>
+
+        </ion-card-header>
+
+        <ion-card-content>
+          <div style= "margin: auto; text-align: center; font-size: 2rem">
+            <strong>
+              {{records[key].duration}}
+            </strong>
+          </div>
+
+          <div>
+            <small class="right" style="color: #666">
+              {{key | dateFromMilli}}
+            </small>
+          </div>
+        </ion-card-content>
+
+      </ion-card>
+
+    </ion-col>
+  </ion-row>
 
 </ion-content>

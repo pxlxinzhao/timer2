@@ -26,22 +26,28 @@
 }
 
 // home page
+.buttons-row{
+  text-align: center;
+}
+
+
 .main-timer-container {
   text-align: center;
-  font-size: 5rem;
+  font-size: 3rem;
+  color: #171717;
 }
 
 .main-button-container{
   text-align: center;
   margin-top: 20px;
-  button {
-    width: 120px;
-    margin: auto;
-  }
+  display: inline-block;
+  font-size: 2rem;
 }
 
 
 //about page
-.categories-list {
+.category-list {
   list-style-type: none;
+  overflow: hidden;
+  padding: 0;
 }
