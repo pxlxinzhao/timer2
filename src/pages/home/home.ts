@@ -24,7 +24,10 @@ export class HomePage {
   isPaused: boolean = false;
   isStarted: boolean = false;
 
+  records: any = {};
+
   constructor(public navCtrl: NavController) {
+    this.refresh();
 
   }
 
@@ -88,8 +91,10 @@ export class HomePage {
     this.miniSeconds += "";
 
     this.prependZeros();
-    this.timeCounter = this.hours + ":" + this.minutes + ":" + this.seconds
+    this.timeCounter = this.hours + ":" + this.minutes + ":" + this.seconds;
       //+ ":" + this.miniSeconds;
+
+    this.refresh();
   }
 
   prependZeros(){
@@ -128,5 +133,13 @@ export class HomePage {
           self.start();
         }
       });
+  }
+
+  refresh(){
+    if (window.localStorage['records']) {
+      let records = JSON.parse(window.localStorage['records']);
+      console.log('records', records);
+      this.records = records;
+    }
   }
 }

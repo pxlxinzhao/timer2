@@ -49,5 +49,13 @@
 
   </div>
 
+  <div>
+    Recent records:
+    <ul>
+      <li *ngFor="let key of records | keys">
+        {{records[key].title || 'Default title'}} -- {{records[key].duration}}
+      </li>
 
+    </ul>
+  </div>
 </ion-content>

@@ -26,7 +26,6 @@ export class AboutPage {
     //}
     //this.categories = JSON.parse(window.localStorage['categories']);
 
-    this.refresh();
   }
 
   changeCategory(cat){
