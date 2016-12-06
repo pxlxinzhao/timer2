@@ -12,6 +12,8 @@
     <ion-col width-25>
       <strong>Categories </strong>
       <ul class="category-list">
+        <li><input type="text" [(ngModel)]="newCategory" (focusout)="addCategory()" (keyup.enter)="addCategory()"/></li>
+
         <li *ngFor="let c of categories" class="hoverable" (click)="changeCategory(c)">
           {{c}}
         </li>

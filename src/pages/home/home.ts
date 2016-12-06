@@ -60,6 +60,7 @@ export class HomePage {
     this.isStarted = false;
     this.timeElapsed = 0;
     this.storeRecords();
+    this.refresh();
   }
 
   storeRecords(){

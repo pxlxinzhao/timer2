@@ -17,15 +17,23 @@ export class AboutPage {
   titles: any = {};
   helper:Helper;
   currentCategory: string = "";
+  newCategory: string = "";
 
   constructor(public navCtrl:NavController, helper:Helper) {
     this.helper = helper;
 
-    //if (!window.localStorage['categories']) {
-    //  window.localStorage['categories'] = JSON.stringify(['Default']);
-    //}
-    //this.categories = JSON.parse(window.localStorage['categories']);
+    /**
+     * initiate categories with
+     */
+    if (!window.localStorage['categories']) {
+      window.localStorage['categories'] = JSON.stringify(['Default category']);
+    }
+    this.categories = JSON.parse(window.localStorage['categories']);
 
+  }
+
+  addCategory(){
+    let c = JSON.parse(window.localStorage['categories']);
   }
 
   changeCategory(cat){
@@ -72,14 +80,22 @@ export class AboutPage {
         self.categories.pop();
       }
 
-      for (let key in records){
-        let c = records[key].category;
+      /**
+       * @deprecated
+       * using records to store category, not efficient
+       */
+      //for (let key in records){
+      //  let c = records[key].category;
+      //
+      //  if (self.categories.indexOf(c) === -1){
+      //    self.categories.push(c);
+      //  }
+      //}
 
-        if (self.categories.indexOf(c) === -1){
-          self.categories.push(c);
-        }
-      }
-
+      /**
+       * get category from category table
+       */
+      self.categories = JSON.parse(window.localStorage['categories']);
       /**
        * filter out record that does not belong the category
        */
