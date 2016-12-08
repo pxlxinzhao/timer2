@@ -24,7 +24,6 @@
       <ion-card *ngFor="let key of records | keys">
         <!--<ion-card-title></ion-card-title>-->
         <ion-card-header>
-
           <span class="hoverable" (click)="setTitleKey(key)" [hidden]="idForTitleChanging === key">
             {{records[key].title || "Default Title"}}
           </span>
@@ -34,10 +33,13 @@
                  style="width: 100px"
             />
 
-          <span class="right hoverable" >
-            <ion-icon name="remove-circle" (click)="deleteRecord(key)"></ion-icon>
+           <span class="right hoverable" >
+            <ion-icon name="ios-remove-circle-outline" (click)="deleteRecord(key)"></ion-icon>
           </span>
 
+           <span class="right hoverable" style="margin-right: 15px;">
+             <ion-icon name="ios-folder-open-outline" (click) = "presentPopover()"></ion-icon>
+          </span>
         </ion-card-header>
 
         <ion-card-content>

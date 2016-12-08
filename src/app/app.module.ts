@@ -9,6 +9,7 @@ import { KeysPipe } from '../pages/pipes/keysPipe';
 import { DatePipe } from '../pages/pipes/DatePipe';
 import { DbHelper } from '../pages/helper/db';
 import { TimeHelper } from '../pages/helper/time';
+import { CategoryPopover} from '../pages/about/category-popover'
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { TimeHelper } from '../pages/helper/time';
     ContactPage,
     HomePage,
     TabsPage,
+    CategoryPopover,
     KeysPipe,
     DatePipe
   ],
@@ -29,7 +31,8 @@ import { TimeHelper } from '../pages/helper/time';
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    CategoryPopover
   ],
   providers: [
     DbHelper,

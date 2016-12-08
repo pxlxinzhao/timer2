@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Dialogs } from 'ionic-native';
+import { PopoverController } from 'ionic-angular';
 import { DbHelper } from '../helper/db';
 import { TimeHelper} from '../helper/time';
+import { CategoryPopover} from './category-popover'
+
 //import * as _ from 'underscore';
 
 @Component({
@@ -12,6 +15,7 @@ import { TimeHelper} from '../helper/time';
 export class AboutPage {
   dbHelper:DbHelper;
   timeHelper:TimeHelper;
+  pop: PopoverController;
 
   categories:string[] = [];
   currentCategory: string = "";
@@ -20,9 +24,13 @@ export class AboutPage {
   records:any = {};
   titles: any = {};
 
-  constructor(public navCtrl:NavController, dbHelper:DbHelper, timeHelper:TimeHelper) {
+  constructor(public navCtrl:NavController,
+              dbHelper:DbHelper,
+              timeHelper:TimeHelper,
+              pop: PopoverController) {
     this.dbHelper = dbHelper;
     this.timeHelper = timeHelper;
+    this.pop = pop;
     this.categories = this.dbHelper.get('categories');
   }
 
@@ -58,6 +66,11 @@ export class AboutPage {
 
   formatDuration(milli){
     return this.timeHelper.formatTime(milli);
+  }
+
+  presentPopover() {
+    let popover = this.pop.create(CategoryPopover);
+    popover.present();
   }
 
   setTitleKey(id){
