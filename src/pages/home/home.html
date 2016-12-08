@@ -53,7 +53,7 @@
     Recent records:
     <ul>
       <li *ngFor="let key of records | keys">
-        {{records[key].title || 'Default title'}} -- {{records[key].duration}}
+        {{records[key].title || 'Default title'}} -- {{formatDuration(records[key].duration)}}
       </li>
 
     </ul>

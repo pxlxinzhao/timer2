@@ -40,6 +40,10 @@ export class HomePage {
     this.refresh();
   }
 
+  formatDuration(milli){
+    return this.timeHelper.formatTime(milli);
+  }
+
   start(){
     this.prevTime = new Date().getTime();
 
@@ -76,20 +80,21 @@ export class HomePage {
   }
 
   stop(){
+    clearInterval(this.interval);
+    this.storeRecords();
+
     this.isPaused = false;
     this.isCounting = false;
-    clearInterval(this.interval);
-
     this.isStarted = false;
     this.timeElapsed = 0;
-    this.storeRecords();
+
     this.refresh();
   }
 
   storeRecords(){
     var storedRecords = JSON.parse(window.localStorage['records']);
     storedRecords[new Date().getTime()] = {
-      duration: this.timeCounter,
+      duration: this.timeElapsed,
       title: this.title,
       category: 'Default category'
     }

@@ -56,6 +56,10 @@ export class AboutPage {
     this.refresh();
   }
 
+  formatDuration(milli){
+    return this.timeHelper.formatTime(milli);
+  }
+
   setTitleKey(id){
     this.newId = id;
   }
