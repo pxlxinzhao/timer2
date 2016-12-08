@@ -10,9 +10,9 @@
 
   <ion-row>
     <ion-col width-25>
-      <strong>Categories </strong>
+      <strong class="hoverable" (click)="showCategoryDialog()">Categories </strong>
       <ul class="category-list">
-        <li><input type="text" [(ngModel)]="newCategory" (focusout)="addCategory()" (keyup.enter)="addCategory()"/></li>
+        <!--<li><input type="text" [(ngModel)]="newCategory" (focusout)="addCategory()" (keyup.enter)="addCategory()"/></li>-->
 
         <li *ngFor="let c of categories" class="hoverable" (click)="changeCategory(c)">
           {{c}}
@@ -30,7 +30,9 @@
           </span>
 
           <input type="text" [hidden]="idForTitleChanging !== key"
-                 [(ngModel)]="titles[key]" (focusout)="changeTitle()" (keyup.enter)="changeTitle()"/>
+                 [(ngModel)]="titles[key]" (focusout)="changeTitle()" (keyup.enter)="changeTitle()"
+                 style="width: 100px"
+            />
 
           <span class="right hoverable" >
             <ion-icon name="remove-circle" (click)="deleteRecord(key)"></ion-icon>

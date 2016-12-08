@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 import { Helper } from '../helper/helper';
+import { Dialogs } from 'ionic-native';
 //import * as _ from 'underscore';
 
 
@@ -23,7 +24,7 @@ export class AboutPage {
     this.helper = helper;
 
     /**
-     * initiate categories with
+     * initiate categories with Default category
      */
     if (!window.localStorage['categories']) {
       window.localStorage['categories'] = JSON.stringify(['Default category']);
@@ -32,8 +33,10 @@ export class AboutPage {
 
   }
 
-  addCategory(){
-    let c = JSON.parse(window.localStorage['categories']);
+  addCategory(newCategory){
+    let c = this.helper.get('categories');
+    c.push(newCategory);
+    this.helper.save('categories', c);
   }
 
   changeCategory(cat){
@@ -96,6 +99,7 @@ export class AboutPage {
        * get category from category table
        */
       self.categories = JSON.parse(window.localStorage['categories']);
+
       /**
        * filter out record that does not belong the category
        */
@@ -107,5 +111,21 @@ export class AboutPage {
 
       this.records = records;
     }
+  }
+
+  showCategoryDialog(){
+    let self = this;
+    Dialogs.prompt('Enter a name', 'New Category', ['Ok','Cancel'], '')
+      .then(function(result) {
+        var input = result.input1;
+        // no button = 0, 'OK' = 1, 'Cancel' = 2
+        var btnIndex = result.buttonIndex;
+
+        if(btnIndex === 1){
+          self.newCategory = input;
+          self.addCategory(input);
+          self.refresh();
+        }
+      });
   }
 }

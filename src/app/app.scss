@@ -54,4 +54,8 @@
   input {
     width: 100px;
   }
+
+  li:not(:first-child) {
+    padding-top: 20px;
+  }
 }
