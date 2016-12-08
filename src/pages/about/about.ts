@@ -1,42 +1,44 @@
 import { Component } from '@angular/core';
-
 import { NavController } from 'ionic-angular';
-import { Helper } from '../helper/helper';
+import { DbHelper } from '../helper/db';
 import { Dialogs } from 'ionic-native';
+import { TimeHelper} from '../helper/time';
 //import * as _ from 'underscore';
-
 
 @Component({
   selector: 'page-about',
   templateUrl: 'about.html'
 })
 export class AboutPage {
+  dbHelper:DbHelper;
+  timeHelper:TimeHelper;
 
   categories:string[] = [];
-  records:any = {};
-  idForTitleChanging: string = "";
-  titles: any = {};
-  helper:Helper;
   currentCategory: string = "";
   newCategory: string = "";
+  newId: string = "";
+  records:any = {};
+  titles: any = {};
 
-  constructor(public navCtrl:NavController, helper:Helper) {
-    this.helper = helper;
+  constructor(public navCtrl:NavController, dbHelper:DbHelper, timeHelper:TimeHelper) {
+    this.dbHelper = dbHelper;
+    this.timeHelper = timeHelper;
 
-    /**
-     * initiate categories with Default category
-     */
-    if (!window.localStorage['categories']) {
-      window.localStorage['categories'] = JSON.stringify(['Default category']);
-    }
-    this.categories = JSON.parse(window.localStorage['categories']);
+    this.setupDefault();
+  }
 
+  /**
+   * life cycle events goes first
+   * then functions are order by names
+   */
+  ionViewWillEnter() {
+    this.refresh();
   }
 
   addCategory(newCategory){
-    let c = this.helper.get('categories');
+    let c = this.dbHelper.get('categories');
     c.push(newCategory);
-    this.helper.save('categories', c);
+    this.dbHelper.save('categories', c);
   }
 
   changeCategory(cat){
@@ -44,32 +46,19 @@ export class AboutPage {
     this.refresh();
   }
 
-  setTitleKey(id){
-    this.idForTitleChanging = id;
-  }
-
   changeTitle(){
-    this.helper.update('records', this.idForTitleChanging, 'title', this.titles[this.idForTitleChanging]);
-    this.idForTitleChanging = "";
-    this.refresh();
-  }
-
-  addRecord(name:string, record:string) {
-    if (this.records[name]) {
-      console.info('Record ' + name + ' already exists');
-    } else {
-      this.records[name] = record;
-    }
-  }
-
-  ionViewWillEnter() {
+    this.dbHelper.update('records', this.newId, 'title', this.titles[this.newId]);
+    this.newId = "";
     this.refresh();
   }
 
   deleteRecord(id) {
-    console.log('deleteRecord', id);
-    this.helper.delete('records', id);
+    this.dbHelper.delete('records', id);
     this.refresh();
+  }
+
+  setTitleKey(id){
+    this.newId = id;
   }
 
   refresh(){
@@ -77,23 +66,11 @@ export class AboutPage {
       let self = this;
       let records = JSON.parse(window.localStorage['records']);
 
-      console.log('refresh', records);
+      //console.log('refresh', records);
 
       while(self.categories.length > 0){
         self.categories.pop();
       }
-
-      /**
-       * @deprecated
-       * using records to store category, not efficient
-       */
-      //for (let key in records){
-      //  let c = records[key].category;
-      //
-      //  if (self.categories.indexOf(c) === -1){
-      //    self.categories.push(c);
-      //  }
-      //}
 
       /**
        * get category from category table
@@ -111,6 +88,16 @@ export class AboutPage {
 
       this.records = records;
     }
+  }
+
+  setupDefault(){
+    /**
+     * initiate categories with Default category
+     */
+    if (!window.localStorage['categories']) {
+      window.localStorage['categories'] = JSON.stringify(['Default category']);
+    }
+    this.categories = JSON.parse(window.localStorage['categories']);
   }
 
   showCategoryDialog(){

@@ -7,7 +7,8 @@ import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { KeysPipe } from '../pages/pipes/keysPipe';
 import { DatePipe } from '../pages/pipes/DatePipe';
-import { Helper } from '../pages/helper/helper';
+import { DbHelper } from '../pages/helper/db';
+import { TimeHelper } from '../pages/helper/time';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,9 @@ import { Helper } from '../pages/helper/helper';
     HomePage,
     TabsPage
   ],
-  providers: [Helper]
+  providers: [
+    DbHelper,
+    TimeHelper
+  ]
 })
 export class AppModule {}

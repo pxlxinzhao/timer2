@@ -10,7 +10,7 @@ import { Dialogs } from 'ionic-native';
 export class HomePage {
 
   interval: any = null;
-  timeCounter: string = "00:00:00";
+  timeCounter: string = "00:00:00:000";
     //+ ":000";
 
   hours: any = "00"
@@ -25,6 +25,8 @@ export class HomePage {
   isStarted: boolean = false;
 
   records: any = {};
+  currentTime: number;
+  prevTime: number;
 
   constructor(public navCtrl: NavController) {
     this.refresh();
@@ -32,14 +34,18 @@ export class HomePage {
   }
 
   start(){
+    this.prevTime = new Date().getTime();
+
     this.isPaused = false;
     this.isCounting = true;
     this.isStarted = true;
     let self = this;
     this.interval = setInterval(function () {
-      self.timeElapsed += 1000;;
+      self.currentTime = new Date().getTime();
+      self.timeElapsed += (self.currentTime - self.prevTime);
+      self.prevTime = self.currentTime;
       self.updateTimeCounter();
-    }, 1000)
+    }, 67)
   }
 
   pause(){
@@ -92,8 +98,8 @@ export class HomePage {
     this.miniSeconds += "";
 
     this.prependZeros();
-    this.timeCounter = this.hours + ":" + this.minutes + ":" + this.seconds;
-      //+ ":" + this.miniSeconds;
+    this.timeCounter = this.hours + ":" + this.minutes + ":" + this.seconds
+      + ":" + this.miniSeconds;
 
     this.refresh();
   }
@@ -122,7 +128,7 @@ export class HomePage {
 
   showDialog(){
     let self = this;
-    console.log('prompt dialog');
+    //console.log('prompt dialog');
     Dialogs.prompt('Enter a title', 'New Record', ['Ok','Cancel'], '')
       .then(function(result) {
         var input = result.input1;
@@ -139,7 +145,7 @@ export class HomePage {
   refresh(){
     if (window.localStorage['records']) {
       let records = JSON.parse(window.localStorage['records']);
-      console.log('records', records);
+      //console.log('records', records);
       this.records = records;
     }
   }

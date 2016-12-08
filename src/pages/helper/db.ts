@@ -2,7 +2,7 @@
  * Created by patrickpu on 11/4/2016.
  */
 
-export class Helper {
+export class DbHelper {
   constructor(){
 
   }
