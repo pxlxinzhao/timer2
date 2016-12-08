@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { DbHelper } from '../helper/db';
 import { Dialogs } from 'ionic-native';
+import { DbHelper } from '../helper/db';
 import { TimeHelper} from '../helper/time';
 //import * as _ from 'underscore';
 
@@ -23,8 +23,7 @@ export class AboutPage {
   constructor(public navCtrl:NavController, dbHelper:DbHelper, timeHelper:TimeHelper) {
     this.dbHelper = dbHelper;
     this.timeHelper = timeHelper;
-
-    this.setupDefault();
+    this.categories = this.dbHelper.get('categories');
   }
 
   /**
@@ -88,16 +87,6 @@ export class AboutPage {
 
       this.records = records;
     }
-  }
-
-  setupDefault(){
-    /**
-     * initiate categories with Default category
-     */
-    if (!window.localStorage['categories']) {
-      window.localStorage['categories'] = JSON.stringify(['Default category']);
-    }
-    this.categories = JSON.parse(window.localStorage['categories']);
   }
 
   showCategoryDialog(){

@@ -16,6 +16,14 @@ export class DbHelper {
     window.localStorage[table] = JSON.stringify(records);
   }
 
+  get(table){
+    return JSON.parse(window.localStorage[table]);
+  }
+
+  save(table, obj){
+    window.localStorage[table] = JSON.stringify(obj);
+  }
+
   update(table, id, attr, value){
     let records = JSON.parse(window.localStorage[table]);
 
@@ -26,12 +34,6 @@ export class DbHelper {
     window.localStorage[table] = JSON.stringify(records);
   }
 
-  get(table){
-    return JSON.parse(window.localStorage[table]);
-  }
 
-  save(table, obj){
-    window.localStorage[table] = JSON.stringify(obj);
-  }
 
 }
