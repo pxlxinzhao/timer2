@@ -68,9 +68,11 @@ export class AboutPage {
     return this.timeHelper.formatTime(milli);
   }
 
-  presentPopover() {
+  presentPopover(key) {
     let popover = this.pop.create(CategoryPopover);
     popover.present();
+    window.localStorage['currentRecord'] = key;
+    console.log('key', key);
   }
 
   setTitleKey(id){
