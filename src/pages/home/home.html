@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content padding >
-  <div class="main-timer-container">{{timeCounter}}</div>
+  <div class="main-timer-container" [style.height]="width">{{timeCounter}}</div>
   <!--<div class="main-button-container">-->
     <!--<button ion-button (click)="showDialog()" [disabled]="isCounting || isPaused">-->
       <!--<span>Start</span>-->
@@ -50,12 +50,12 @@
   </div>
 
   <div>
-    Recent records:
-    <ul>
-      <li *ngFor="let key of records | keys">
-        {{records[key].title || 'Default title'}} -- {{formatDuration(records[key].duration)}}
-      </li>
 
-    </ul>
+    <ion-list>
+      <button ion-item *ngFor="let key of records | keys">
+        {{records[key].title || 'Default title'}} -- {{formatDuration(records[key].duration)}}
+      </button>
+    </ion-list>
+
   </div>
 </ion-content>

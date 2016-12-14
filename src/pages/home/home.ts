@@ -25,6 +25,8 @@ export class HomePage {
   currentTime: number;
   prevTime: number;
 
+  width: any;
+
   constructor(
     navCtrl: NavController,
     timeHelper: TimeHelper,
@@ -38,6 +40,12 @@ export class HomePage {
 
   ionViewWillEnter() {
     this.refresh();
+  }
+
+  ionViewDidEnter() {
+    let container = document.getElementsByClassName("main-timer-container")[0];
+    this.width = container['offsetWidth'] + 'px';
+    //console.log('container', container, container['offsetWidth']);
   }
 
   formatDuration(milli){
@@ -124,5 +132,9 @@ export class HomePage {
 
   refresh(){
       this.records = this.dbHelper.get('records');
+
+
+
+      //this.width = container ? container.offsetWidth : '100px';
   }
 }
