@@ -4,6 +4,7 @@ import { Dialogs } from 'ionic-native';
 import { PopoverController } from 'ionic-angular';
 import { DbHelper } from '../helper/db';
 import { TimeHelper} from '../helper/time';
+import { Extra } from '../helper/extra';
 import { CategoryPopover} from './category-popover'
 
 //import * as _ from 'underscore';
@@ -13,25 +14,29 @@ import { CategoryPopover} from './category-popover'
   templateUrl: 'about.html'
 })
 export class AboutPage {
-  dbHelper:DbHelper;
-  timeHelper:TimeHelper;
-  pop: PopoverController;
-
   categories:string[] = [];
   currentCategory: string = "";
   newCategory: string = "";
   newId: string = "";
   records:any = {};
   titles: any = {};
+  categoryNames: any = {};
+  idForTitleChanging: any = ""
+  idForCategoryChanging: any = ""
+  categoryCount: any = {}
 
   constructor(public navCtrl:NavController,
-              dbHelper:DbHelper,
-              timeHelper:TimeHelper,
-              pop: PopoverController) {
+              private dbHelper:DbHelper,
+              private timeHelper:TimeHelper,
+              private pop: PopoverController,
+              private extra: Extra) {
     this.dbHelper = dbHelper;
     this.timeHelper = timeHelper;
     this.pop = pop;
     this.categories = this.dbHelper.get('categories');
+    this.extra.getEvent.subscribe( (refresh) => {
+      this.refresh();
+    } );
   }
 
   /**
@@ -48,6 +53,10 @@ export class AboutPage {
     this.dbHelper.save('categories', c);
   }
 
+  selectCategory(c){
+    this.idForCategoryChanging = c;
+  }
+
   changeCategory(cat){
     this.currentCategory = cat;
     this.refresh();
@@ -56,7 +65,14 @@ export class AboutPage {
   changeTitle(){
     this.dbHelper.update('records', this.newId, 'title', this.titles[this.newId]);
     this.newId = "";
+    this.idForTitleChanging = "";
     this.refresh();
+  }
+
+  changeCategoryName(c){
+
+    console.log('original: ' + c);
+    console.log('new' + this.categoryNames[c]);
   }
 
   deleteRecord(id) {
@@ -72,11 +88,11 @@ export class AboutPage {
     let popover = this.pop.create(CategoryPopover);
     popover.present();
     window.localStorage['currentRecord'] = key;
-    console.log('key', key);
   }
 
   setTitleKey(id){
     this.newId = id;
+    this.idForTitleChanging = id;
   }
 
   refresh(){
@@ -84,7 +100,11 @@ export class AboutPage {
       let self = this;
       let records = JSON.parse(window.localStorage['records']);
 
-      //console.log('refresh', records);
+      this.categoryCount = {};
+
+      for (let key in records){
+        this.addToCategory(records[key])
+      }
 
       while(self.categories.length > 0){
         self.categories.pop();
@@ -103,7 +123,6 @@ export class AboutPage {
           delete records[k];
         }
       }
-
       this.records = records;
     }
   }
@@ -122,5 +141,13 @@ export class AboutPage {
           self.refresh();
         }
       });
+  }
+
+  addToCategory(record){
+    if (typeof this.categoryCount[record.category] === 'undefined'){
+      this.categoryCount[record.category ] = 1;
+    }else{
+      this.categoryCount[record.category ]++;
+    }
   }
 }

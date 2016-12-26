@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
 import { Dialogs } from 'ionic-native';
 import { DbHelper } from '../helper/db';
 import { TimeHelper} from '../helper/time';
@@ -9,9 +8,6 @@ import { TimeHelper} from '../helper/time';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  timeHelper: TimeHelper;
-  dbHelper: DbHelper;
-
   interval: any = null;
   timeCounter: string = "00:00:00:000";
 
@@ -28,14 +24,12 @@ export class HomePage {
   width: any;
 
   constructor(
-    navCtrl: NavController,
-    timeHelper: TimeHelper,
-    dbHelper: DbHelper
+    private timeHelper: TimeHelper,
+    private dbHelper: DbHelper
   ) {
-    this.timeHelper = timeHelper;
-    this.dbHelper = dbHelper;
     this.setupDefault();
     this.refresh();
+
   }
 
   ionViewWillEnter() {

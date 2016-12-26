@@ -14,9 +14,17 @@
       <ul class="category-list">
         <!--<li><input type="text" [(ngModel)]="newCategory" (focusout)="addCategory()" (keyup.enter)="addCategory()"/></li>-->
 
-        <li *ngFor="let c of categories" class="hoverable" (click)="changeCategory(c)">
-          {{c}}
+        <li *ngFor="let c of categories" [hidden]="idForCategoryChanging === c" class="hoverable" [class.category-selected]="currentCategory === c" (click)="selectCategory(c)">
+          {{c}} ({{categoryCount[c] || 0}})
+
+          <input type="text" [hidden]="idForCategoryChanging !== c"
+                 [(ngModel)]="categoryNames[c]" (focusout)="changeCategoryName()" (keyup.enter)="changeCategoryName(c)"
+                 style="width: 100px"
+            />
+
         </li>
+
+
       </ul>
     </ion-col>
 

@@ -1,5 +1,7 @@
+import { ViewController } from 'ionic-angular/index';
 import { Component } from '@angular/core';
 import { DbHelper } from '../helper/db';
+import { Extra } from '../helper/extra';
 
 //import * as _ from 'underscore';
 
@@ -9,16 +11,19 @@ import { DbHelper } from '../helper/db';
 })
 export class CategoryPopover {
     categories:string[] = [];
-    dbHelper:DbHelper;
 
-    constructor(dbHelper:DbHelper){
-      this.dbHelper = dbHelper;
+    constructor(private dbHelper:DbHelper, private extra: Extra, private viewCtrl: ViewController){
       this.categories = this.dbHelper.get('categories');
     }
 
     changeCategory(value){
       let key = window.localStorage['currentRecord'];
-
       this.dbHelper.update('records', key, 'category', value);
+      this.extra.refresh();
+      this.close();
     }
+
+  close() {
+    this.viewCtrl.dismiss();
+  }
 }

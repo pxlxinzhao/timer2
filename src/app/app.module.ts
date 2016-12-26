@@ -8,6 +8,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { KeysPipe } from '../pages/pipes/keysPipe';
 import { DatePipe } from '../pages/pipes/DatePipe';
 import { DbHelper } from '../pages/helper/db';
+import { Extra } from '../pages/helper/extra';
 import { TimeHelper } from '../pages/helper/time';
 import { CategoryPopover} from '../pages/about/category-popover'
 
@@ -36,7 +37,8 @@ import { CategoryPopover} from '../pages/about/category-popover'
   ],
   providers: [
     DbHelper,
-    TimeHelper
+    TimeHelper,
+    Extra
   ]
 })
 export class AppModule {}
