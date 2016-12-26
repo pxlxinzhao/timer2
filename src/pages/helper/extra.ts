@@ -16,7 +16,15 @@ export class Extra {
   }
 
   public refresh() {
-    this.getEventObserver.next();
+    if (this.getEventObserver){
+      this.getEventObserver.next();
+    }
   }
+
+  //public switchToCategory(){
+  //  if (this.getEventObserver){
+  //    this.getEventObserver.next();
+  //  }
+  //}
 
 }

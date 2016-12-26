@@ -1,7 +1,10 @@
+import {NavController} from 'ionic-angular';
 import { Component } from '@angular/core';
 import { Dialogs } from 'ionic-native';
 import { DbHelper } from '../helper/db';
 import { TimeHelper} from '../helper/time';
+import { Extra } from '../helper/extra';
+
 
 @Component({
   selector: 'page-home',
@@ -25,7 +28,9 @@ export class HomePage {
 
   constructor(
     private timeHelper: TimeHelper,
-    private dbHelper: DbHelper
+    private dbHelper: DbHelper,
+    private extra: Extra,
+    private nav: NavController
   ) {
     this.setupDefault();
     this.refresh();
@@ -102,6 +107,15 @@ export class HomePage {
     }
 
     window.localStorage['records'] = JSON.stringify(storedRecords);
+  }
+
+  switchToCategory(cat){
+    /**
+     * recent record is used to change category of the about page
+     */
+    window.localStorage['currentCategory'] =cat;
+    this.extra.refresh();
+    this.nav.parent.select(1);
   }
 
   updateTimeCounter() {

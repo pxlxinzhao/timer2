@@ -44,6 +44,9 @@ export class AboutPage {
    * then functions are order by names
    */
   ionViewWillEnter() {
+    //this.extra.getEvent.subscribe( (switchToCategory) => {
+    //  console.log('got it');
+    //})
     this.refresh();
   }
 
@@ -57,9 +60,47 @@ export class AboutPage {
     this.idForCategoryChanging = c;
   }
 
+  /**
+   * used to show records of different category
+   */
   changeCategory(cat){
+
     this.currentCategory = cat;
     this.refresh();
+  }
+
+  /**
+   * used to rename category
+   */
+  changeCategoryName(c){
+    let self = this;
+    let oldValue = c;
+    let newValue = this.categoryNames[c];
+
+    if (newValue){
+      //update category and records
+      let records = JSON.parse(window.localStorage['records']);
+      let categories = JSON.parse(window.localStorage['categories']);
+
+      for (let key in records){
+        if (records[key].category === oldValue) records[key].category = newValue;
+      }
+
+      for (let i=0; i<categories.length; i++){
+        if (categories[i] === oldValue) categories[i] = newValue;
+      }
+
+      window.localStorage['records'] = JSON.stringify(records);
+      window.localStorage['categories'] = JSON.stringify(categories);
+
+      this.currentCategory = newValue;
+    }
+
+    this.idForCategoryChanging = "";
+
+    setTimeout(() => {
+      self.refresh();
+    }, 1)
   }
 
   changeTitle(){
@@ -67,12 +108,6 @@ export class AboutPage {
     this.newId = "";
     this.idForTitleChanging = "";
     this.refresh();
-  }
-
-  changeCategoryName(c){
-
-    console.log('original: ' + c);
-    console.log('new' + this.categoryNames[c]);
   }
 
   deleteRecord(id) {
@@ -96,6 +131,13 @@ export class AboutPage {
   }
 
   refresh(){
+    if (window.localStorage['currentCategory']){
+      this.currentCategory = window.localStorage['currentCategory'];
+      // clear immediately because it should only be used once after
+      // clicking on home page record
+      window.localStorage['currentCategory'] = "";
+    }
+
     if (window.localStorage['records']) {
       let self = this;
       let records = JSON.parse(window.localStorage['records']);

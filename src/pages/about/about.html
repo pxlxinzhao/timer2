@@ -13,15 +13,15 @@
       <strong class="hoverable" (click)="showCategoryDialog()">Categories </strong>
       <ul class="category-list">
         <!--<li><input type="text" [(ngModel)]="newCategory" (focusout)="addCategory()" (keyup.enter)="addCategory()"/></li>-->
+        <li *ngFor="let c of categories" class="hoverable"
+            [class.category-selected]="currentCategory === c" (dblclick)="selectCategory(c)" (click)="changeCategory(c)">
 
-        <li *ngFor="let c of categories" [hidden]="idForCategoryChanging === c" class="hoverable" [class.category-selected]="currentCategory === c" (click)="selectCategory(c)">
-          {{c}} ({{categoryCount[c] || 0}})
+          <span [hidden]="idForCategoryChanging === c" >{{c}} ({{categoryCount[c] || 0}}) </span>
 
           <input type="text" [hidden]="idForCategoryChanging !== c"
-                 [(ngModel)]="categoryNames[c]" (focusout)="changeCategoryName()" (keyup.enter)="changeCategoryName(c)"
+                 [(ngModel)]="categoryNames[c]" (focusout)="changeCategoryName(c)" (keyup.enter)="changeCategoryName(c)"
                  style="width: 100px"
             />
-
         </li>
 
 

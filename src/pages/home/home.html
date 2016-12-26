@@ -53,7 +53,7 @@
   <div>
 
     <ion-list>
-      <button ion-item *ngFor="let key of records | keys">
+      <button ion-item *ngFor="let key of records | keys" (click)="switchToCategory(records[key].category)">
         {{records[key].title || 'Default title'}} -- {{formatDuration(records[key].duration)}}
       </button>
     </ion-list>

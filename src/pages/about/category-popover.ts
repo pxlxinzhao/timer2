@@ -17,6 +17,10 @@ export class CategoryPopover {
     }
 
     changeCategory(value){
+      /**
+       * current record is used in about page for changing category
+       * @type {any}
+       */
       let key = window.localStorage['currentRecord'];
       this.dbHelper.update('records', key, 'category', value);
       this.extra.refresh();
