@@ -8,11 +8,17 @@
 
 <ion-content padding>
 
-  <ion-row>
-    <ion-col width-25>
+  <ion-item>
+    <ion-label>Category</ion-label>
+    <ion-select [(ngModel)]="currentCategory" (ionChange)="refresh()">
+      <ion-option *ngFor="let c of categories">{{c}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+    <!--<ion-col width-0>
       <strong class="hoverable" (click)="showCategoryDialog()">Categories </strong>
       <ul class="category-list">
-        <!--<li><input type="text" [(ngModel)]="newCategory" (focusout)="addCategory()" (keyup.enter)="addCategory()"/></li>-->
+        &lt;!&ndash;<li><input type="text" [(ngModel)]="newCategory" (focusout)="addCategory()" (keyup.enter)="addCategory()"/></li>&ndash;&gt;
         <li *ngFor="let c of categories" class="hoverable"
             [class.category-selected]="currentCategory === c" (dblclick)="selectCategory(c)" (click)="changeCategory(c)">
 
@@ -26,9 +32,8 @@
 
 
       </ul>
-    </ion-col>
+    </ion-col>-->
 
-    <ion-col width-75>
       <ion-card *ngFor="let key of records | keys">
         <!--<ion-card-title></ion-card-title>-->
         <ion-card-header>
@@ -66,7 +71,11 @@
 
       </ion-card>
 
-    </ion-col>
-  </ion-row>
 
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-title>Total time:</ion-title>
+  </ion-toolbar>
+</ion-footer>
