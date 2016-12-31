@@ -9,6 +9,7 @@ import { KeysPipe } from '../pages/pipes/keysPipe';
 import { CategoryPage } from '../pages/category/category';
 import { DatePipe } from '../pages/pipes/DatePipe';
 import { DbHelper } from '../pages/helper/db';
+import { Constant } from  '../pages/helper/constant';
 import { Extra } from '../pages/helper/extra';
 import { TimeHelper } from '../pages/helper/time';
 import { CategoryPopover} from '../pages/about/category-popover'
@@ -41,7 +42,8 @@ import { CategoryPopover} from '../pages/about/category-popover'
   providers: [
     DbHelper,
     TimeHelper,
-    Extra
+    Extra,
+    Constant
   ]
 })
 export class AppModule {}

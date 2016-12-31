@@ -4,6 +4,7 @@ import { Dialogs } from 'ionic-native';
 import { DbHelper } from '../helper/db';
 import { TimeHelper} from '../helper/time';
 import { Extra } from '../helper/extra';
+import { Constant } from '../helper/constant'
 
 
 @Component({
@@ -30,11 +31,15 @@ export class HomePage {
     private timeHelper: TimeHelper,
     private dbHelper: DbHelper,
     private extra: Extra,
+    private constant: Constant,
     private nav: NavController
   ) {
     this.setupDefault();
     this.refresh();
 
+    if (!window.localStorage[this.constant.CATEGORY_SEED]){
+      window.localStorage[this.constant.CATEGORY_SEED] = 1;
+    }
   }
 
   ionViewWillEnter() {
@@ -100,12 +105,15 @@ export class HomePage {
 
   storeRecords(){
     var storedRecords = JSON.parse(window.localStorage['records']);
+    let seed = parseInt(window.localStorage[this.constant.CATEGORY_SEED]);
+
     storedRecords[new Date().getTime()] = {
       duration: this.timeElapsed,
-      title: this.title,
+      title: 'Record ' + seed ,
       category: 'Default category'
     }
 
+    window.localStorage[this.constant.CATEGORY_SEED] = ++seed;
     window.localStorage['records'] = JSON.stringify(storedRecords);
   }
 
