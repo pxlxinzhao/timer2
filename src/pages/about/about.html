@@ -15,67 +15,49 @@
     </ion-select>
   </ion-item>
 
-    <!--<ion-col width-0>
-      <strong class="hoverable" (click)="showCategoryDialog()">Categories </strong>
-      <ul class="category-list">
-        &lt;!&ndash;<li><input type="text" [(ngModel)]="newCategory" (focusout)="addCategory()" (keyup.enter)="addCategory()"/></li>&ndash;&gt;
-        <li *ngFor="let c of categories" class="hoverable"
-            [class.category-selected]="currentCategory === c" (dblclick)="selectCategory(c)" (click)="changeCategory(c)">
 
-          <span [hidden]="idForCategoryChanging === c" >{{c}} ({{categoryCount[c] || 0}}) </span>
+  <ion-card *ngFor="let key of records | keys">
+    <!--<ion-card-title></ion-card-title>-->
+    <ion-card-header>
+      <span class="hoverable" (click)="setTitleKey(key)" [hidden]="idForTitleChanging === key">
+        {{records[key].title || "Default Title"}}
+      </span>
 
-          <input type="text" [hidden]="idForCategoryChanging !== c"
-                 [(ngModel)]="categoryNames[c]" (focusout)="changeCategoryName(c)" (keyup.enter)="changeCategoryName(c)"
-                 style="width: 100px"
-            />
-        </li>
+      <input type="text" [hidden]="idForTitleChanging !== key"
+             [(ngModel)]="titles[key]" (focusout)="changeTitle()" (keyup.enter)="changeTitle()"
+             style="width: 100px"
+        />
 
+       <span class="right hoverable" >
+        <ion-icon name="ios-remove-circle-outline" (click)="deleteRecord(key)"></ion-icon>
+      </span>
 
-      </ul>
-    </ion-col>-->
+       <span class="right hoverable" style="margin-right: 15px;">
+         <ion-icon name="ios-folder-open-outline" (click) = "presentPopover(key)"></ion-icon>
+      </span>
+    </ion-card-header>
 
-      <ion-card *ngFor="let key of records | keys">
-        <!--<ion-card-title></ion-card-title>-->
-        <ion-card-header>
-          <span class="hoverable" (click)="setTitleKey(key)" [hidden]="idForTitleChanging === key">
-            {{records[key].title || "Default Title"}}
-          </span>
+    <ion-card-content>
+      <div style= "margin: auto; text-align: center; font-size: 2rem">
+        <strong>
+          {{formatDuration(records[key].duration)}}
+        </strong>
+      </div>
 
-          <input type="text" [hidden]="idForTitleChanging !== key"
-                 [(ngModel)]="titles[key]" (focusout)="changeTitle()" (keyup.enter)="changeTitle()"
-                 style="width: 100px"
-            />
+      <div>
+        <small class="right" style="color: #666">
+          {{key | dateFromMilli}}
+        </small>
+      </div>
+    </ion-card-content>
 
-           <span class="right hoverable" >
-            <ion-icon name="ios-remove-circle-outline" (click)="deleteRecord(key)"></ion-icon>
-          </span>
-
-           <span class="right hoverable" style="margin-right: 15px;">
-             <ion-icon name="ios-folder-open-outline" (click) = "presentPopover(key)"></ion-icon>
-          </span>
-        </ion-card-header>
-
-        <ion-card-content>
-          <div style= "margin: auto; text-align: center; font-size: 2rem">
-            <strong>
-              {{formatDuration(records[key].duration)}}
-            </strong>
-          </div>
-
-          <div>
-            <small class="right" style="color: #666">
-              {{key | dateFromMilli}}
-            </small>
-          </div>
-        </ion-card-content>
-
-      </ion-card>
+  </ion-card>
 
 
 </ion-content>
 
 <ion-footer>
   <ion-toolbar>
-    <ion-title>Total time:</ion-title>
+    <ion-title>Total time:  {{formatDuration(totalTime)}}</ion-title>
   </ion-toolbar>
 </ion-footer>

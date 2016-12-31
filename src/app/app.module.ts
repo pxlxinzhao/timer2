@@ -6,6 +6,7 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { KeysPipe } from '../pages/pipes/keysPipe';
+import { CategoryPage } from '../pages/category/category';
 import { DatePipe } from '../pages/pipes/DatePipe';
 import { DbHelper } from '../pages/helper/db';
 import { Extra } from '../pages/helper/extra';
@@ -21,7 +22,8 @@ import { CategoryPopover} from '../pages/about/category-popover'
     TabsPage,
     CategoryPopover,
     KeysPipe,
-    DatePipe
+    DatePipe,
+    CategoryPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -33,7 +35,8 @@ import { CategoryPopover} from '../pages/about/category-popover'
     ContactPage,
     HomePage,
     TabsPage,
-    CategoryPopover
+    CategoryPopover,
+    CategoryPage
   ],
   providers: [
     DbHelper,

@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Categories
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+
+  <ion-list>
+
+    <ion-item-sliding  *ngFor="let c of categories">
+
+      <ion-item>
+        <span [hidden]="selectedCategory === c" (click)="selectCategory(c)">{{c}}</span>
+        <input type="text"
+               [hidden]="selectedCategory !== c"
+               [placeholder]="c"
+               [(ngModel)]="categoryNames[c]"
+               (focusout) ="changeCategoryName()"
+               (keyup.enter)="changeCategoryName()"
+          />
+      </ion-item>
+
+      <ion-item-options>
+        <button ion-button color="danger" (click)="deleteCategory(c)"> Delete</button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+  </ion-list>
+
+</ion-content>

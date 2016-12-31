@@ -24,6 +24,7 @@ export class AboutPage {
   idForTitleChanging: any = ""
   idForCategoryChanging: any = ""
   categoryCount: any = {}
+  totalTime: any
 
   constructor(public navCtrl:NavController,
               private dbHelper:DbHelper,
@@ -72,36 +73,36 @@ export class AboutPage {
   /**
    * used to rename category
    */
-  changeCategoryName(c){
-    let self = this;
-    let oldValue = c;
-    let newValue = this.categoryNames[c];
-
-    if (newValue){
-      //update category and records
-      let records = JSON.parse(window.localStorage['records']);
-      let categories = JSON.parse(window.localStorage['categories']);
-
-      for (let key in records){
-        if (records[key].category === oldValue) records[key].category = newValue;
-      }
-
-      for (let i=0; i<categories.length; i++){
-        if (categories[i] === oldValue) categories[i] = newValue;
-      }
-
-      window.localStorage['records'] = JSON.stringify(records);
-      window.localStorage['categories'] = JSON.stringify(categories);
-
-      this.currentCategory = newValue;
-    }
-
-    this.idForCategoryChanging = "";
-
-    setTimeout(() => {
-      self.refresh();
-    }, 1)
-  }
+  //changeCategoryName(c){
+  //  let self = this;
+  //  let oldValue = c;
+  //  let newValue = this.categoryNames[c];
+  //
+  //  if (newValue){
+  //    //update category and records
+  //    let records = JSON.parse(window.localStorage['records']);
+  //    let categories = JSON.parse(window.localStorage['categories']);
+  //
+  //    for (let key in records){
+  //      if (records[key].category === oldValue) records[key].category = newValue;
+  //    }
+  //
+  //    for (let i=0; i<categories.length; i++){
+  //      if (categories[i] === oldValue) categories[i] = newValue;
+  //    }
+  //
+  //    window.localStorage['records'] = JSON.stringify(records);
+  //    window.localStorage['categories'] = JSON.stringify(categories);
+  //
+  //    this.currentCategory = newValue;
+  //  }
+  //
+  //  this.idForCategoryChanging = "";
+  //
+  //  setTimeout(() => {
+  //    self.refresh();
+  //  }, 1)
+  //}
 
   changeTitle(){
     this.dbHelper.update('records', this.newId, 'title', this.titles[this.newId]);
@@ -166,7 +167,16 @@ export class AboutPage {
         }
       }
       this.records = records;
+      this.calculateTotalTime(records);
     }
+  }
+
+  calculateTotalTime(records){
+    let total = 0;
+    for (let k in records){
+      total += records[k].duration;
+    }
+    this.totalTime = total;
   }
 
   showCategoryDialog(){
