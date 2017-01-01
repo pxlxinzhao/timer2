@@ -17,35 +17,21 @@
   <div class="buttons-row">
 
     <div class="main-button-container">
-      <button (click)="start()" [disabled]="isCounting || isPaused" ion-button icon-only clear>
-        <!--<span>Quick Start</span>-->
-        <!--ios-refresh-outline-->
-        <ion-icon name="ios-refresh-outline"></ion-icon>
+      <button (click)="resume()" [disabled]="isCounting" ion-button icon-only clear>
+        <ion-icon name="ios-play-outline"></ion-icon>
       </button>
-
     </div>
+
     <div class="main-button-container">
       <button (click)="pause()" [disabled]="!isCounting" ion-button icon-only clear large>
-        <!--<span>Pause</span>-->
-        <!--//ios-pause-outline-->
         <ion-icon name="ios-pause-outline"></ion-icon>
       </button>
     </div>
 
     <div class="main-button-container">
-      <button (click)="resume()" [disabled]="isCounting || timeElapsed === 0" ion-button icon-only clear>
-        <!--<span>Resume</span>-->
-        <ion-icon name="ios-play-outline"></ion-icon>
-      </button>
-
-    </div>
-
-    <div class="main-button-container">
       <button (click)="stop()" [disabled]="!isStarted" ion-button icon-only clear>
-        <!--<span>Stop</span>-->
         <ion-icon name="ios-square-outline"></ion-icon>
       </button>
-
     </div>
 
   </div>

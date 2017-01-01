@@ -6,7 +6,6 @@ import { TimeHelper} from '../helper/time';
 import { Extra } from '../helper/extra';
 import { Constant } from '../helper/constant'
 
-
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -58,7 +57,7 @@ export class HomePage {
 
   start(){
     this.prevTime = new Date().getTime();
-
+    this.isCounting = true;
     this.isPaused = false;
     this.isCounting = true;
     this.isStarted = true;
@@ -83,7 +82,7 @@ export class HomePage {
 
   setupDefault(){
     if (!window.localStorage['categories']) {
-      window.localStorage['categories'] = JSON.stringify(['Default category']);
+      window.localStorage['categories'] = JSON.stringify(['Uncategorized']);
     }
 
     if (!window.localStorage['records']){
@@ -100,7 +99,10 @@ export class HomePage {
     this.isStarted = false;
     this.timeElapsed = 0;
 
-    this.refresh();
+    this.isStarted = false;
+    this.timeElapsed = 0;
+
+    this.updateTimeCounter();
   }
 
   storeRecords(){
@@ -110,7 +112,7 @@ export class HomePage {
     storedRecords[new Date().getTime()] = {
       duration: this.timeElapsed,
       title: 'Record ' + seed ,
-      category: 'Default category'
+      category: 'Uncategorized'
     }
 
     window.localStorage[this.constant.CATEGORY_SEED] = ++seed;
@@ -131,25 +133,23 @@ export class HomePage {
     this.refresh();
   }
 
-  showDialog(){
-    let self = this;
-    Dialogs.prompt('Enter a title', 'New Record', ['Ok','Cancel'], '')
-      .then(function(result) {
-        var input = result.input1;
-        // no button = 0, 'OK' = 1, 'Cancel' = 2
-        var btnIndex = result.buttonIndex;
-
-        if(btnIndex === 1){
-          self.title = input;
-          self.start();
-        }
-      });
-  }
+  //showDialog(){
+  //  let self = this;
+  //  Dialogs.prompt('Enter a title', 'New Record', ['Ok','Cancel'], '')
+  //    .then(function(result) {
+  //      var input = result.input1;
+  //      // no button = 0, 'OK' = 1, 'Cancel' = 2
+  //      var btnIndex = result.buttonIndex;
+  //
+  //      if(btnIndex === 1){
+  //        self.title = input;
+  //        self.start();
+  //      }
+  //    });
+  //}
 
   refresh(){
       this.records = this.dbHelper.get('records');
-
-
 
       //this.width = container ? container.offsetWidth : '100px';
   }

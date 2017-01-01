@@ -24,7 +24,8 @@ export class AboutPage {
   idForTitleChanging: any = ""
   idForCategoryChanging: any = ""
   categoryCount: any = {}
-  totalTime: any
+  totalTime: any;
+  isCounting: boolean = false;
 
   constructor(public navCtrl:NavController,
               private dbHelper:DbHelper,
