@@ -1,20 +1,33 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      About
-    </ion-title>
-  </ion-navbar>
+  <!--<ion-navbar>-->
+    <!--<ion-title>-->
+      <!--Records-->
+    <!--</ion-title>-->
+  <!--</ion-navbar>-->
+
+  <ion-toolbar>
+    <ion-item>
+      <ion-label>Category</ion-label>
+      <ion-select [(ngModel)]="currentCategory" (ionChange)="refresh()">
+      <ion-option *ngFor="let c of categories">{{c}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-toolbar>
+
 </ion-header>
+
+
 
 <ion-content padding>
 
-  <ion-item>
-    <ion-label>Category</ion-label>
-    <ion-select [(ngModel)]="currentCategory" (ionChange)="refresh()">
-      <ion-option *ngFor="let c of categories">{{c}}</ion-option>
-    </ion-select>
-  </ion-item>
-
+  <!--<div class="bar bar-subheader bar-positive">-->
+    <!--<ion-item>-->
+      <!--<ion-label>Category</ion-label>-->
+      <!--<ion-select [(ngModel)]="currentCategory" (ionChange)="refresh()">-->
+        <!--<ion-option *ngFor="let c of categories">{{c}}</ion-option>-->
+      <!--</ion-select>-->
+    <!--</ion-item>-->
+  <!--</div>-->
 
   <ion-card *ngFor="let key of records | keys">
     <!--<ion-card-title></ion-card-title>-->
@@ -29,7 +42,7 @@
         />
 
        <span class="right hoverable" >
-        <ion-icon name="ios-remove-circle-outline" (click)="deleteRecord(key)"></ion-icon>
+        <ion-icon name="ios-remove-circle-outline" (click)="confirmDelete(key)"></ion-icon>
       </span>
 
        <span class="right hoverable" style="margin-right: 15px;">
@@ -45,7 +58,7 @@
       </div>
 
       <div>
-        <small class="right" style="color: #666">
+        <small class="right time-format">
           {{key | dateFromMilli}}
         </small>
       </div>

@@ -112,6 +112,18 @@ export class AboutPage {
     this.refresh();
   }
 
+  confirmDelete(id){
+    let self = this;
+
+    Dialogs.confirm('Are you sure you want to delete this record?', 'Delete record', ['Ok','Cancel'])
+      .then(function(result){
+        //ok is 1, cancel is 2
+        if (result === 1){
+          self.deleteRecord(id);
+        }
+      })
+  }
+
   deleteRecord(id) {
     this.dbHelper.delete('records', id);
     this.refresh();

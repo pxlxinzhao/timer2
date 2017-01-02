@@ -4,6 +4,6 @@ import moment from 'moment';
 @Pipe({name: 'dateFromMilli'})
 export class DatePipe implements PipeTransform {
   transform(value) : any {
-    return moment(value/1).format('MM/DD/YYYY hh:mm:ss');
+    return moment(value/1).format('MMM D, YYYY hh:mm a');
   }
 }
