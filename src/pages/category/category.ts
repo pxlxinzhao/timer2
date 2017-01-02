@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { Dialogs } from 'ionic-native';
 
 @Component({
   templateUrl: 'category.html'
@@ -29,19 +30,44 @@ export class CategoryPage {
     this.isAdding = true;
   }
 
-  addCategory() {
+  showCategoryDialog(){
+    let self = this;
+    Dialogs.prompt('Please enter a name', 'New category', ['Ok','Cancel'], '')
+      .then(function(result) {
+        var input = result.input1;
+        // no button = 0, 'OK' = 1, 'Cancel' = 2
+        var btnIndex = result.buttonIndex;
+
+        if(btnIndex === 1){
+          self.newCategory = input;
+          self.addCategory(input);
+          self.refresh();
+        }
+      });
+  }
+
+  addCategory(input) {
     let category = JSON.parse(window.localStorage['categories']);
-    if (this.newCategory && category.indexOf(this.newCategory) === -1) {
+
+    if (input && category.indexOf(input) === -1){
+      category.push(input);
+    }else if (this.newCategory && category.indexOf(this.newCategory) === -1) {
       category.push(this.newCategory);
     }
+
     window.localStorage['categories'] = JSON.stringify(category);
     this.refresh();
   }
 
-  changeCategoryName() {
+  changeCategoryName(c) {
+    console.log('patrick');
+
     let self = this;
-    let oldValue = this.selectedCategory;
-    let newValue = this.categoryNames[oldValue];
+    let oldValue = c;
+    let newValue = this.categoryNames[c];
+
+    console.log('newValue', newValue);
+    console.log('categoryNames[c]', this.categoryNames[c]);
 
     if (newValue) {
       //update category and records

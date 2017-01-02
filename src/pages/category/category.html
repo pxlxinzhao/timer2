@@ -16,14 +16,14 @@
     <ion-item-sliding  *ngFor="let c of categories">
 
       <ion-item [hidden]="c === 'Uncategorized'">
-        <span [hidden]="selectedCategory === c" (click)="selectCategory(c)">{{c}}</span>
-        <input type="text"
-               [hidden]="selectedCategory !== c"
-               [placeholder]="c"
-               [(ngModel)]="categoryNames[c]"
-               (focusout) ="changeCategoryName()"
-               (keyup.enter)="changeCategoryName()"
-          />
+        <ion-input type="text" value=""
+                   [(ngModel)]="categoryNames[c]"
+                   (focusout) ="changeCategoryName(c)"
+                   (keyup.enter)="changeCategoryName(c)"
+                   [placeholder]="c"
+                   class="category-edit"
+          ></ion-input>
+
       </ion-item>
 
       <ion-item-options>
@@ -34,20 +34,20 @@
   </ion-list>
 
   <ion-fab right bottom>
-    <button ion-fab mini (click)="switchToAddingState()"><ion-icon name="add"></ion-icon></button>
+    <button ion-fab mini (click)="showCategoryDialog()"><ion-icon name="add"></ion-icon></button>
 
   </ion-fab>
 
 </ion-content>
 
 
-<ion-footer>
-  <ion-item [hidden]="!isAdding">
-    <ion-label color="primary">New category: </ion-label>
-    <ion-input
-      [(ngModel)]="newCategory"
-      (focusout) ="addCategory()"
-      (keyup.enter)="addCategory()"
-      ></ion-input>
-  </ion-item>
-</ion-footer>
+<!--<ion-footer>-->
+  <!--<ion-item [hidden]="!isAdding">-->
+    <!--<ion-label color="primary">New category: </ion-label>-->
+    <!--<ion-input-->
+      <!--[(ngModel)]="newCategory"-->
+      <!--(focusout) ="addCategory()"-->
+      <!--(keyup.enter)="addCategory()"-->
+      <!--></ion-input>-->
+  <!--</ion-item>-->
+<!--</ion-footer>-->

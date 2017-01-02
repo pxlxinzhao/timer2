@@ -1,13 +1,13 @@
 <ion-header>
-  <!--<ion-navbar>-->
-    <!--<ion-title>-->
-      <!--Records-->
-    <!--</ion-title>-->
-  <!--</ion-navbar>-->
+  <ion-navbar>
+    <ion-title>
+      Records
+    </ion-title>
+  </ion-navbar>
 
   <ion-toolbar>
     <ion-item>
-      <ion-label>Category</ion-label>
+      <ion-label>Choose category</ion-label>
       <ion-select [(ngModel)]="currentCategory" (ionChange)="refresh()">
       <ion-option *ngFor="let c of categories">{{c}}</ion-option>
       </ion-select>

@@ -1,48 +1,44 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Timer</ion-title>
+    <ion-title>
+      Timer
+    </ion-title>
   </ion-navbar>
-</ion-header>
+
+  <ion-toolbar>
+    <div class="main-timer-container" >{{timeCounter}}</div>
+
+    <div class="buttons-row">
+
+      <div class="main-button-container">
+        <button (click)="resume()" [disabled]="isCounting" ion-button icon-only clear>
+          <ion-icon name="ios-play-outline"></ion-icon>
+        </button>
+      </div>
+
+      <div class="main-button-container">
+        <button (click)="pause()" [disabled]="!isCounting" ion-button icon-only clear large>
+          <ion-icon name="ios-pause-outline"></ion-icon>
+        </button>
+      </div>
+
+      <div class="main-button-container">
+        <button (click)="stop()" [disabled]="!isStarted" ion-button icon-only clear>
+          <ion-icon name="ios-square-outline"></ion-icon>
+        </button>
+      </div>
+
+    </div>
+  </ion-toolbar>
+  </ion-header>
+
 
 <ion-content padding >
-  <div class="main-timer-container" >{{timeCounter}}</div>
-  <!--[style.height]="width"-->
-  <!--<div class="main-button-container">-->
-    <!--<button ion-button (click)="showDialog()" [disabled]="isCounting || isPaused">-->
-      <!--<span>Start</span>-->
-    <!--</button>-->
-  <!--</div>-->
-
-
-  <div class="buttons-row">
-
-    <div class="main-button-container">
-      <button (click)="resume()" [disabled]="isCounting" ion-button icon-only clear>
-        <ion-icon name="ios-play-outline"></ion-icon>
-      </button>
-    </div>
-
-    <div class="main-button-container">
-      <button (click)="pause()" [disabled]="!isCounting" ion-button icon-only clear large>
-        <ion-icon name="ios-pause-outline"></ion-icon>
-      </button>
-    </div>
-
-    <div class="main-button-container">
-      <button (click)="stop()" [disabled]="!isStarted" ion-button icon-only clear>
-        <ion-icon name="ios-square-outline"></ion-icon>
-      </button>
-    </div>
-
-  </div>
-
   <div>
-
     <ion-list>
-      <button ion-item *ngFor="let key of records | keys" (click)="switchToCategory(records[key].category)">
+      <button ion-item *ngFor="let key of records | keys" (dblclick)="switchToCategory(records[key].category)">
         {{records[key].title || 'Default title'}} -- {{formatDuration(records[key].duration)}}
       </button>
     </ion-list>
-
   </div>
 </ion-content>

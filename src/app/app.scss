@@ -25,7 +25,7 @@
   opacity: 0.5;
 }
 
-// home page
+// timer page
 .buttons-row{
   text-align: center;
 }
@@ -34,7 +34,8 @@
 .main-timer-container {
    text-align: center;
    font-size: 8vw;
-   color: #171717;
+   color: #1c1c1c;
+  padding-top: 10px;
    //background-color: rgba(0, 189, 0, 0.5);
    //width: 60%;
    //border-radius: 50%;
@@ -49,7 +50,7 @@
 }
 
 
-//about page
+//records
 .category-list {
   list-style-type: none;
   overflow: hidden;
@@ -72,4 +73,32 @@
   color: #666;
   padding-top: 16px;
   padding-bottom: 12px;
+}
+
+.category-popover{
+  padding: 10px;
+}
+
+//settings
+.category-edit > input {
+  &::-webkit-input-placeholder {
+    color: #1c1c1c;
+  }
+
+  &:-moz-placeholder { /* Firefox 18- */
+    color: #1c1c1c;
+  }
+
+  &::-moz-placeholder {  /* Firefox 19+ */
+    color: #1c1c1c;
+  }
+
+  &:-ms-input-placeholder {
+    color: #1c1c1c;
+  }
+}
+
+.change-category-header {
+  color: black;
+  font-size: 22px;
 }
