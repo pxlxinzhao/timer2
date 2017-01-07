@@ -8,26 +8,23 @@
 
 
 <ion-content>
-
-
-
   <ion-list>
 
     <ion-item-sliding  *ngFor="let c of categories">
 
-      <ion-item [hidden]="c === 'Uncategorized'">
+      <ion-item [hidden]="c.doc.name === 'Uncategorized'">
         <ion-input type="text" value=""
-                   [(ngModel)]="categoryNames[c]"
-                   (focusout) ="changeCategoryName(c)"
-                   (keyup.enter)="changeCategoryName(c)"
-                   [placeholder]="c"
+                   [(ngModel)]="categoryNames[c.id]"
+                   (focusout) ="changeCategoryName(c.doc.name, c.id)"
+                   (keyup.enter)="changeCategoryName(c.doc.name, c.id)"
+                   [placeholder]="c.doc.name"
                    class="category-edit"
           ></ion-input>
 
       </ion-item>
 
       <ion-item-options>
-        <button ion-button color="danger" (click)="deleteCategory(c)"> Delete</button>
+        <button ion-button color="danger" (click)="deleteCategory(c.id)"> Delete</button>
       </ion-item-options>
     </ion-item-sliding>
 
@@ -39,15 +36,3 @@
   </ion-fab>
 
 </ion-content>
-
-
-<!--<ion-footer>-->
-  <!--<ion-item [hidden]="!isAdding">-->
-    <!--<ion-label color="primary">New category: </ion-label>-->
-    <!--<ion-input-->
-      <!--[(ngModel)]="newCategory"-->
-      <!--(focusout) ="addCategory()"-->
-      <!--(keyup.enter)="addCategory()"-->
-      <!--></ion-input>-->
-  <!--</ion-item>-->
-<!--</ion-footer>-->

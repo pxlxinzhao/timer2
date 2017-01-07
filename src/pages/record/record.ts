@@ -119,7 +119,6 @@ export class RecordPage {
     console.log('currentCategory1', this.currentCategory);
 
     if (this.pouch.getLocal(this.constant.CATEGORY_SELECTED)){
-      console.log(1);
       this.currentCategory = this.pouch.getLocal(this.constant.CATEGORY_SELECTED);
       /**
        * clear immediately because it should only be used once after
@@ -127,13 +126,8 @@ export class RecordPage {
        */
       this.pouch.setLocal(this.constant.CATEGORY_SELECTED, '');
     }else if(this.currentCategory.length === 0 ){
-      console.log(2);
-
       this.currentCategory = this.constant.CATEGORY_DEFAULT;
     }
-
-    console.log('currentCategory2', this.currentCategory);
-
     /**
      * refresh records
      */
