@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-
-import { NavController } from 'ionic-angular';
 import { CategoryPage } from '../category/category'
+import { Component } from '@angular/core';
+import { Pouch } from  '../helper/pouch';
+import { NavController } from 'ionic-angular';
+
 
 @Component({
   selector: 'page-setting',
@@ -9,12 +10,17 @@ import { CategoryPage } from '../category/category'
 })
 export class SettingPage {
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController,
+  private pouch: Pouch) {
 
   }
 
   navigateToCategory(){
     this.navCtrl.push(CategoryPage)
+  }
+
+  reset(){
+    this.pouch.reset();
   }
 
 }

@@ -1,5 +1,5 @@
 import { CategoryPage } from '../pages/category/category';
-import { CategoryPopover} from '../pages/about/category-popover'
+import { CategoryPopover} from '../pages/record/category-popover'
 import { Constant } from  '../pages/helper/constant';
 import { DatePipe } from '../pages/pipes/DatePipe';
 import { DbHelper } from '../pages/helper/db';

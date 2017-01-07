@@ -36,8 +36,10 @@
 <ion-content padding >
   <div>
     <ion-list>
-      <button ion-item *ngFor="let key of records | keys" (dblclick)="switchToCategory(records[key].category)">
-        {{records[key].title || 'Default title'}} -- {{formatDuration(records[key].duration)}}
+      <button ion-item *ngFor="let key of records | keys" (click)="switchToCategory(records[key].doc.category)">
+
+          {{records[key].doc.title || 'Default title'}} -- {{formatDuration(records[key].doc.duration)}}
+
       </button>
     </ion-list>
   </div>

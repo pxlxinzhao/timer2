@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Constant } from '../helper/constant'
 import { DbHelper } from '../helper/db';
-import { Dialogs } from 'ionic-native';
+//import { Dialogs } from 'ionic-native';
 import { Extra } from '../helper/extra';
 import { NavController } from 'ionic-angular';
 import { Pouch } from  '../helper/pouch';
@@ -36,7 +36,7 @@ export class TimerPage {
     private timeHelper: TimeHelper
   ) {
     this.setupDefault();
-    this.refresh();
+    //this.refresh();
 
     if (!window.localStorage[this.constant.CATEGORY_SEED]){
       window.localStorage[this.constant.CATEGORY_SEED] = 1;
@@ -107,39 +107,44 @@ export class TimerPage {
   }
 
   storeRecords(){
-    var storedRecords = JSON.parse(window.localStorage['records']);
     let seed = parseInt(window.localStorage[this.constant.CATEGORY_SEED]);
 
     let newRecord =  {
       category: 'Uncategorized',
       duration: this.timeElapsed,
-      title: 'Record ' + seed
+      title: 'Record ' + seed,
+      timestamp: new Date().getTime()
     }
 
-    this.pouch.add(newRecord);
+    this.pouch.local(this.constant.CATEGORY_SEED, ++seed);
 
-    storedRecords[new Date().getTime()] = newRecord;
-
-    window.localStorage[this.constant.CATEGORY_SEED] = ++seed;
-    window.localStorage['records'] = JSON.stringify(storedRecords);
+    this.pouch.add(newRecord).then((response) => {
+      this.refresh();
+    });
   }
 
   switchToCategory(cat){
     /**
      * recent record is used to change category of the about page
      */
-    window.localStorage['currentCategory'] =cat;
+    this.pouch.local(this.constant.CATEGORY_SELECTED, cat);
+
     this.extra.refresh();
     this.nav.parent.select(1);
   }
 
   updateTimeCounter() {
     this.timeCounter = this.timeHelper.formatTime(this.timeElapsed);
-    //this.refresh();
   }
 
   refresh(){
-      console.log('pouch get all: ', this.pouch.getAll());
-      this.records = this.dbHelper.get('records');
+    this.pouch.getAll().then((docs) =>{
+      /**
+       * docs.rows is an array list object, thus use keys pipe to loop
+       */
+      let records = this.pouch.getAsArray(docs);
+      records.sort((a, b) => b.doc.timestamp -  a.doc.timestamp);
+      this.records = records;
+    })
   }
 }
