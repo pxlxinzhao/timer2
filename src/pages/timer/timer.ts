@@ -3,8 +3,9 @@ import { Constant } from '../helper/constant'
 import { DbHelper } from '../helper/db';
 import { Dialogs } from 'ionic-native';
 import { Extra } from '../helper/extra';
+import { NavController } from 'ionic-angular';
+import { Pouch } from  '../helper/pouch';
 import { TimeHelper} from '../helper/time';
-import {NavController} from 'ionic-angular';
 
 @Component({
   selector: 'page-timer',
@@ -14,24 +15,25 @@ export class TimerPage {
   interval: any = null;
   timeCounter: string = "00:00:00:000";
 
-  title: string = "";
-  timeElapsed: number = 0;
   isCounting: boolean = false;
   isPaused: boolean = false;
   isStarted: boolean = false;
+  timeElapsed: number = 0;
+  title: string = "";
 
-  records: any = {};
   currentTime: number;
   prevTime: number;
+  records: any = {};
 
   width: any;
 
   constructor(
-    private timeHelper: TimeHelper,
+    private constant: Constant,
     private dbHelper: DbHelper,
     private extra: Extra,
-    private constant: Constant,
-    private nav: NavController
+    private nav: NavController,
+    private pouch: Pouch,
+    private timeHelper: TimeHelper
   ) {
     this.setupDefault();
     this.refresh();
@@ -108,11 +110,15 @@ export class TimerPage {
     var storedRecords = JSON.parse(window.localStorage['records']);
     let seed = parseInt(window.localStorage[this.constant.CATEGORY_SEED]);
 
-    storedRecords[new Date().getTime()] = {
+    let newRecord =  {
+      category: 'Uncategorized',
       duration: this.timeElapsed,
-      title: 'Record ' + seed ,
-      category: 'Uncategorized'
+      title: 'Record ' + seed
     }
+
+    this.pouch.add(newRecord);
+
+    storedRecords[new Date().getTime()] = newRecord;
 
     window.localStorage[this.constant.CATEGORY_SEED] = ++seed;
     window.localStorage['records'] = JSON.stringify(storedRecords);
@@ -129,10 +135,11 @@ export class TimerPage {
 
   updateTimeCounter() {
     this.timeCounter = this.timeHelper.formatTime(this.timeElapsed);
-    this.refresh();
+    //this.refresh();
   }
 
   refresh(){
+      console.log('pouch get all: ', this.pouch.getAll());
       this.records = this.dbHelper.get('records');
   }
 }
