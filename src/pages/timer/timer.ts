@@ -7,10 +7,10 @@ import { Extra } from '../helper/extra';
 import { Constant } from '../helper/constant'
 
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+  selector: 'page-timer',
+  templateUrl: 'timer.html'
 })
-export class HomePage {
+export class TimerPage {
   interval: any = null;
   timeCounter: string = "00:00:00:000";
 

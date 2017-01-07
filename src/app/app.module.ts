@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
-import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
-import { HomePage } from '../pages/home/home';
+import { RecordPage } from '../pages/record/record';
+import { SettingPage } from '../pages/setting/setting';
+import { TimerPage } from '../pages/timer/timer';
 import { TabsPage } from '../pages/tabs/tabs';
 import { KeysPipe } from '../pages/pipes/keysPipe';
 import { CategoryPage } from '../pages/category/category';
@@ -17,9 +17,9 @@ import { CategoryPopover} from '../pages/about/category-popover'
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
+    RecordPage,
+    SettingPage,
+    TimerPage,
     TabsPage,
     CategoryPopover,
     KeysPipe,
@@ -32,9 +32,9 @@ import { CategoryPopover} from '../pages/about/category-popover'
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
+    RecordPage,
+    SettingPage,
+    TimerPage,
     TabsPage,
     CategoryPopover,
     CategoryPage

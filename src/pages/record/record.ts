@@ -10,10 +10,10 @@ import { CategoryPopover} from './category-popover'
 //import * as _ from 'underscore';
 
 @Component({
-  selector: 'page-about',
-  templateUrl: 'about.html'
+  selector: 'page-record',
+  templateUrl: 'record.html'
 })
-export class AboutPage {
+export class RecordPage {
   categories:string[] = [];
   currentCategory: string = "";
   newCategory: string = "";
