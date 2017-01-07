@@ -1,10 +1,10 @@
-import {NavController} from 'ionic-angular';
 import { Component } from '@angular/core';
-import { Dialogs } from 'ionic-native';
-import { DbHelper } from '../helper/db';
-import { TimeHelper} from '../helper/time';
-import { Extra } from '../helper/extra';
 import { Constant } from '../helper/constant'
+import { DbHelper } from '../helper/db';
+import { Dialogs } from 'ionic-native';
+import { Extra } from '../helper/extra';
+import { TimeHelper} from '../helper/time';
+import {NavController} from 'ionic-angular';
 
 @Component({
   selector: 'page-timer',
@@ -48,7 +48,6 @@ export class TimerPage {
   ionViewDidEnter() {
     let container = document.getElementsByClassName("main-timer-container")[0];
     this.width = container['offsetWidth'] + 'px';
-    //console.log('container', container, container['offsetWidth']);
   }
 
   formatDuration(milli){
@@ -133,24 +132,7 @@ export class TimerPage {
     this.refresh();
   }
 
-  //showDialog(){
-  //  let self = this;
-  //  Dialogs.prompt('Enter a title', 'New Record', ['Ok','Cancel'], '')
-  //    .then(function(result) {
-  //      var input = result.input1;
-  //      // no button = 0, 'OK' = 1, 'Cancel' = 2
-  //      var btnIndex = result.buttonIndex;
-  //
-  //      if(btnIndex === 1){
-  //        self.title = input;
-  //        self.start();
-  //      }
-  //    });
-  //}
-
   refresh(){
       this.records = this.dbHelper.get('records');
-
-      //this.width = container ? container.offsetWidth : '100px';
   }
 }

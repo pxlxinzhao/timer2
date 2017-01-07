@@ -1,13 +1,11 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { Dialogs } from 'ionic-native';
-import { PopoverController } from 'ionic-angular';
-import { DbHelper } from '../helper/db';
-import { TimeHelper} from '../helper/time';
-import { Extra } from '../helper/extra';
 import { CategoryPopover} from './category-popover'
-
-//import * as _ from 'underscore';
+import { Component } from '@angular/core';
+import { DbHelper } from '../helper/db';
+import { Dialogs } from 'ionic-native';
+import { Extra } from '../helper/extra';
+import { NavController } from 'ionic-angular';
+import { PopoverController } from 'ionic-angular';
+import { TimeHelper} from '../helper/time';
 
 @Component({
   selector: 'page-record',
@@ -46,9 +44,6 @@ export class RecordPage {
    * then functions are order by names
    */
   ionViewWillEnter() {
-    //this.extra.getEvent.subscribe( (switchToCategory) => {
-    //  console.log('got it');
-    //})
     this.refresh();
   }
 
@@ -74,37 +69,6 @@ export class RecordPage {
   /**
    * used to rename category
    */
-  //changeCategoryName(c){
-  //  let self = this;
-  //  let oldValue = c;
-  //  let newValue = this.categoryNames[c];
-  //
-  //  if (newValue){
-  //    //update category and records
-  //    let records = JSON.parse(window.localStorage['records']);
-  //    let categories = JSON.parse(window.localStorage['categories']);
-  //
-  //    for (let key in records){
-  //      if (records[key].category === oldValue) records[key].category = newValue;
-  //    }
-  //
-  //    for (let i=0; i<categories.length; i++){
-  //      if (categories[i] === oldValue) categories[i] = newValue;
-  //    }
-  //
-  //    window.localStorage['records'] = JSON.stringify(records);
-  //    window.localStorage['categories'] = JSON.stringify(categories);
-  //
-  //    this.currentCategory = newValue;
-  //  }
-  //
-  //  this.idForCategoryChanging = "";
-  //
-  //  setTimeout(() => {
-  //    self.refresh();
-  //  }, 1)
-  //}
-
   changeTitle(){
     this.dbHelper.update('records', this.newId, 'title', this.titles[this.newId]);
     this.newId = "";
