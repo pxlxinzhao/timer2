@@ -143,7 +143,7 @@ export class TimerPage {
        * docs.rows is an array list object, thus use keys pipe to loop
        */
       let records = this.pouch.getAsArray(docs);
-      records.sort((a, b) => b.doc.timestamp -  a.doc.timestamp);
+      records.sort((a, b) => b['doc'].timestamp -  a['doc'].timestamp);
       this.records = records;
     })
   }
