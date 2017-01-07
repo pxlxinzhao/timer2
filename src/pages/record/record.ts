@@ -1,10 +1,12 @@
 import { CategoryPopover} from './category-popover'
 import { Component } from '@angular/core';
+import { Constant } from '../helper/constant'
 import { DbHelper } from '../helper/db';
 import { Dialogs } from 'ionic-native';
 import { Extra } from '../helper/extra';
 import { NavController } from 'ionic-angular';
 import { PopoverController } from 'ionic-angular';
+import { Pouch } from  '../helper/pouch';
 import { TimeHelper} from '../helper/time';
 
 @Component({
@@ -26,9 +28,11 @@ export class RecordPage {
   isCounting: boolean = false;
 
   constructor(public navCtrl:NavController,
+              private constant: Constant,
               private dbHelper:DbHelper,
               private timeHelper:TimeHelper,
               private pop: PopoverController,
+              private pouch: Pouch,
               private extra: Extra) {
     this.dbHelper = dbHelper;
     this.timeHelper = timeHelper;
@@ -60,11 +64,11 @@ export class RecordPage {
   /**
    * used to show records of different category
    */
-  changeCategory(cat){
-
-    this.currentCategory = cat;
-    this.refresh();
-  }
+  //changeCategory(cat){
+  //  console.log('currentCategory', cat);
+  //  this.currentCategory = cat;
+  //  this.refresh();
+  //}
 
   /**
    * used to rename category
@@ -109,49 +113,81 @@ export class RecordPage {
   }
 
   refresh(){
-    if (window.localStorage['currentCategory']){
-      this.currentCategory = window.localStorage['currentCategory'];
-      // clear immediately because it should only be used once after
-      // clicking on home page record
-      window.localStorage['currentCategory'] = "";
+    /**
+     * setting up category
+     */
+    console.log('currentCategory1', this.currentCategory);
+
+    if (this.pouch.getLocal(this.constant.CATEGORY_SELECTED)){
+      console.log(1);
+      this.currentCategory = this.pouch.getLocal(this.constant.CATEGORY_SELECTED);
+      /**
+       * clear immediately because it should only be used once after
+       * clicking on home page record
+       */
+      this.pouch.setLocal(this.constant.CATEGORY_SELECTED, '');
+    }else if(this.currentCategory.length === 0 ){
+      console.log(2);
+
+      this.currentCategory = this.constant.CATEGORY_DEFAULT;
     }
 
-    if (window.localStorage['records']) {
-      let self = this;
-      let records = JSON.parse(window.localStorage['records']);
+    console.log('currentCategory2', this.currentCategory);
 
+    /**
+     * refresh records
+     */
+    this.pouch.getAll().then((docs) =>{
+      /**
+       * docs.rows is an array list object, thus use keys pipe to loop
+       */
+      let records = this.pouch.getAsArray(docs);
+      records.sort((a, b) => b['doc'].timestamp -  a['doc'].timestamp);
+      //this.records = records;
+
+      /**
+       * count each category has how many records
+       * @type {{}}
+       */
       this.categoryCount = {};
-
       for (let key in records){
         this.addToCategory(records[key])
       }
 
-      while(self.categories.length > 0){
-        self.categories.pop();
-      }
-
       /**
-       * get category from category table
+       * generate category drop down
        */
-      self.categories = JSON.parse(window.localStorage['categories']);
+      while(this.categories.length > 0){
+        this.categories.pop();
+      }
+      this.categories = JSON.parse(window.localStorage['categories']);
 
       /**
        * filter out record that does not belong the category
        */
-      for (let k in records){
-        if (records[k].category != self.currentCategory){
-          delete records[k];
-        }
-      }
+      //for (let k in records){
+      //  if (records[k].doc.category != this.currentCategory){
+      //    delete records[k];
+      //  }
+      //}
+
       this.records = records;
+
       this.calculateTotalTime(records);
-    }
+    })
+
+    //if (window.localStorage['records']) {
+    //  let self = this;
+    //  let records = JSON.parse(window.localStorage['records']);
+
+
+    //}
   }
 
   calculateTotalTime(records){
     let total = 0;
     for (let k in records){
-      total += records[k].duration;
+      total += records[k].doc.duration;
     }
     this.totalTime = total;
   }
@@ -173,10 +209,10 @@ export class RecordPage {
   }
 
   addToCategory(record){
-    if (typeof this.categoryCount[record.category] === 'undefined'){
-      this.categoryCount[record.category ] = 1;
+    if (typeof this.categoryCount[record.doc.category] === 'undefined'){
+      this.categoryCount[record.doc.category ] = 1;
     }else{
-      this.categoryCount[record.category ]++;
+      this.categoryCount[record.doc.category ]++;
     }
   }
 }

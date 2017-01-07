@@ -8,8 +8,8 @@
   <ion-toolbar>
     <ion-item>
       <ion-label>Choose category</ion-label>
-      <ion-select [(ngModel)]="currentCategory" (ionChange)="refresh()">
-      <ion-option *ngFor="let c of categories">{{c}}</ion-option>
+      <ion-select [(ngModel)]="currentCategory">
+      <ion-option value="{{c}}" *ngFor="let c of categories">{{c}}</ion-option>
       </ion-select>
     </ion-item>
   </ion-toolbar>
@@ -20,20 +20,11 @@
 
 <ion-content padding>
 
-  <!--<div class="bar bar-subheader bar-positive">-->
-    <!--<ion-item>-->
-      <!--<ion-label>Category</ion-label>-->
-      <!--<ion-select [(ngModel)]="currentCategory" (ionChange)="refresh()">-->
-        <!--<ion-option *ngFor="let c of categories">{{c}}</ion-option>-->
-      <!--</ion-select>-->
-    <!--</ion-item>-->
-  <!--</div>-->
-
-  <ion-card *ngFor="let key of records | keys">
+  <ion-card *ngFor="let key of records | keys" [hidden]="currentCategory !== records[key].doc.category">
     <!--<ion-card-title></ion-card-title>-->
     <ion-card-header>
       <span class="hoverable" (click)="setTitleKey(key)" [hidden]="idForTitleChanging === key">
-        {{records[key].title || "Default Title"}}
+        {{records[key].doc.title || "Default Title"}}
       </span>
 
       <input type="text" [hidden]="idForTitleChanging !== key"
@@ -53,13 +44,13 @@
     <ion-card-content>
       <div style= "margin: auto; text-align: center; font-size: 2rem">
         <strong>
-          {{formatDuration(records[key].duration)}}
+          {{formatDuration(records[key].doc.duration)}}
         </strong>
       </div>
 
       <div>
         <small class="right time-format">
-          {{key | dateFromMilli}}
+          {{records[key].doc.timestamp | dateFromMilli}}
         </small>
       </div>
     </ion-card-content>

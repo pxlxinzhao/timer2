@@ -116,7 +116,7 @@ export class TimerPage {
       timestamp: new Date().getTime()
     }
 
-    this.pouch.local(this.constant.CATEGORY_SEED, ++seed);
+    this.pouch.setLocal(this.constant.CATEGORY_SEED, ++seed);
 
     this.pouch.add(newRecord).then((response) => {
       this.refresh();
@@ -127,7 +127,7 @@ export class TimerPage {
     /**
      * recent record is used to change category of the about page
      */
-    this.pouch.local(this.constant.CATEGORY_SELECTED, cat);
+    this.pouch.setLocal(this.constant.CATEGORY_SELECTED, cat);
 
     this.extra.refresh();
     this.nav.parent.select(1);

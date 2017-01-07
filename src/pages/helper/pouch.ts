@@ -28,12 +28,12 @@ export class Pouch {
     return this._db.remove(record);
   }
 
-  local(id, value){
-    if (value){
-      window.localStorage[id] = value;
-    }else{
-      return window.localStorage[id];
-    }
+  setLocal(id, value){
+    window.localStorage[id] = value;
+  }
+
+  getLocal(id){
+    return window.localStorage[id];
   }
 
   /**
