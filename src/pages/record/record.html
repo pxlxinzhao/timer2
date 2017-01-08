@@ -22,7 +22,7 @@
 
   <ion-card *ngFor="let key of records | keys" [hidden]="currentCategory !== records[key].doc.category">
     <!--<ion-card-title></ion-card-title>-->
-    <ion-card-header>
+    <ion-card-header style="padding: 12px;">
       <span class="hoverable" (click)="openTitleDialog(records[key].id)">
         {{records[key].doc.title || "Default Title"}}
       </span>

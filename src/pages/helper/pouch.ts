@@ -75,7 +75,15 @@ export class Pouch {
       if (err) {
         return console.log(err);
       } else {
-        console.info('destroyed database, recreate one');
+        console.info('destroyed records database, recreate one');
+        self._db = new PouchDB('records', { adapter: 'websql' });
+      }
+    });
+    self._categroyDb.destroy(function (err, response) {
+      if (err) {
+        return console.log(err);
+      } else {
+        console.info('destroyed categories database, recreate one');
         self._db = new PouchDB('records', { adapter: 'websql' });
       }
     });
