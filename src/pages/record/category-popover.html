@@ -8,8 +8,8 @@
     <!--Change category-->
   <!--</ion-list-header>-->
 
-  <ion-item *ngFor="let c of categories" (click)="changeCategory(c)" class="hoverable">
-    <ion-label>{{c}}</ion-label>
+  <ion-item *ngFor="let c of categories" (click)="changeCategory(c.doc.name)" class="hoverable">
+    <ion-label>{{c.doc.name}}</ion-label>
   </ion-item>
 
 </ion-list>

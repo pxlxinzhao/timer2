@@ -2,6 +2,9 @@ import { ViewController } from 'ionic-angular/index';
 import { Component } from '@angular/core';
 import { DbHelper } from '../helper/db';
 import { Extra } from '../helper/extra';
+import { Constant } from '../helper/constant'
+import { Pouch } from  '../helper/pouch';
+
 
 //import * as _ from 'underscore';
 
@@ -12,19 +15,28 @@ import { Extra } from '../helper/extra';
 export class CategoryPopover {
     categories:string[] = [];
 
-    constructor(private dbHelper:DbHelper, private extra: Extra, private viewCtrl: ViewController){
-      this.categories = this.dbHelper.get('categories');
+    constructor(private dbHelper:DbHelper,
+                private extra: Extra,
+                private viewCtrl: ViewController,
+                private pouch: Pouch,
+                private constant: Constant){
+      this.pouch.getAllCategory().then((docs) =>{
+        this.categories = this.pouch.getAsArray(docs);
+      })
     }
 
-    changeCategory(value){
+    changeCategory(categoryName){
       /**
        * current record is used in about page for changing category
        * @type {any}
        */
-      let key = window.localStorage['currentRecord'];
-      this.dbHelper.update('records', key, 'category', value);
-      this.extra.refresh();
-      this.close();
+      let self = this;
+      let id = this.pouch.getLocal(this.constant.RECORD_SELECTED_TO_CHANGE_CATEGORY);
+
+      this.pouch.updateRecordCategory(id, categoryName, function(){
+        self.extra.refresh();
+        self.close();
+      })
     }
 
   close() {

@@ -34,6 +34,4 @@ export class DbHelper {
     window.localStorage[table] = JSON.stringify(records);
   }
 
-
-
 }

@@ -50,14 +50,13 @@ export class Pouch {
   }
 
   reset(){
-    this._db.destroy(function (err, response) {
+    let self = this;
+    self._db.destroy(function (err, response) {
       if (err) {
         return console.log(err);
       } else {
-        // success
         console.info('destroyed database, recreate one');
-
-        this._db = new PouchDB('records', { adapter: 'websql' });
+        self._db = new PouchDB('records', { adapter: 'websql' });
       }
     });
   }
@@ -65,11 +64,9 @@ export class Pouch {
   getAsArray(docs){
     let rows = docs['rows'];
     let records = [];
-
     for (var key in rows){
       records.push(rows[key]);
     }
-
     return records;
   }
 
@@ -81,14 +78,21 @@ export class Pouch {
     })
   }
 
+  deleteRecord(id, callback){
+    let self = this;
+    self._db.get(id, function(err, doc) {
+      if (err) { return console.log(err); }
+      self._db.remove(doc, function(err, response) {
+        if (err) { return console.log(err); }
+        if (callback) callback();
+      });
+    });
+  }
+
   deleteCategory(id, callback){
     let self = this;
-    console.log('deleting: ', id);
-
     self._categroyDb.get(id, function(err, doc) {
       if (err) { return console.log(err); }
-      console.log('getting', doc);
-
       self._categroyDb.remove(doc, function(err, response) {
         if (err) { return console.log(err); }
         if (callback) callback();
@@ -96,6 +100,13 @@ export class Pouch {
     });
   }
 
+  /**
+   * change category name in setting page
+   * @param newValue
+   * @param oldValue
+   * @param oldId
+   * @param callback
+   */
   updateCategory(newValue, oldValue, oldId, callback){
     if (!newValue || !oldId) return;
     let self = this;
@@ -108,6 +119,12 @@ export class Pouch {
     });
   }
 
+
+  /**
+   * change all records with old category to new category
+   * @param newValue
+   * @param oldValue
+   */
   updateRecordsCategory(newValue, oldValue){
     if (!newValue || !oldValue) return;
 
@@ -126,4 +143,62 @@ export class Pouch {
       }
     })
   }
+
+  /**
+   * update a single record's title
+   * @param id
+   * @param newTitle
+   * @param callback
+   */
+  updateRecordTitle(id, newTitle, callback){
+    if (!id || !newTitle) return;
+    let self = this;
+
+    self._db.get(id, function(err, doc){
+      if (err) {
+        console.error(err);
+      }else{
+        self._db.put({
+          _id: doc._id,
+          _rev: doc._rev,
+          title: newTitle,
+          category: doc.category,
+          duration: doc.duration,
+          timestamp: doc.timestamp
+        }, function(err, res){
+          if (err) console.log(err);
+          if (callback) callback();
+        })
+      }
+    })
+  }
+
+  /**
+   * change a single record's category
+   * @param id
+   * @param newCategory
+   */
+  updateRecordCategory(id, newCategory, callback){
+    if (!id || !newCategory) return;
+    let self = this;
+
+    self._db.get(id, function(err, doc){
+      if (err) {
+        console.error(err);
+      }else{
+        self._db.put({
+          _id: doc._id,
+          _rev: doc._rev,
+          title: doc.title,
+          category: newCategory,
+          duration: doc.duration,
+          timestamp: doc.timestamp
+        }, function(err, res){
+          if (err) console.log(err);
+          if (callback) callback();
+        })
+      }
+    })
+  }
+
 }

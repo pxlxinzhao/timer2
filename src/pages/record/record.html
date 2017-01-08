@@ -9,7 +9,7 @@
     <ion-item>
       <ion-label>Choose category</ion-label>
       <ion-select [(ngModel)]="currentCategory">
-      <ion-option value="{{c}}" *ngFor="let c of categories">{{c}}</ion-option>
+      <ion-option value="{{categories[key].doc.name}}" *ngFor="let key of categories | keys">{{categories[key].doc.name}}</ion-option>
       </ion-select>
     </ion-item>
   </ion-toolbar>
@@ -23,21 +23,21 @@
   <ion-card *ngFor="let key of records | keys" [hidden]="currentCategory !== records[key].doc.category">
     <!--<ion-card-title></ion-card-title>-->
     <ion-card-header>
-      <span class="hoverable" (click)="setTitleKey(key)" [hidden]="idForTitleChanging === key">
+      <span class="hoverable" (click)="setTitleId(records[key].id)" [hidden]="idForTitleChanging === records[key].id">
         {{records[key].doc.title || "Default Title"}}
       </span>
 
-      <input type="text" [hidden]="idForTitleChanging !== key"
-             [(ngModel)]="titles[key]" (focusout)="changeTitle()" (keyup.enter)="changeTitle()"
+      <input type="text" [hidden]="idForTitleChanging !== records[key].id"
+             [(ngModel)]="titles[records[key].id]" (focusout)="changeTitle()" (keyup.enter)="changeTitle()"
              style="width: 100px"
         />
 
        <span class="right hoverable" >
-        <ion-icon name="ios-remove-circle-outline" (click)="confirmDelete(key)"></ion-icon>
+        <ion-icon name="ios-remove-circle-outline" (click)="confirmDelete(records[key].id)"></ion-icon>
       </span>
 
        <span class="right hoverable" style="margin-right: 15px;">
-         <ion-icon name="ios-folder-open-outline" (click) = "presentPopover(key)"></ion-icon>
+         <ion-icon name="ios-folder-open-outline" (click) = "presentPopover(records[key].id)"></ion-icon>
       </span>
     </ion-card-header>
 

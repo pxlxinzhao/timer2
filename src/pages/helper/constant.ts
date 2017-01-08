@@ -7,6 +7,8 @@ export class Constant{
   TAB_RECORD: number = 1;
   TAB_SETTING: number = 2;
 
+  RECORD_SELECTED_TO_CHANGE_CATEGORY = "record_selected_to_change_category";
+
   constructor(){
 
   }
