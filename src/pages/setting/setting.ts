@@ -4,6 +4,7 @@ import { Pouch } from  '../helper/pouch';
 import { NavController } from 'ionic-angular';
 import { Dialogs } from 'ionic-native';
 import { Platform } from 'ionic-angular';
+import { Extra } from '../helper/extra';
 
 @Component({
   selector: 'page-setting',
@@ -13,7 +14,8 @@ export class SettingPage {
 
   constructor(public navCtrl: NavController,
   private pouch: Pouch,
-  private platform: Platform) {
+  private platform: Platform,
+  private extra: Extra) {
 
   }
 

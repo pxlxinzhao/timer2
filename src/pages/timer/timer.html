@@ -27,8 +27,14 @@
   <div>
     <ion-list>
       <button ion-item *ngFor="let key of records | keys" (click)="switchToCategory(records[key].doc.category)">
-
-          {{records[key].doc.title || 'Default title'}} -- {{formatDuration(records[key].doc.duration)}}
+        <div>
+          <div class="timer-record-title">
+            {{records[key].doc.title || 'Default title'}}
+          </div>
+          <div class="timer-record-time">
+            {{formatDuration(records[key].doc.duration)}}
+          </div>
+        </div>
 
       </button>
     </ion-list>

@@ -71,12 +71,16 @@ export class Pouch {
 
   reset(){
     let self = this;
+    let countdown = 1;
     self._db.destroy(function (err, response) {
       if (err) {
         return console.log(err);
       } else {
         console.info('destroyed records database, recreate one');
         self._db = new PouchDB('records', { adapter: 'websql' });
+        if (countdown-- == 0){
+          window.location.reload();
+        }
       }
     });
     self._categroyDb.destroy(function (err, response) {
@@ -85,8 +89,12 @@ export class Pouch {
       } else {
         console.info('destroyed categories database, recreate one');
         self._db = new PouchDB('records', { adapter: 'websql' });
+        if (countdown-- == 0){
+          window.location.reload();
+        }
       }
     });
+
   }
 
   getAsArray(docs){

@@ -26,7 +26,7 @@ export class RecordPage {
   records:any = {};
   selectedCategoryId: any = ""
   titles: any = {};
-  totalTime: any;
+  //totalTime: any;
   totalTimeByCategoryMap: any = {}
   totalCountByCategoryMap: any = {}
 
@@ -40,6 +40,7 @@ export class RecordPage {
               private platform: Platform) {
 
     this.pouch.setDefaultCategory();
+
     this.extra.getEvent.subscribe( (refresh) => {
       this.refresh();
     } );
@@ -136,6 +137,7 @@ export class RecordPage {
      * first try to use it from local storage which is passed from the timer page
      * else if not set use default category
      */
+
     if (this.pouch.getLocal(this.constant.CATEGORY_SELECTED)){
       this.currentCategory = this.pouch.getLocal(this.constant.CATEGORY_SELECTED);
       /**
