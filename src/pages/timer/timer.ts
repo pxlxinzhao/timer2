@@ -26,6 +26,8 @@ export class TimerPage {
   records: any = {};
 
   width: any;
+  greenButtonText: string = "";
+  redButtonText: string = "";
 
   constructor(
     private constant: Constant,
@@ -77,12 +79,16 @@ export class TimerPage {
       self.prevTime = self.currentTime;
       self.updateTimeCounter();
     }, 67)
+
+    this.setUpText();
   }
 
   pause(){
     this.isPaused = true;
     this.isCounting = false;
     clearInterval(this.interval);
+
+    this.setUpText();
   }
 
   setupDefault(){
@@ -108,6 +114,13 @@ export class TimerPage {
     this.timeElapsed = 0;
 
     this.updateTimeCounter();
+
+    this.setUpText();
+  }
+
+  setUpText(){
+    this.greenButtonText = this.isStarted &&  this.isPaused ? 'Resume' : 'Start';
+    this.redButtonText = this.isPaused ? 'Stop' : 'Pause';
   }
 
   storeRecords(){
@@ -142,6 +155,8 @@ export class TimerPage {
   }
 
   refresh(){
+    this.setUpText();
+
     this.pouch.getAll().then((docs) =>{
       /**
        * docs.rows is an array list object, thus use keys pipe to loop

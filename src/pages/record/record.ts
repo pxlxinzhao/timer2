@@ -17,15 +17,17 @@ import { Platform } from 'ionic-angular';
 })
 export class RecordPage {
   categories:string[] = [];
+  categoryCount: any = {}
+  categoryNames: any = {};
   currentCategory: string = "";
+  isCounting: boolean = false;
   newCategory: string = "";
   records:any = {};
-  titles: any = {};
-  categoryNames: any = {};
   selectedCategoryId: any = ""
-  categoryCount: any = {}
+  titles: any = {};
   totalTime: any;
-  isCounting: boolean = false;
+  totalTimeByCategoryMap: any = {}
+  totalCountByCategoryMap: any = {}
 
   constructor(public navCtrl:NavController,
               private constant: Constant,
@@ -156,18 +158,27 @@ export class RecordPage {
       records.sort((a, b) => b['doc'].timestamp -  a['doc'].timestamp);
 
       this.records = records;
-      this.calculateTotalTime(records);
+      this.calculateTotalTimeAndCountTotalRecords(records);
 
-      console.log('records', records);
+      //console.log('records', records);
     })
   }
 
-  calculateTotalTime(records){
-    let total = 0;
-    for (let k in records){
-      total += records[k].doc.duration;
-    }
-    this.totalTime = total;
-  }
+  calculateTotalTimeAndCountTotalRecords(records){
+    this.totalTimeByCategoryMap = {};
 
+    for (let k in records){
+      let record = records[k];
+      let duration = record.doc.duration;
+      let category = record.doc.category;
+
+      if (!this.totalTimeByCategoryMap[category]){
+        this.totalTimeByCategoryMap[category] = 0;
+        this.totalCountByCategoryMap[category] = 0;
+      }
+
+      this.totalTimeByCategoryMap[category] += duration;
+      this.totalCountByCategoryMap[category] ++;
+    }
+  }
 }

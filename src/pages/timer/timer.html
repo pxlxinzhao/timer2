@@ -10,12 +10,12 @@
 
     <ion-row style="text-align: center">
         <ion-col width-50>
-          <button ion-button round outline (click)="start()"
-            [disabled]="isStarted && !isPaused">Outline + Round</button>
+          <button ion-button round outline (click)="start()" class="main-button"
+            [disabled]="isStarted && !isPaused">{{greenButtonText}}</button>
         </ion-col>
       <ion-col width-50>
-        <button color="danger" ion-button round outline (click)="pauseOrStop()"
-                [disabled]="!isStarted">Outline + Round</button>
+        <button color="danger" ion-button round outline (click)="pauseOrStop()" class="main-button"
+                [disabled]="!isStarted">{{redButtonText}}</button>
       </ion-col>
     </ion-row>
 

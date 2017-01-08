@@ -39,21 +39,25 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
   text-align: center;
 }
 
+.main-button {
+  margin-top: 15px;
+  margin-bottom: 10px;
+  width: 100%;
+}
 
 .main-timer-container {
-   text-align: center;
-   font-size: 12vw;
-   color: #1c1c1c;
+  background-color: #fff;
+  border-radius: 10px;
+  color: #1c1c1c;
+  font-size: 12vw;
+  margin: auto;
   padding: 10px;
-   background-color: #fff;
-   //width: 60%;
-   //border-radius: 50%;
-   margin: auto;
+  text-align: center;
+  box-shadow: 1px 2px 5px #ddd;
  }
 
 .main-button-container{
   text-align: center;
-  //margin-top: 20px;
   display: inline-block;
   font-size: 2rem;
 }
@@ -86,6 +90,11 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
 
 .category-popover{
   padding: 10px;
+}
+
+.record-footer{
+  //box-shadow: 1px 2px 5px #ddd;
+  //background-color: white;
 }
 
 //settings
