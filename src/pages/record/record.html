@@ -27,20 +27,21 @@
         {{records[key].doc.title || "Default Title"}}
       </span>
 
-      <!--[hidden]="selectedCategoryId !== records[key].id"-->
-
-      <!--<input type="text"  hidden-->
-             <!--[(ngModel)]="titles[records[key].id]" (focusout)="changeTitle()" (keyup.enter)="changeTitle()"-->
-             <!--style="width: 100px"-->
-        <!--/>-->
-
        <span class="right hoverable" >
         <ion-icon name="ios-remove-circle-outline" (click)="confirmDelete(records[key].id)"></ion-icon>
       </span>
 
        <span class="right hoverable" style="margin-right: 15px;">
-         <ion-icon name="ios-folder-open-outline" (click) = "presentPopover(records[key].id)"></ion-icon>
+         <ion-icon name="ios-folder-open-outline" (click) = "showCategoryDropdown(records[key].id)"></ion-icon>
       </span>
+
+      <ion-item [hidden]="recordIdSelectedForCategoryChanging !== records[key].id">
+        <ion-label>Choose category</ion-label>
+        <ion-select [(ngModel)]="categoryByRecordIdMap[records[key].id]" (ionChange)="changeRecordCategory(records[key].id)">
+          <ion-option value="{{categories[key].doc.name}}" *ngFor="let key of categories | keys">{{categories[key].doc.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+
     </ion-card-header>
 
     <ion-card-content>

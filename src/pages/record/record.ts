@@ -1,4 +1,3 @@
-import { CategoryPopover} from './category-popover'
 import { Component } from '@angular/core';
 import { Constant } from '../helper/constant'
 import { DbHelper } from '../helper/db';
@@ -17,8 +16,10 @@ import { Platform } from 'ionic-angular';
 })
 export class RecordPage {
   categories:string[] = [];
+  categoryByRecordIdMap: any = {};
   categoryCount: any = {}
   categoryNames: any = {};
+  recordIdSelectedForCategoryChanging: any;
   currentCategory: string = "";
   isCounting: boolean = false;
   newCategory: string = "";
@@ -97,7 +98,6 @@ export class RecordPage {
           }
         })
     }
-
   }
 
   deleteRecord(id) {
@@ -112,11 +112,18 @@ export class RecordPage {
     return this.timeHelper.formatTime(milli);
   }
 
-  presentPopover(key) {
-    let popover = this.pop.create(CategoryPopover);
-    popover.present();
+  showCategoryDropdown(id) {
+    this.recordIdSelectedForCategoryChanging = id === this.recordIdSelectedForCategoryChanging ? '' : id;
+    this.pouch.setLocal(this.constant.RECORD_SELECTED_TO_CHANGE_CATEGORY, id);
+  }
 
-    this.pouch.setLocal(this.constant.RECORD_SELECTED_TO_CHANGE_CATEGORY, key);
+  changeRecordCategory(id){
+    let self = this;
+    let newValue = this.categoryByRecordIdMap[id];
+
+    this.pouch.updateRecordCategory(id, newValue, function(){
+      self.refresh();
+    })
   }
 
   setTitleId(id){
