@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import * as PouchDB from 'pouchdb';
+import { Constant } from '../helper/constant'
 
 @Injectable()
 export class Pouch {
   private _db;
   private _categroyDb;
 
-  constructor() {
+  constructor(private constant: Constant) {
     this._db = new PouchDB('records', { adapter: 'websql' });
     this._categroyDb = new PouchDB('categories', { adapter: 'websql' });
 
@@ -47,6 +48,25 @@ export class Pouch {
 
   getAllCategory() {
     return this._categroyDb.allDocs({ include_docs: true})
+  }
+
+  setDefaultCategory(){
+    this.getAllCategory().then((docs) => {
+      let hasDefault = false;
+      let categories = this.getAsArray(docs);
+
+      for (let i = 0; i<categories.length; i++){
+        let category = categories[i];
+        if (category.doc.name === this.constant.CATEGORY_DEFAULT){
+          hasDefault = true;
+          break;
+        }
+      }
+
+      if (!hasDefault){
+        this.addCategory(this.constant.CATEGORY_DEFAULT, null);
+      }
+    })
   }
 
   reset(){

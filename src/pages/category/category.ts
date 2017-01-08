@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Dialogs } from 'ionic-native';
 import { Pouch } from  '../helper/pouch';
+import { Platform } from 'ionic-angular';
+
 
 @Component({
   templateUrl: 'category.html'
@@ -14,7 +16,8 @@ export class CategoryPage {
 
   constructor(public navCtrl:NavController,
               public navParams:NavParams,
-            private pouch: Pouch) {
+              private pouch: Pouch,
+              private platform:Platform) {
     this.refresh();
   }
 
@@ -25,6 +28,11 @@ export class CategoryPage {
   }
 
   showCategoryDialog(){
+    if (this.platform.is('core')){
+      console.info('can only add record in real device');
+      return;
+    }
+    
     let self = this;
     Dialogs.prompt('Please enter a name', 'New category', ['Ok','Cancel'], '')
       .then(function(result) {
@@ -40,6 +48,7 @@ export class CategoryPage {
   }
 
   addCategory(input) {
+
     if (!input) return;
 
     this.pouch.addCategory(input, null);

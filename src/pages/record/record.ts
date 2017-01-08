@@ -8,6 +8,8 @@ import { NavController } from 'ionic-angular';
 import { PopoverController } from 'ionic-angular';
 import { Pouch } from  '../helper/pouch';
 import { TimeHelper} from '../helper/time';
+import { Platform } from 'ionic-angular';
+
 
 @Component({
   selector: 'page-record',
@@ -33,8 +35,10 @@ export class RecordPage {
               private timeHelper:TimeHelper,
               private pop: PopoverController,
               private pouch: Pouch,
-              private extra: Extra) {
+              private extra: Extra,
+              private platform: Platform) {
 
+    this.pouch.setDefaultCategory();
     this.extra.getEvent.subscribe( (refresh) => {
       this.refresh();
     } );
@@ -51,25 +55,65 @@ export class RecordPage {
   //  this.selectedCategoryId = cat;
   //}
 
-  changeTitle(){
+  changeTitle(id, value){
+    if (!value) return;
+
     let self = this;
 
-    self.pouch.updateRecordTitle(this.selectedCategoryId, this.titles[this.selectedCategoryId], function(){
-      self.selectedCategoryId = "";
+    self.pouch.updateRecordTitle(id, value, function(){
       self.refresh();
     })
+
+    //let self = this;
+    //let inputValue = this.titles[this.selectedCategoryId];
+    //
+    //if (this.titles[inputValue]){
+    //  self.pouch.updateRecordTitle(this.selectedCategoryId, inputValue, function(){
+    //    self.selectedCategoryId = "";
+    //    self.refresh();
+    //  })
+    //}else{
+    //  self.selectedCategoryId = "";
+    //}
+  }
+
+  openTitleDialog(id){
+    if (this.platform.is('core')){
+      console.info('can only change title in a real device');
+      return;
+    }
+
+    let self = this;
+
+    Dialogs.prompt('Please enter a new title', 'New title', ['Ok','Cancel'], '')
+      .then(function(result) {
+        let input = result.input1;
+        // no button = 0, 'OK' = 1, 'Cancel' = 2
+        let btnIndex = result.buttonIndex;
+
+        if(btnIndex === 1){
+          self.changeTitle(id, input);
+          self.refresh();
+        }
+      });
   }
 
   confirmDelete(id){
-    let self = this;
 
-    Dialogs.confirm('Are you sure you want to delete this record?', 'Delete record', ['Ok','Cancel'])
-      .then(function(result){
-        //ok is 1, cancel is 2
-        if (result === 1){
-          self.deleteRecord(id);
-        }
-      })
+    if (this.platform.is('core')){
+      this.deleteRecord(id);
+    }else{
+      let self = this;
+
+      Dialogs.confirm('Are you sure you want to delete this record?', 'Delete record', ['Ok','Cancel'])
+        .then(function(result){
+          //ok is 1, cancel is 2
+          if (result === 1){
+            self.deleteRecord(id);
+          }
+        })
+    }
+
   }
 
   deleteRecord(id) {

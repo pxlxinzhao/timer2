@@ -23,14 +23,16 @@
   <ion-card *ngFor="let key of records | keys" [hidden]="currentCategory !== records[key].doc.category">
     <!--<ion-card-title></ion-card-title>-->
     <ion-card-header>
-      <span class="hoverable" (click)="setTitleId(records[key].id)" [hidden]="idForTitleChanging === records[key].id">
+      <span class="hoverable" (click)="openTitleDialog(records[key].id)">
         {{records[key].doc.title || "Default Title"}}
       </span>
 
-      <input type="text" [hidden]="idForTitleChanging !== records[key].id"
-             [(ngModel)]="titles[records[key].id]" (focusout)="changeTitle()" (keyup.enter)="changeTitle()"
-             style="width: 100px"
-        />
+      <!--[hidden]="selectedCategoryId !== records[key].id"-->
+
+      <!--<input type="text"  hidden-->
+             <!--[(ngModel)]="titles[records[key].id]" (focusout)="changeTitle()" (keyup.enter)="changeTitle()"-->
+             <!--style="width: 100px"-->
+        <!--/>-->
 
        <span class="right hoverable" >
         <ion-icon name="ios-remove-circle-outline" (click)="confirmDelete(records[key].id)"></ion-icon>
