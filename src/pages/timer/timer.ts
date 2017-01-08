@@ -56,6 +56,14 @@ export class TimerPage {
     return this.timeHelper.formatTime(milli);
   }
 
+  pauseOrStop(){
+    if (this.isPaused){
+      this.stop();
+    }else{
+      this.pause();
+    }
+  }
+
   start(){
     this.prevTime = new Date().getTime();
     this.isCounting = true;
@@ -75,10 +83,6 @@ export class TimerPage {
     this.isPaused = true;
     this.isCounting = false;
     clearInterval(this.interval);
-  }
-
-  resume(){
-    this.start();
   }
 
   setupDefault(){

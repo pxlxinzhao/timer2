@@ -15,8 +15,17 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
-
 //general
+
+@font-face {
+  font-family: "SegoePrint";
+  src: url("../assets/fonts/SegoePrint.ttf");
+}
+
+body, span, button, h1, h2, h3, h4, h5, h6, div {
+  font-family: 'SegoePrint' !important;
+}
+
 .right {
   float: right;
 }
@@ -33,10 +42,10 @@
 
 .main-timer-container {
    text-align: center;
-   font-size: 14vw;
+   font-size: 12vw;
    color: #1c1c1c;
-  padding-top: 10px;
-   //background-color: rgba(0, 189, 0, 0.5);
+  padding: 10px;
+   background-color: #fff;
    //width: 60%;
    //border-radius: 50%;
    margin: auto;
@@ -44,7 +53,7 @@
 
 .main-button-container{
   text-align: center;
-  margin-top: 20px;
+  //margin-top: 20px;
   display: inline-block;
   font-size: 2rem;
 }

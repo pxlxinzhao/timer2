@@ -8,27 +8,17 @@
   <ion-toolbar>
     <div class="main-timer-container" >{{timeCounter}}</div>
 
-    <div class="buttons-row">
+    <ion-row style="text-align: center">
+        <ion-col width-50>
+          <button ion-button round outline (click)="start()"
+            [disabled]="isStarted && !isPaused">Outline + Round</button>
+        </ion-col>
+      <ion-col width-50>
+        <button color="danger" ion-button round outline (click)="pauseOrStop()"
+                [disabled]="!isStarted">Outline + Round</button>
+      </ion-col>
+    </ion-row>
 
-      <div class="main-button-container">
-        <button (click)="resume()" [disabled]="isCounting" ion-button icon-only clear>
-          <ion-icon name="ios-play-outline"></ion-icon>
-        </button>
-      </div>
-
-      <div class="main-button-container">
-        <button (click)="pause()" [disabled]="!isCounting" ion-button icon-only clear large>
-          <ion-icon name="ios-pause-outline"></ion-icon>
-        </button>
-      </div>
-
-      <div class="main-button-container">
-        <button (click)="stop()" [disabled]="!isStarted" ion-button icon-only clear>
-          <ion-icon name="ios-square-outline"></ion-icon>
-        </button>
-      </div>
-
-    </div>
   </ion-toolbar>
   </ion-header>
 

@@ -19,11 +19,9 @@ export class RecordPage {
   categories:string[] = [];
   currentCategory: string = "";
   newCategory: string = "";
-  //newId: string = "";
   records:any = {};
   titles: any = {};
   categoryNames: any = {};
-  //idForTitleChanging: any = ""
   selectedCategoryId: any = ""
   categoryCount: any = {}
   totalTime: any;
@@ -51,10 +49,6 @@ export class RecordPage {
     this.refresh();
   }
 
-  //selectCategory(cat){
-  //  this.selectedCategoryId = cat;
-  //}
-
   changeTitle(id, value){
     if (!value) return;
 
@@ -63,18 +57,6 @@ export class RecordPage {
     self.pouch.updateRecordTitle(id, value, function(){
       self.refresh();
     })
-
-    //let self = this;
-    //let inputValue = this.titles[this.selectedCategoryId];
-    //
-    //if (this.titles[inputValue]){
-    //  self.pouch.updateRecordTitle(this.selectedCategoryId, inputValue, function(){
-    //    self.selectedCategoryId = "";
-    //    self.refresh();
-    //  })
-    //}else{
-    //  self.selectedCategoryId = "";
-    //}
   }
 
   openTitleDialog(id){
