@@ -14,6 +14,7 @@ import { SettingPage } from '../pages/setting/setting';
 import { TabsPage } from '../pages/tabs/tabs';
 import { TimeHelper } from '../pages/helper/time';
 import { TimerPage } from '../pages/timer/timer';
+import { TipPage } from '../pages/tips/tip';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { TimerPage } from '../pages/timer/timer';
     SettingPage,
     TabsPage,
     TimerPage,
+    TipPage,
     MyApp
   ],
   imports: [
@@ -38,7 +40,8 @@ import { TimerPage } from '../pages/timer/timer';
     RecordPage,
     SettingPage,
     TabsPage,
-    TimerPage
+    TimerPage,
+    TipPage
   ],
   providers: [
     Constant,

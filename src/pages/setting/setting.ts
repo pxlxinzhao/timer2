@@ -1,4 +1,5 @@
 import { CategoryPage } from '../category/category'
+import { TipPage } from '../tips/tip'
 import { Component } from '@angular/core';
 import { Pouch } from  '../helper/pouch';
 import { NavController } from 'ionic-angular';
@@ -21,6 +22,10 @@ export class SettingPage {
 
   navigateToCategory(){
     this.navCtrl.push(CategoryPage)
+  }
+
+  navigateToTips(){
+    this.navCtrl.push(TipPage)
   }
 
   reset(){
