@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef, Renderer } from '@angular/core';
 import { Constant } from '../helper/constant'
 import { DbHelper } from '../helper/db';
 import { Dialogs } from 'ionic-native';
@@ -30,6 +30,8 @@ export class RecordPage {
   totalTimeByCategoryMap: any = {}
   totalCountByCategoryMap: any = {}
 
+  @ViewChild('categorySelect') categorySelect:ElementRef;
+
   constructor(public navCtrl:NavController,
               private constant: Constant,
               private dbHelper:DbHelper,
@@ -37,7 +39,8 @@ export class RecordPage {
               private pop: PopoverController,
               private pouch: Pouch,
               private extra: Extra,
-              private platform: Platform) {
+              private platform: Platform,
+              private renderer: Renderer) {
 
     this.pouch.setDefaultCategory();
 

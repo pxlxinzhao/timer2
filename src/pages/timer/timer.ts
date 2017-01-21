@@ -20,6 +20,7 @@ export class TimerPage {
   isStarted: boolean = false;
   timeElapsed: number = 0;
   title: string = "";
+  startTime: any;
 
   currentTime: number;
   prevTime: number;
@@ -67,6 +68,7 @@ export class TimerPage {
   }
 
   start(){
+    this.startTime = new Date().getTime();
     this.prevTime = new Date().getTime();
     this.isCounting = true;
     this.isPaused = false;
@@ -130,8 +132,11 @@ export class TimerPage {
       category: 'Uncategorized',
       duration: this.timeElapsed,
       title: 'Record ' + seed,
-      timestamp: new Date().getTime()
+      timestamp: new Date().getTime(),
+      startTime: this.startTime
     }
+
+    this.startTime = 0;
 
     this.pouch.setLocal(this.constant.CATEGORY_SEED, ++seed);
 

@@ -103,11 +103,17 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
   color: green;
 }
 
+.record-change-category-button {
+  position: absolute;
+  right: 10px;
+  top: 0px;
+}
+
 .category-title {
   display: inline-block;
   left: 15px;
   right: 80px;
-  bottom: 15px;
+  top: 15px;
   position: absolute;
   overflow: hidden;
   text-overflow: ellipsis;

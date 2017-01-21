@@ -9,7 +9,7 @@
     <ion-item>
       <ion-label>Choose category</ion-label>
       <ion-select [(ngModel)]="currentCategory">
-      <ion-option value="{{categories[key].doc.name}}" *ngFor="let key of categories | keys">{{categories[key].doc.name}}</ion-option>
+        <ion-option value="{{categories[key].doc.name}}" *ngFor="let key of categories | keys">{{categories[key].doc.name}}</ion-option>
       </ion-select>
     </ion-item>
   </ion-toolbar>
@@ -36,7 +36,7 @@
       </span>
 
       <ion-item [hidden]="recordIdSelectedForCategoryChanging !== records[key].id">
-        <ion-label>Choose category</ion-label>
+        <ion-label>Change category</ion-label>
         <ion-select [(ngModel)]="categoryByRecordIdMap[records[key].id]" (ionChange)="changeRecordCategory(records[key].id)">
           <ion-option value="{{categories[key].doc.name}}" *ngFor="let key of categories | keys">{{categories[key].doc.name}}</ion-option>
         </ion-select>
