@@ -41,8 +41,11 @@ export class RecordPage {
               private extra: Extra,
               private platform: Platform,
               private renderer: Renderer) {
-
+    /**
+     * for first time app started,insert into category table with default category
+     */
     this.pouch.setDefaultCategory();
+    this.currentCategory = this.pouch.getLocal(this.constant.CATEGORY_CURRENT) || this.constant.CATEGORY_DEFAULT;
 
     this.extra.getEvent.subscribe( (refresh) => {
       this.refresh();
@@ -172,8 +175,25 @@ export class RecordPage {
       this.records = records;
       this.calculateTotalTimeAndCountTotalRecords(records);
 
-      //console.log('records', records);
+      /**
+       * set value to the 'change category' select
+       */
+      for (let i=0; i<records.length; i++){
+        //console.log(records[i]);
+        this.categoryByRecordIdMap[records[i].id] = records[i].doc.category;
+      }
+
+      /**
+       * set current category for timer page
+       */
+      this.changeCurrentCategory();
+
+      this.recordIdSelectedForCategoryChanging = "";
     })
+  }
+
+  changeCurrentCategory(){
+    this.pouch.setLocal(this.constant.CATEGORY_CURRENT, this.currentCategory);
   }
 
   calculateTotalTimeAndCountTotalRecords(records){

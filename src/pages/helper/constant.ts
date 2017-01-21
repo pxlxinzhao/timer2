@@ -2,6 +2,7 @@ export class Constant{
   CATEGORY_SEED: string = "category_seed";
   CATEGORY_SELECTED: string = "category_selected";
   CATEGORY_DEFAULT = "Uncategorized";
+  CATEGORY_CURRENT = "currentCategory";
 
   TAB_TIMER: number = 0;
   TAB_RECORD: number = 1;

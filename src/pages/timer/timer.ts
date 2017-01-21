@@ -127,9 +127,10 @@ export class TimerPage {
 
   storeRecords(){
     let seed = parseInt(window.localStorage[this.constant.CATEGORY_SEED]);
+    let currentCategory = this.pouch.getLocal(this.constant.CATEGORY_CURRENT);
 
     let newRecord =  {
-      category: 'Uncategorized',
+      category: currentCategory || this.constant.CATEGORY_DEFAULT,
       duration: this.timeElapsed,
       title: 'Record ' + seed,
       timestamp: new Date().getTime(),

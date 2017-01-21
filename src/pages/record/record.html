@@ -2,13 +2,18 @@
   <ion-navbar>
     <ion-title>
       Records
+
+      <ion-icon name="ios-options-outline" class="right hoverable"></ion-icon>
+
     </ion-title>
+
+
   </ion-navbar>
 
   <ion-toolbar>
     <ion-item>
       <ion-label>Choose category</ion-label>
-      <ion-select [(ngModel)]="currentCategory">
+      <ion-select [(ngModel)]="currentCategory" (ionChange)="changeCurrentCategory()">
         <ion-option value="{{categories[key].doc.name}}" *ngFor="let key of categories | keys">{{categories[key].doc.name}}</ion-option>
       </ion-select>
     </ion-item>
@@ -28,11 +33,15 @@
       </div>
 
        <span class="right hoverable" >
-        <ion-icon name="ios-remove-circle-outline" (click)="confirmDelete(records[key].id)"></ion-icon>
+        <ion-icon name="ios-trash-outline" danger (click)="confirmDelete(records[key].id)"></ion-icon>
       </span>
 
-       <span class="right hoverable" style="margin-right: 15px;">
-         <ion-icon name="ios-folder-open-outline" (click) = "showCategoryDropdown(records[key].id)"></ion-icon>
+       <span class="right hoverable" style="margin-right: 15px;"  [hidden]="recordIdSelectedForCategoryChanging === records[key].id">
+         <ion-icon name="ios-arrow-down-outline" (click) = "showCategoryDropdown(records[key].id)"></ion-icon>
+      </span>
+
+       <span class="right hoverable" style="margin-right: 15px;"  [hidden]="recordIdSelectedForCategoryChanging !== records[key].id">
+         <ion-icon name="ios-arrow-up-outline" (click) = "showCategoryDropdown(records[key].id)"></ion-icon>
       </span>
 
       <ion-item [hidden]="recordIdSelectedForCategoryChanging !== records[key].id">
@@ -44,15 +53,19 @@
 
     </ion-card-header>
 
-    <ion-card-content>
+    <ion-card-content style="position: relative">
       <div style= "margin: auto; text-align: center; font-size: 2rem">
         <strong>
           {{formatDuration(records[key].doc.duration)}}
         </strong>
       </div>
 
-      <div>
-        <small class="right time-format">
+      <div style="height: 26px; padding-top: 4px;">
+        <small class="time-format" style="position: absolute; left: 8px; height: 16px;">
+          {{records[key].doc.startTime | dateFromMilli}}
+        </small>
+
+        <small class="time-format" style="position: absolute; right: 8px; height: 16px;">
           {{records[key].doc.timestamp | dateFromMilli}}
         </small>
       </div>
