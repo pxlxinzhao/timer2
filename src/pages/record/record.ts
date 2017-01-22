@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, Renderer } from '@angular/core';
+import { Component} from '@angular/core';
 import { Constant } from '../helper/constant'
 import { DbHelper } from '../helper/db';
 import { Dialogs } from 'ionic-native';
@@ -39,8 +39,7 @@ export class RecordPage {
               private pop: PopoverController,
               private pouch: Pouch,
               private extra: Extra,
-              private platform: Platform,
-              private renderer: Renderer) {
+              private platform: Platform) {
     /**
      * for first time app started,insert into category table with default category
      */

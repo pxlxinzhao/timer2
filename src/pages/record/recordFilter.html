@@ -1,1 +1,20 @@
-ASDFASFD
+<ion-content>
+
+  <ion-item>
+    <ion-label>From</ion-label>
+    <ion-datetime displayFormat="MM/DD/YY HH:mm" [(ngModel)]="fromDate"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>To</ion-label>
+    <ion-datetime displayFormat="MM/DD/YY HH:mm" [(ngModel)]="toDate"></ion-datetime>
+  </ion-item>
+
+
+  <div class="item" style="text-align: center">
+
+    <button ion-button round style="width: 98%">Apply</button>
+
+  </div>
+
+</ion-content>

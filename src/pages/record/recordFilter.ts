@@ -13,7 +13,9 @@ import { Pouch } from  '../helper/pouch';
     templateUrl: 'recordFilter.html'
 })
 export class RecordFilter {
-    categories:string[] = [];
+
+    fromDate: any;
+    toDate: any;
 
     constructor(private dbHelper:DbHelper,
                 private extra: Extra,
@@ -21,6 +23,7 @@ export class RecordFilter {
                 private pouch: Pouch,
                 private constant: Constant){
 
+      this.toDate = new Date().toISOString();
     }
 
 
