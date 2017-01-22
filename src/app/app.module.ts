@@ -1,5 +1,5 @@
 import { CategoryPage } from '../pages/category/category';
-import { CategoryPopover} from '../pages/record/category-popover'
+import { RecordFilter} from '../pages/record/recordFilter'
 import { Constant } from  '../pages/helper/constant';
 import { DatePipe } from '../pages/pipes/DatePipe';
 import { DbHelper } from '../pages/helper/db';
@@ -19,7 +19,7 @@ import { TipPage } from '../pages/tips/tip';
 @NgModule({
   declarations: [
     CategoryPage,
-    CategoryPopover,
+    RecordFilter,
     DatePipe,
     KeysPipe,
     RecordPage,
@@ -35,7 +35,7 @@ import { TipPage } from '../pages/tips/tip';
   bootstrap: [IonicApp],
   entryComponents: [
     CategoryPage,
-    CategoryPopover,
+    RecordFilter,
     MyApp,
     RecordPage,
     SettingPage,

@@ -2,10 +2,14 @@
   <ion-navbar>
     <ion-title>
       Records
-
-      <ion-icon name="ios-options-outline" class="right hoverable"></ion-icon>
-
+      <!--<ion-icon name="ios-options-outline" class="right hoverable" (click)="presentPopover($event)"></ion-icon>-->
     </ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="presentPopover($event)">
+        <ion-icon name="ios-options-outline"></ion-icon>
+      </button>
+    </ion-buttons>
 
 
   </ion-navbar>

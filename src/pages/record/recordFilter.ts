@@ -10,9 +10,9 @@ import { Pouch } from  '../helper/pouch';
 
 @Component({
     selector: 'page-popover',
-    templateUrl: 'category-popover.html'
+    templateUrl: 'recordFilter.html'
 })
-export class CategoryPopover {
+export class RecordFilter {
     categories:string[] = [];
 
     constructor(private dbHelper:DbHelper,
@@ -20,24 +20,9 @@ export class CategoryPopover {
                 private viewCtrl: ViewController,
                 private pouch: Pouch,
                 private constant: Constant){
-      this.pouch.getAllCategory().then((docs) =>{
-        this.categories = this.pouch.getAsArray(docs);
-      })
+
     }
 
-    changeCategory(categoryName){
-      /**
-       * current record is used in about page for changing category
-       * @type {any}
-       */
-      let self = this;
-      let id = this.pouch.getLocal(this.constant.RECORD_SELECTED_TO_CHANGE_CATEGORY);
-
-      this.pouch.updateRecordCategory(id, categoryName, function(){
-        self.extra.refresh();
-        self.close();
-      })
-    }
 
   close() {
     this.viewCtrl.dismiss();

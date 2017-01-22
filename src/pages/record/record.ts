@@ -8,7 +8,7 @@ import { PopoverController } from 'ionic-angular';
 import { Pouch } from  '../helper/pouch';
 import { TimeHelper} from '../helper/time';
 import { Platform } from 'ionic-angular';
-
+import {RecordFilter} from './recordFilter'
 
 @Component({
   selector: 'page-record',
@@ -30,7 +30,7 @@ export class RecordPage {
   totalTimeByCategoryMap: any = {}
   totalCountByCategoryMap: any = {}
 
-  @ViewChild('categorySelect') categorySelect:ElementRef;
+  //@ViewChild('categorySelect') categorySelect:ElementRef;
 
   constructor(public navCtrl:NavController,
               private constant: Constant,
@@ -212,5 +212,12 @@ export class RecordPage {
       this.totalTimeByCategoryMap[category] += duration;
       this.totalCountByCategoryMap[category] ++;
     }
+  }
+
+  presentPopover(myEvent) {
+    let popover = this.pop.create(RecordFilter);
+    popover.present({
+      ev: myEvent
+    })
   }
 }
