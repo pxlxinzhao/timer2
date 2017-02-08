@@ -25,8 +25,8 @@ export class RecordFilter {
 
       let timezoneOffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
       let localISOTime = (new Date(Date.now() - timezoneOffset)).toISOString();
-      this.fromDate = localISOTime;
-      this.toDate = localISOTime;
+      this.fromDate = this.pouch.getLocal('fromDate') || localISOTime;
+      this.toDate = this.pouch.getLocal('toDate') || localISOTime;
     }
 
   apply(){

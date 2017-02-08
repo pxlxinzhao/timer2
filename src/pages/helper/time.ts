@@ -25,7 +25,7 @@ export class TimeHelper{
       this.prependZeros();
     }
 
-    return this.hours + ":" + this.minutes + ":" + this.seconds + ":" + this.milliseconds;
+    return this.hours + ":" + this.minutes + ":" + this.seconds// + ":" + this.milliseconds;
   }
 
   prependZeros(){

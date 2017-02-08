@@ -13,7 +13,7 @@ import { TimeHelper} from '../helper/time';
 })
 export class TimerPage {
   interval: any = null;
-  timeCounter: string = "00:00:00:000";
+  timeCounter: string = "00:00:00";
 
   isCounting: boolean = false;
   isPaused: boolean = false;
@@ -80,7 +80,7 @@ export class TimerPage {
       self.timeElapsed += (self.currentTime - self.prevTime);
       self.prevTime = self.currentTime;
       self.updateTimeCounter();
-    }, 10)
+    }, 500)
 
     this.setUpText();
   }
