@@ -6,7 +6,7 @@
     </ion-title>
 
     <ion-buttons end>
-      <button ion-button icon-only (click)="presentPopover($event)">
+      <button ion-button icon-only (click)="presentPopover($event)" [ngClass]="{'green': isFiltered}">
         <ion-icon name="ios-options-outline"></ion-icon>
       </button>
     </ion-buttons>
@@ -80,7 +80,7 @@
 
 <ion-footer>
   <ion-toolbar>
-    <div class="record-footer">
+    <div [ngClass]="{'record-footer': true, 'green': isFiltered}">
       Total time: {{formatDuration(totalTimeByCategoryMap[currentCategory])}}
       <span style="float: right">{{this.totalCountByCategoryMap[currentCategory] || 0}} records</span>
     </div>

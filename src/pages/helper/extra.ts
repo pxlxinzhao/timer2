@@ -21,6 +21,14 @@ export class Extra {
     }
   }
 
+  public refreshWithDate(data: any){
+    if (this.getEventObserver){
+      this.getEventObserver.next(data);
+    }
+  }
+
+
+
   //public switchToCategory(){
   //  if (this.getEventObserver){
   //    this.getEventObserver.next();

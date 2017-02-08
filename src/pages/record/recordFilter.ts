@@ -23,9 +23,22 @@ export class RecordFilter {
                 private pouch: Pouch,
                 private constant: Constant){
 
-      this.toDate = new Date().toISOString();
+      let timezoneOffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+      let localISOTime = (new Date(Date.now() - timezoneOffset)).toISOString();
+      this.fromDate = localISOTime;
+      this.toDate = localISOTime;
     }
 
+  apply(){
+    this.extra.refreshWithDate({
+      fromDate: this.fromDate,
+      toDate: this.toDate
+    });
+
+    this.pouch.setLocal('fromDate', this.fromDate);
+    this.pouch.setLocal('toDate', this.toDate);
+    this.close();
+  }
 
   close() {
     this.viewCtrl.dismiss();

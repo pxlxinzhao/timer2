@@ -30,6 +30,10 @@ export class RecordPage {
   totalTimeByCategoryMap: any = {}
   totalCountByCategoryMap: any = {}
 
+  fromDate: Date;
+  toDate: Date;
+  isFiltered: boolean = false;
+
   //@ViewChild('categorySelect') categorySelect:ElementRef;
 
   constructor(public navCtrl:NavController,
@@ -49,6 +53,14 @@ export class RecordPage {
     this.extra.getEvent.subscribe( (refresh) => {
       this.refresh();
     } );
+
+    this.extra.getEvent.subscribe((refreshWithDate) => {
+      console.log('here');
+
+      this.fromDate = refreshWithDate.fromDate ? new Date(refreshWithDate.fromDate) : null;
+      this.toDate = refreshWithDate.toDate ? new Date(refreshWithDate.toDate) : null;
+      this.refresh();
+    })
   }
 
   /**
@@ -137,11 +149,13 @@ export class RecordPage {
   }
 
   refresh(){
+    this.isFiltered = false;
     /**
      * set up current category
      * first try to use it from local storage which is passed from the timer page
      * else if not set use default category
      */
+    let self = this;
 
     if (this.pouch.getLocal(this.constant.CATEGORY_SELECTED)){
       this.currentCategory = this.pouch.getLocal(this.constant.CATEGORY_SELECTED);
@@ -169,7 +183,27 @@ export class RecordPage {
        * docs.rows is an array like object, thus use keys pipe to loop
        */
       let records = this.pouch.getAsArray(docs);
+
+      /**
+       * sort by time
+       */
       records.sort((a, b) => b['doc'].timestamp -  a['doc'].timestamp);
+
+      /**
+       * use date filter
+       */
+      if (this.fromDate || this.toDate){
+        this.isFiltered = true;
+        let timezoneOffset = (new Date()).getTimezoneOffset() * 60000;
+
+        records =  records.filter(function(it){
+          let startTime = it['doc'].startTime;
+          let endTime = it['doc'].timestamp;
+
+          return (!self.fromDate || startTime - timezoneOffset >= self.fromDate.getTime())
+            && (!self.toDate || endTime - timezoneOffset<= self.toDate.getTime());
+        })
+      }
 
       this.records = records;
       this.calculateTotalTimeAndCountTotalRecords(records);
