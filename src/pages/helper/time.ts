@@ -14,13 +14,13 @@ export class TimeHelper{
     this.hours = "00"
     this.minutes = "00";
     this.seconds = "00";
-    this.milliseconds = "000";
+    this.milliseconds = "00";
 
     if (milliseconds){
       this.hours = Math.floor(milliseconds/3600000).toString();
       this.minutes = Math.floor(milliseconds%3600000/60000).toString();
       this.seconds = Math.floor(milliseconds%60000/1000).toString();
-      this.milliseconds = (milliseconds%1000).toString();
+      this.milliseconds = Math.floor((milliseconds%1000)/10).toString();
 
       this.prependZeros();
     }
@@ -32,7 +32,7 @@ export class TimeHelper{
     this.hours = this.prependZero(this.hours, 2);
     this.minutes = this.prependZero(this.minutes, 2);
     this.seconds = this.prependZero(this.seconds, 2);
-    this.milliseconds = this.prependZero(this.milliseconds, 3);
+    this.milliseconds = this.prependZero(this.milliseconds, 2);
   }
 
   prependZero(it, totalDigits){

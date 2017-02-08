@@ -80,7 +80,7 @@ export class TimerPage {
       self.timeElapsed += (self.currentTime - self.prevTime);
       self.prevTime = self.currentTime;
       self.updateTimeCounter();
-    }, 67)
+    }, 10)
 
     this.setUpText();
   }
