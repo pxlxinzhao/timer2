@@ -253,4 +253,10 @@ export class RecordPage {
       ev: myEvent
     })
   }
+
+  clearFilter(){
+    this.fromDate = null;
+    this.toDate = null;
+    this.refresh();
+  }
 }
