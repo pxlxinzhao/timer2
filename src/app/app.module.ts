@@ -9,6 +9,7 @@ import { IonicApp, IonicModule } from 'ionic-angular';
 import { KeysPipe } from '../pages/pipes/keysPipe';
 import { MyApp } from './app.component';
 import { NgModule } from '@angular/core';
+import { NgCalendarModule  } from 'ionic2-calendar';
 import { Pouch } from '../pages/helper/pouch'
 import { RecordPage } from '../pages/record/record';
 import { SettingPage } from '../pages/setting/setting';
@@ -32,6 +33,7 @@ import { TipPage } from '../pages/tips/tip';
     MyApp
   ],
   imports: [
+    NgCalendarModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
