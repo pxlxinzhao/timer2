@@ -38,5 +38,10 @@
 
       </button>
     </ion-list>
+
+    <div class="item" style="text-align: center" [hidden]="!hasMoreRecords">
+      <button ion-button round (click)="showMore()" style="width: 98%">Show more</button>
+    </div>
+
   </div>
 </ion-content>

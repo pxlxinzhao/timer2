@@ -25,6 +25,7 @@ export class TimerPage {
   currentTime: number;
   prevTime: number;
   records: any = {};
+  hasMoreRecords: boolean = false;
 
   width: any;
   greenButtonText: string = "";
@@ -156,6 +157,10 @@ export class TimerPage {
     this.nav.parent.select(1);
   }
 
+  showMore(){
+    this.nav.parent.select(1);
+  }
+
   updateTimeCounter() {
     this.timeCounter = this.timeHelper.formatTime(this.timeElapsed);
   }
@@ -169,6 +174,14 @@ export class TimerPage {
        */
       let records = this.pouch.getAsArray(docs);
       records.sort((a, b) => b['doc'].timestamp -  a['doc'].timestamp);
+
+      if (records.length > 10){
+        this.hasMoreRecords = true;
+      }else{
+        this.hasMoreRecords = false;
+      }
+
+      records = records.slice(0, 10);
       this.records = records;
     })
   }
