@@ -1,4 +1,5 @@
 import { CategoryPage } from '../pages/category/category';
+import { CalendarPage } from '../pages/calendar/calendar'
 import { RecordFilter} from '../pages/record/recordFilter'
 import { Constant } from  '../pages/helper/constant';
 import { DatePipe } from '../pages/pipes/DatePipe';
@@ -19,6 +20,7 @@ import { TipPage } from '../pages/tips/tip';
 @NgModule({
   declarations: [
     CategoryPage,
+    CalendarPage,
     RecordFilter,
     DatePipe,
     KeysPipe,
@@ -35,6 +37,7 @@ import { TipPage } from '../pages/tips/tip';
   bootstrap: [IonicApp],
   entryComponents: [
     CategoryPage,
+    CalendarPage,
     RecordFilter,
     MyApp,
     RecordPage,

@@ -1,3 +1,4 @@
+import { CalendarPage } from '../calendar/calendar'
 import { Component} from '@angular/core';
 import { Constant } from '../helper/constant'
 import { DbHelper } from '../helper/db';
@@ -258,5 +259,9 @@ export class RecordPage {
     this.fromDate = null;
     this.toDate = null;
     this.refresh();
+  }
+
+  switchToCalendar(){
+    this.navCtrl.push(CalendarPage);
   }
 }
