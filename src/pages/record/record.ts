@@ -205,6 +205,10 @@ export class RecordPage {
             && (!self.toDate || endTime - timezoneOffset<= self.toDate.getTime());
         })
       }
+      /**
+       * cache records to be used in the calendar page
+       */
+      this.pouch.setLocal("records", JSON.stringify(records));
 
       this.records = records;
       this.calculateTotalTimeAndCountTotalRecords(records);
