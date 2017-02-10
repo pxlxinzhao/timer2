@@ -134,8 +134,7 @@ export class TimerPage {
       category: currentCategory || this.constant.CATEGORY_DEFAULT,
       duration: this.timeElapsed,
       title: 'Record ' + seed,
-      timestamp: new Date().getTime(),
-      startTime: this.startTime
+      timestamp: this.startTime
     }
 
     this.startTime = 0;

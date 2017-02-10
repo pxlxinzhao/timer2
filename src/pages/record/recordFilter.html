@@ -10,11 +10,18 @@
     <ion-datetime displayFormat="MM/DD/YY HH:mm" [(ngModel)]="toDate"></ion-datetime>
   </ion-item>
 
+  <ion-item>
+    <button ion-button round style="width: 98%" (click)="apply()" style="text-align: center">Apply</button>
+  </ion-item>
 
-  <div class="item" style="text-align: center">
+  <ion-item>
+    <ion-label fixed>Records</ion-label>
+    <ion-input type="text" value="{{totalCount}}" style="text-align: right;" disabled></ion-input>
+  </ion-item>
 
-    <button ion-button round style="width: 98%" (click)="apply()">Apply</button>
-
-  </div>
+  <ion-item>
+    <ion-label fixed>Total time</ion-label>
+    <ion-input type="text" value="{{formatDuration(totalTime)}}" style="text-align: right;" disabled></ion-input>
+  </ion-item>
 
 </ion-content>

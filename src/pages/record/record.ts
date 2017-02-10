@@ -246,6 +246,9 @@ export class RecordPage {
       this.totalTimeByCategoryMap[category] += duration;
       this.totalCountByCategoryMap[category] ++;
     }
+
+    this.pouch.setLocal("totalTime", this.totalTimeByCategoryMap[this.currentCategory]);
+    this.pouch.setLocal("totalCount", this.totalCountByCategoryMap[this.currentCategory]);
   }
 
   presentPopover(myEvent) {

@@ -1,6 +1,7 @@
 import { ViewController } from 'ionic-angular/index';
 import { Component } from '@angular/core';
 import { DbHelper } from '../helper/db';
+import { TimeHelper } from '../helper/time';
 import { Extra } from '../helper/extra';
 import { Constant } from '../helper/constant'
 import { Pouch } from  '../helper/pouch';
@@ -16,8 +17,11 @@ export class RecordFilter {
 
     fromDate: any;
     toDate: any;
+    totalTime: any;
+    totalCount: any;
 
     constructor(private dbHelper:DbHelper,
+                private timeHelper: TimeHelper,
                 private extra: Extra,
                 private viewCtrl: ViewController,
                 private pouch: Pouch,
@@ -27,6 +31,8 @@ export class RecordFilter {
       let localISOTime = (new Date(Date.now() - timezoneOffset)).toISOString();
       this.fromDate = this.pouch.getLocal('fromDate') || localISOTime;
       this.toDate = this.pouch.getLocal('toDate') || localISOTime;
+      this.totalTime = this.pouch.getLocal('totalTime');
+      this.totalCount = this.pouch.getLocal('totalCount');
     }
 
   apply(){
@@ -42,5 +48,9 @@ export class RecordFilter {
 
   close() {
     this.viewCtrl.dismiss();
+  }
+
+  formatDuration(milli){
+    return this.timeHelper.formatTime(milli);
   }
 }
