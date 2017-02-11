@@ -19,7 +19,7 @@
 
   <ion-item>
     <ion-label fixed>Total time</ion-label>
-    <ion-input type="text" value="{{formatDuration(totalTime)}}" class="right-align-ion-input" readonly></ion-input>
+    <ion-input type="text" value="{{totalTime | duration}}" class="right-align-ion-input" readonly></ion-input>
   </ion-item>
 
 </ion-content>

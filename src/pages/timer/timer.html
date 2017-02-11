@@ -6,7 +6,7 @@
   </ion-navbar>
 
   <ion-toolbar>
-    <div class="main-timer-container" >{{timeCounter}}</div>
+    <div class="main-timer-container" >{{timeElapsed | duration}}</div>
 
     <ion-row style="text-align: center">
         <ion-col width-50>
@@ -32,7 +32,7 @@
             {{records[key].doc.title || 'Default title'}}
           </div>
           <div class="timer-record-time">
-            {{formatDuration(records[key].doc.duration)}}
+            {{records[key].doc.duration | duration}}
           </div>
         </div>
 

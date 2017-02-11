@@ -19,10 +19,10 @@ export class DurationPipe implements PipeTransform {
   }
 
   prependZero(it, totalDigits){
-    if (it.length === totalDigits){
-      return it;
-    }else if (it.length <= totalDigits){
-      return this.prependZero("0" + it, totalDigits);
+    if (it.length < totalDigits){
+      return this.prependZero("0".repeat(totalDigits - it.length) + it, totalDigits);
+    }else{
+      return it
     }
   }
 }

@@ -49,8 +49,4 @@ export class RecordFilter {
   close() {
     this.viewCtrl.dismiss();
   }
-
-  formatDuration(milli){
-    return this.timeHelper.formatTime(milli);
-  }
 }

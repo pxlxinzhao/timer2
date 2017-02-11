@@ -29,11 +29,11 @@
 
 <ion-content padding>
 
-  <div *ngFor="let key of records | keys">
-
-    <div style="text-align: center; padding-top: 20px;">
-
-      {{records[key].doc.timestamp | dateFromMilli}}
+  <div *ngFor="let key of records | keys; let i = index;">
+    <div *ngIf="records[key].doc.onNewDate" style="text-align: center;" [ngClass]="{'extra-top-padding': i > 0}">
+      <ion-chip>
+        <ion-label>{{records[key].doc.timestamp | dateFromMilli}}</ion-label>
+      </ion-chip>
     </div>
 
 
@@ -69,7 +69,7 @@
       <ion-card-content style="position: relative">
         <div style= "margin: auto; text-align: center; font-size: 2rem">
           <strong>
-            {{formatDuration(records[key].doc.duration)}}
+            {{records[key].doc.duration | duration}}
           </strong>
         </div>
 

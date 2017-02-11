@@ -53,6 +53,10 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
   text-align: end;
 }
 
+.chip-md {
+  background-color: rgba(0, 0, 0, 0.06);
+}
+
 // timer page
 .buttons-row{
   text-align: center;
@@ -151,6 +155,10 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
 .record-footer{
   //box-shadow: 1px 2px 5px #ddd;
   //background-color: white;
+}
+
+.extra-top-padding {
+  padding-top: 40px;
 }
 
 //settings

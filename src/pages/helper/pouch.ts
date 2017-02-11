@@ -72,6 +72,18 @@ export class Pouch {
   reset(){
     let self = this;
     let countdown = 1;
+
+    this.setLocal(this.constant.RECORD_SELECTED_TO_CHANGE_CATEGORY, '');
+    this.setLocal(this.constant.CATEGORY_SELECTED, '');
+    this.setLocal(this.constant.CATEGORY_CURRENT, '');
+    this.setLocal(this.constant.CATEGORY_SEED, 1);
+
+    this.setLocal("records", '');
+    this.setLocal("totalTime", '');
+    this.setLocal("totalCount",'');
+    this.setLocal('fromDate', '');
+    this.setLocal('toDate', '');
+
     self._db.destroy(function (err, response) {
       if (err) {
         return console.log(err);

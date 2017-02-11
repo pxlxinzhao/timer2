@@ -57,9 +57,10 @@ export class RecordPage {
 
     this.extra.getEvent.subscribe((refreshWithDate) => {
       //console.log('here');
-
-      this.fromDate = refreshWithDate.fromDate ? new Date(refreshWithDate.fromDate) : null;
-      this.toDate = refreshWithDate.toDate ? new Date(refreshWithDate.toDate) : null;
+      if (refreshWithDate){
+        this.fromDate = refreshWithDate.fromDate ? refreshWithDate.fromDate : null;
+        this.toDate = refreshWithDate.toDate ? refreshWithDate.toDate : null;
+      }
       this.refresh();
     })
   }
@@ -127,10 +128,6 @@ export class RecordPage {
     })
   }
 
-  formatDuration(milli){
-    return this.timeHelper.formatTime(milli);
-  }
-
   showCategoryDropdown(id) {
     this.recordIdSelectedForCategoryChanging = id === this.recordIdSelectedForCategoryChanging ? '' : id;
     this.pouch.setLocal(this.constant.RECORD_SELECTED_TO_CHANGE_CATEGORY, id);
@@ -195,20 +192,51 @@ export class RecordPage {
        */
       if (this.fromDate || this.toDate){
         this.isFiltered = true;
-        let timezoneOffset = (new Date()).getTimezoneOffset() * 60000;
-
         records =  records.filter(function(it){
-          let startTime = it['doc'].startTime;
-          let endTime = it['doc'].timestamp;
+          let time = it['doc'].timestamp;
 
-          return (!self.fromDate || startTime - timezoneOffset >= self.fromDate.getTime())
-            && (!self.toDate || endTime - timezoneOffset<= self.toDate.getTime());
+          /**
+           * here we have some weird time zone issue
+           * when reading a plain text, it considers it as a ISO time.
+           * we need to do the mannul time zone conversion
+           */
+
+          return (!self.fromDate || self.timeHelper.justDate(time) >= self.timeHelper.convertISOStringToLocalMilliseconds(self.fromDate))
+            && (!self.toDate || self.timeHelper.justDate(time)<= self.timeHelper.convertISOStringToLocalMilliseconds(self.toDate));
         })
       }
       /**
        * cache records to be used in the calendar page
        */
       this.pouch.setLocal("records", JSON.stringify(records));
+
+      /**
+       * calculate if a record is on a new date
+       * @type {Array}
+       */
+      for (let j=0; j<records.length; j++){
+        if (j==0) {
+          records[j].doc.onNewDate = true;;
+          continue;
+        }
+
+        let thisDate = this.timeHelper.justDate(records[j].doc.timestamp);
+        let prevDate = this.timeHelper.justDate(records[j-1].doc.timestamp);
+
+        console.log('thisDate', new Date(thisDate).toLocaleDateString());
+        console.log('prevDate', new Date(prevDate).toLocaleDateString());
+        console.log(thisDate == prevDate);
+
+        //console.log(this);
+
+        if (thisDate == prevDate){
+          records[j].doc.onNewDate = false;
+        }else{
+          records[j].doc.onNewDate = true;
+        }
+      }
+
+      //console.log('records', records);
 
       this.records = records;
 
@@ -252,14 +280,14 @@ export class RecordPage {
       this.totalCountByCategoryMap[category] ++;
     }
 
-    let totalTime = this.totalTimeByCategoryMap[this.currentCategory].toString();
-    let totalCount = this.totalCountByCategoryMap[this.currentCategory].toString();
+    if (this.totalTimeByCategoryMap[this.currentCategory] && this.totalCountByCategoryMap[this.currentCategory]){
+      let totalTime = this.totalTimeByCategoryMap[this.currentCategory].toString();
+      let totalCount = this.totalCountByCategoryMap[this.currentCategory].toString();
 
-    this.pouch.setLocal("totalTime", totalTime);
-    this.pouch.setLocal("totalCount",totalCount);
+      this.pouch.setLocal("totalTime", totalTime);
+      this.pouch.setLocal("totalCount",totalCount);
+    }
 
-    //console.log("totalTime", totalTime);
-    //console.log("totalCount", totalCount);
   }
 
   presentPopover(myEvent) {

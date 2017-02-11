@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
 import { Constant } from '../helper/constant'
-import { DbHelper } from '../helper/db';
-//import { Dialogs } from 'ionic-native';
 import { Extra } from '../helper/extra';
 import { NavController } from 'ionic-angular';
 import { Pouch } from  '../helper/pouch';
-import { TimeHelper} from '../helper/time';
 
 @Component({
   selector: 'page-timer',
@@ -13,7 +10,7 @@ import { TimeHelper} from '../helper/time';
 })
 export class TimerPage {
   interval: any = null;
-  timeCounter: string = "00:00:00";
+  //timeCounter: string = "0";
 
   isCounting: boolean = false;
   isPaused: boolean = false;
@@ -33,14 +30,11 @@ export class TimerPage {
 
   constructor(
     private constant: Constant,
-    private dbHelper: DbHelper,
     private extra: Extra,
     private nav: NavController,
-    private pouch: Pouch,
-    private timeHelper: TimeHelper
+    private pouch: Pouch
   ) {
     this.setupDefault();
-    //this.refresh();
 
     if (!window.localStorage[this.constant.CATEGORY_SEED]){
       window.localStorage[this.constant.CATEGORY_SEED] = 1;
@@ -54,10 +48,6 @@ export class TimerPage {
   ionViewDidEnter() {
     let container = document.getElementsByClassName("main-timer-container")[0];
     this.width = container['offsetWidth'] + 'px';
-  }
-
-  formatDuration(milli){
-    return this.timeHelper.formatTime(milli);
   }
 
   pauseOrStop(){
@@ -80,7 +70,7 @@ export class TimerPage {
       self.currentTime = new Date().getTime();
       self.timeElapsed += (self.currentTime - self.prevTime);
       self.prevTime = self.currentTime;
-      self.updateTimeCounter();
+      //self.updateTimeCounter();
     }, 500)
 
     this.setUpText();
@@ -116,7 +106,7 @@ export class TimerPage {
     this.isStarted = false;
     this.timeElapsed = 0;
 
-    this.updateTimeCounter();
+    //this.updateTimeCounter();
 
     this.setUpText();
   }
@@ -160,9 +150,9 @@ export class TimerPage {
     this.nav.parent.select(1);
   }
 
-  updateTimeCounter() {
-    this.timeCounter = this.timeHelper.formatTime(this.timeElapsed);
-  }
+  //updateTimeCounter() {
+  //  this.timeCounter = this.timeElapsed.toString();;
+  //}
 
   refresh(){
     this.setUpText();
