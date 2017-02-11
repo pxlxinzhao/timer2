@@ -9,11 +9,38 @@
 
 <ion-content>
   <div *ngFor="let key of calendarMap | keys">
-    <ion-item>
-      <ion-label fixed>{{key}}</ion-label>
-      <ion-input type="text" value="{{calendarMap[key].totalTime| duration}}"
-                 style="text-align: right;" readonly></ion-input>
-    </ion-item>
+    <!--<ion-item>-->
+      <!--<ion-label fixed>{{key}}</ion-label>-->
+      <!--<ion-input type="text" value="{{calendarMap[key].totalTime| duration}}"-->
+                 <!--style="text-align: right;" readonly></ion-input>-->
+
+
+
+    <!--</ion-item>-->
+
+    <ion-row>
+      <ion-col>
+        <ion-label fixed style="text-align: center">{{key}}</ion-label>
+      </ion-col>
+      <ion-col class="power-cell-container">
+        <div class="power-cell level1">
+        </div>
+      </ion-col>
+      <ion-col class="power-cell-container">
+        <div class="power-cell level2">
+        </div>
+      </ion-col>
+      <ion-col class="power-cell-container">
+        <div class="power-cell level3">
+        </div>
+      </ion-col>
+
+      <ion-col class="power-cell-container">
+        <div class="power-cell level4">
+        </div>
+      </ion-col>
+    </ion-row>
+
   </div>
 
 </ion-content>

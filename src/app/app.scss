@@ -184,3 +184,35 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
   color: black;
   font-size: 22px;
 }
+
+//calendar
+
+.power-cell-container {
+  padding-left: 0px;
+}
+
+.power-cell {
+  border-radius: 30px;
+  height: 10px;
+  margin-top: 17px;
+
+  &.level1{
+    background-color: #ed6000;
+  }
+
+  &.level2{
+    background-color: #ef7d00;
+  }
+
+  &.level3{
+    background-color: #f4a300;
+  }
+
+  &.level4{
+    background-color: #f7bc00;
+  }
+
+  &.level5{
+    background-color: #ffcf36;
+  }
+}
