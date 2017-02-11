@@ -21,7 +21,7 @@ export class CalendarPage {
   constructor(private pouch: Pouch){
     let records = JSON.parse(this.pouch.getLocal("records"));
 
-    console.log("records", records);
+    //console.log("records", records);
     /**
      * records are already sorted
      */
@@ -31,13 +31,15 @@ export class CalendarPage {
 
       if (!this.calendarMap[dateStr]){
         this.calendarMap[dateStr] = {
-          totalTime: record.doc.timestamp,
+          totalTime: record.doc.duration/1,
           count: 1
         }
       }else{
-        this.calendarMap[dateStr].totalTime += record.doc.timestamp;
+        this.calendarMap[dateStr].totalTime += record.doc.duration/1;
         this.calendarMap[dateStr].count += 1;
       }
+
+      //console.log(this.calendarMap);
     }
   }
 

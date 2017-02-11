@@ -4,6 +4,7 @@ import { RecordFilter} from '../pages/record/recordFilter'
 import { Constant } from  '../pages/helper/constant';
 import { DatePipe } from '../pages/pipes/DatePipe';
 import { DbHelper } from '../pages/helper/db';
+import { DurationPipe } from '../pages/pipes/DurationPipe';
 import { Extra } from '../pages/helper/extra';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { KeysPipe } from '../pages/pipes/keysPipe';
@@ -24,6 +25,7 @@ import { TipPage } from '../pages/tips/tip';
     RecordFilter,
     DatePipe,
     KeysPipe,
+    DurationPipe,
     RecordPage,
     SettingPage,
     TabsPage,

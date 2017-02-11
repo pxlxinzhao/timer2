@@ -56,7 +56,7 @@ export class RecordPage {
     } );
 
     this.extra.getEvent.subscribe((refreshWithDate) => {
-      console.log('here');
+      //console.log('here');
 
       this.fromDate = refreshWithDate.fromDate ? new Date(refreshWithDate.fromDate) : null;
       this.toDate = refreshWithDate.toDate ? new Date(refreshWithDate.toDate) : null;
@@ -211,6 +211,7 @@ export class RecordPage {
       this.pouch.setLocal("records", JSON.stringify(records));
 
       this.records = records;
+
       this.calculateTotalTimeAndCountTotalRecords(records);
 
       /**
@@ -251,8 +252,14 @@ export class RecordPage {
       this.totalCountByCategoryMap[category] ++;
     }
 
-    this.pouch.setLocal("totalTime", this.totalTimeByCategoryMap[this.currentCategory]);
-    this.pouch.setLocal("totalCount", this.totalCountByCategoryMap[this.currentCategory]);
+    let totalTime = this.totalTimeByCategoryMap[this.currentCategory].toString();
+    let totalCount = this.totalCountByCategoryMap[this.currentCategory].toString();
+
+    this.pouch.setLocal("totalTime", totalTime);
+    this.pouch.setLocal("totalCount",totalCount);
+
+    //console.log("totalTime", totalTime);
+    //console.log("totalCount", totalCount);
   }
 
   presentPopover(myEvent) {
