@@ -2,26 +2,24 @@
 
   <ion-item>
     <ion-label>From</ion-label>
-    <ion-datetime displayFormat="MM/DD/YY HH:mm" [(ngModel)]="fromDate"></ion-datetime>
+    <ion-datetime displayFormat="MMM DD, YYYY" [(ngModel)]="fromDate"></ion-datetime>
   </ion-item>
 
   <ion-item>
     <ion-label>To</ion-label>
-    <ion-datetime displayFormat="MM/DD/YY HH:mm" [(ngModel)]="toDate"></ion-datetime>
+    <ion-datetime displayFormat="MMM DD, YYYY" [(ngModel)]="toDate"></ion-datetime>
   </ion-item>
 
-  <ion-item>
-    <button ion-button round style="width: 98%" (click)="apply()" style="text-align: center">Apply</button>
-  </ion-item>
+  <button ion-button round style="width: 90%;  text-align: center;  margin-left: 5%;" (click)="apply()">Apply</button>
 
   <ion-item>
     <ion-label fixed>Records</ion-label>
-    <ion-input type="text" value="{{totalCount}}" style="text-align: right;" readonly></ion-input>
+    <ion-input type="text" value="{{totalCount}}" class="right-align-ion-input" readonly></ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label fixed>Total time</ion-label>
-    <ion-input type="text" value="{{formatDuration(totalTime)}}" style="text-align: right;" readonly></ion-input>
+    <ion-input type="text" value="{{formatDuration(totalTime)}}" class="right-align-ion-input" readonly></ion-input>
   </ion-item>
 
 </ion-content>
