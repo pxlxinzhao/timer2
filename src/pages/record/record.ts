@@ -18,26 +18,21 @@ import {RecordFilter} from './recordFilter'
 export class RecordPage {
   categories:string[] = [];
   categoryByRecordIdMap: any = {};
-  categoryCount: any = {}
+  categoryCount: any = {};
   categoryNames: any = {};
-  recordIdSelectedForCategoryChanging: any;
   currentCategory: string = "";
-  isCounting: boolean = false;
-  newCategory: string = "";
-  records:any = {};
-  selectedCategoryId: any = ""
-  titles: any = {};
-  //totalTime: any;
-  totalTimeByCategoryMap: any = {}
-  totalCountByCategoryMap: any = {}
-
   fromDate: Date;
-  toDate: Date;
+  isCounting: boolean = false;
   isFiltered: boolean = false;
-
+  newCategory: string = "";
+  recordIdSelectedForCategoryChanging: any;
+  records:any = {};
   refreshCallback: any = null;
-
-  //@ViewChild('categorySelect') categorySelect:ElementRef;
+  selectedCategoryId: any = "";
+  titles: any = {};
+  toDate: Date;
+  totalCountByCategoryMap: any = {};
+  totalTimeByCategoryMap: any = {};
 
   constructor(public navCtrl:NavController,
               private constant: Constant,
@@ -53,15 +48,7 @@ export class RecordPage {
     this.pouch.setDefaultCategory();
     this.currentCategory = this.pouch.getLocal(this.constant.CATEGORY_CURRENT) || this.constant.CATEGORY_DEFAULT;
 
-    //this.extra.getEvent.subscribe( (refresh) => {
-    //  console.log('refresh', refresh);
-    //
-    //  this.refresh();
-    //} );
-
     this.extra.getEvent.subscribe((data) => {
-      console.log('data', data);
-
       if (data.fromDate || data.toDate){
         this.fromDate = data.fromDate ? data.fromDate : null;
         this.toDate = data.toDate ? data.toDate : null;
@@ -114,7 +101,6 @@ export class RecordPage {
   }
 
   confirmDelete(id){
-
     if (this.platform.is('core')){
       this.deleteRecord(id);
     }else{
@@ -233,20 +219,12 @@ export class RecordPage {
         let thisDate = this.timeHelper.justDate(records[j].doc.timestamp);
         let prevDate = this.timeHelper.justDate(records[j-1].doc.timestamp);
 
-        //console.log('thisDate', new Date(thisDate).toLocaleDateString());
-        //console.log('prevDate', new Date(prevDate).toLocaleDateString());
-        //console.log(thisDate == prevDate);
-
-        //console.log(this);
-
         if (thisDate == prevDate){
           records[j].doc.onNewDate = false;
         }else{
           records[j].doc.onNewDate = true;
         }
       }
-
-      //console.log('records', records);
 
       this.records = records;
 

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Constant } from '../helper/constant'
-import { Extra } from '../helper/extra';
+//import { Extra } from '../helper/extra';
 import { NavController } from 'ionic-angular';
 import { Pouch } from  '../helper/pouch';
 
@@ -10,8 +10,6 @@ import { Pouch } from  '../helper/pouch';
 })
 export class TimerPage {
   interval: any = null;
-  //timeCounter: string = "0";
-
   isCounting: boolean = false;
   isPaused: boolean = false;
   isStarted: boolean = false;
@@ -30,7 +28,7 @@ export class TimerPage {
 
   constructor(
     private constant: Constant,
-    private extra: Extra,
+    //private extra: Extra,
     private nav: NavController,
     private pouch: Pouch
   ) {
@@ -70,7 +68,6 @@ export class TimerPage {
       self.currentTime = new Date().getTime();
       self.timeElapsed += (self.currentTime - self.prevTime);
       self.prevTime = self.currentTime;
-      //self.updateTimeCounter();
     }, 500)
 
     this.setUpText();
@@ -106,8 +103,6 @@ export class TimerPage {
     this.isStarted = false;
     this.timeElapsed = 0;
 
-    //this.updateTimeCounter();
-
     this.setUpText();
   }
 
@@ -142,17 +137,12 @@ export class TimerPage {
      */
     this.pouch.setLocal(this.constant.CATEGORY_SELECTED, cat);
 
-    //this.extra.refresh(null);
     this.nav.parent.select(1);
   }
 
   showMore(){
     this.nav.parent.select(1);
   }
-
-  //updateTimeCounter() {
-  //  this.timeCounter = this.timeElapsed.toString();;
-  //}
 
   refresh(){
     this.setUpText();

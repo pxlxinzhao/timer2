@@ -82,7 +82,6 @@ export class CalendarPage {
     }
 
     durationArray.sort((a, b)=>{return a-b});
-    console.log('durationArray', durationArray);
     let length = durationArray.length;
 
     let threshold1 = Math.floor(length/4);
@@ -92,9 +91,5 @@ export class CalendarPage {
     this.level1 = durationArray[threshold1];
     this.level2 = durationArray[threshold2];
     this.level3 = durationArray[threshold3];
-
-    //console.log('this.level1', this.level1);
-    //console.log('this.level2', this.level2);
-    //console.log('this.level3', this.level3);
   }
 }

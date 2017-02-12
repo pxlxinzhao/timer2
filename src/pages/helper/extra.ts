@@ -15,24 +15,9 @@ export class Extra {
     });
   }
 
-  //public refresh(callback: any) {
-  //  if (this.getEventObserver){
-  //    this.getEventObserver.next(callback);
-  //  }
-  //}
-
   public refreshRecords(data: any){
     if (this.getEventObserver){
       this.getEventObserver.next(data);
     }
   }
-
-
-
-  //public switchToCategory(){
-  //  if (this.getEventObserver){
-  //    this.getEventObserver.next();
-  //  }
-  //}
-
 }
