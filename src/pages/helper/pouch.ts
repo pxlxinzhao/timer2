@@ -6,10 +6,12 @@ import { Constant } from '../helper/constant'
 export class Pouch {
   private _db;
   private _categroyDb;
+  private _tempDb;
 
   constructor(private constant: Constant) {
     this._db = new PouchDB('records', { adapter: 'websql' });
     this._categroyDb = new PouchDB('categories', { adapter: 'websql' });
+    this._tempDb = new PouchDB('temp', { adapter: 'websql' });
 
     window['PouchDB'] = this._db;
     window['PouchCategory'] = this._categroyDb;
@@ -37,6 +39,28 @@ export class Pouch {
 
   getLocal(id){
     return window.localStorage[id];
+  }
+
+  setTemp(id,value){
+    let self = this;
+    self._tempDb.get(id, function(err, doc) {
+      if (err) { return console.log(err); }
+      self._tempDb.remove(doc, function(err, response) {
+        if (err) { return console.log(err); }
+        // handle response
+        self._tempDb.put({
+          _id: id,
+          value: value
+        })
+      });
+    });
+  }
+
+  getTemp(id, callback){
+    this._tempDb.get(id, function(err, doc) {
+      if (err) { return console.log(err); }
+      callback(doc);
+    });
   }
 
   /**

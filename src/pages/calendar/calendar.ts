@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ChangeDetectorRef } from "@angular/core";
 import { Extra } from '../helper/extra';
 import { Pouch } from  '../helper/pouch';
 import moment from 'moment';
@@ -27,7 +27,8 @@ export class CalendarPage {
   level3: any;
 
   constructor(private pouch: Pouch,
-  private extra: Extra){
+  private extra: Extra,
+  private chRef: ChangeDetectorRef){
     this.refresh();
   }
 
@@ -51,45 +52,58 @@ export class CalendarPage {
   }
 
   refresh(){
+    let self = this;
+
     this.calendarMap = {};
-    let records = JSON.parse(this.pouch.getLocal("records"));
+    //let records = JSON.parse(this.pouch.getLocal("records"));
+    this.pouch.getTemp("records", function(docs){
+      let records = docs.value;
+      console.log('records', records);
 
-    /**
-     * records are already sorted
-     */
-    for (let i=0; i<records.length; i++){
-      let record = records[i];
-      let dateStr = this.getDate(record);
+      /**
+       * records are already sorted
+       */
+      for (let i=0; i<records.length; i++){
+        let record = records[i];
+        let dateStr = self.getDate(record);
 
-      if (!this.calendarMap[dateStr]){
-        this.calendarMap[dateStr] = {
-          totalTime: record.doc.duration/1,
-          count: 1
+        if (!self.calendarMap[dateStr]){
+          self.calendarMap[dateStr] = {
+            totalTime: record.doc.duration/1,
+            count: 1
+          }
+        }else{
+          self.calendarMap[dateStr].totalTime += record.doc.duration/1;
+          self.calendarMap[dateStr].count += 1;
         }
-      }else{
-        this.calendarMap[dateStr].totalTime += record.doc.duration/1;
-        this.calendarMap[dateStr].count += 1;
       }
-    }
+
+      console.log('calendarMap', self.calendarMap);
+
+      /**
+       * calculate threshold for power cell
+       */
+      let durationArray = [];
+
+      for (let key in self.calendarMap){
+        durationArray.push(self.calendarMap[key].totalTime);
+      }
+
+      durationArray.sort((a, b)=>{return a-b});
+      let length = durationArray.length;
+
+      let threshold1 = Math.floor(length/4);
+      let threshold2 = Math.floor(length/4 * 2);
+      let threshold3 = Math.floor(length/4 * 3);;
+
+      self.level1 = durationArray[threshold1];
+      self.level2 = durationArray[threshold2];
+      self.level3 = durationArray[threshold3];
+    });
 
     /**
-     * calculate threshold for power cell
+     * it's like $scope.$apply in angular 1
      */
-    let durationArray = [];
-
-    for (let key in this.calendarMap){
-      durationArray.push(this.calendarMap[key].totalTime);
-    }
-
-    durationArray.sort((a, b)=>{return a-b});
-    let length = durationArray.length;
-
-    let threshold1 = Math.floor(length/4);
-    let threshold2 = Math.floor(length/4 * 2);
-    let threshold3 = Math.floor(length/4 * 3);;
-
-    this.level1 = durationArray[threshold1];
-    this.level2 = durationArray[threshold2];
-    this.level3 = durationArray[threshold3];
+    self.chRef.detectChanges();
   }
 }

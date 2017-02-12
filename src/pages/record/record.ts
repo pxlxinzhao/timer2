@@ -1,7 +1,7 @@
 import { CalendarPage } from '../calendar/calendar'
 import { Component} from '@angular/core';
 import { Constant } from '../helper/constant'
-import { DbHelper } from '../helper/db';
+//import { DbHelper } from '../helper/db';
 import { Dialogs } from 'ionic-native';
 import { Extra } from '../helper/extra';
 import { NavController } from 'ionic-angular';
@@ -36,7 +36,7 @@ export class RecordPage {
 
   constructor(public navCtrl:NavController,
               private constant: Constant,
-              private dbHelper:DbHelper,
+              //private dbHelper:DbHelper,
               private timeHelper:TimeHelper,
               private pop: PopoverController,
               private pouch: Pouch,
@@ -205,6 +205,7 @@ export class RecordPage {
        * cache records to be used in the calendar page
        */
       this.pouch.setLocal("records", JSON.stringify(records));
+      this.pouch.setTemp("records", records);
 
       /**
        * calculate if a record is on a new date
