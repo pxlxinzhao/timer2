@@ -27,17 +27,21 @@
         </div>
       </ion-col>
       <ion-col class="power-cell-container">
-        <div class="power-cell level2">
+        <div class="power-cell level2" [hidden]="getLevel(calendarMap[key].totalTime) < 1">
         </div>
       </ion-col>
       <ion-col class="power-cell-container">
-        <div class="power-cell level3">
+        <div class="power-cell level3"  [hidden]="getLevel(calendarMap[key].totalTime) < 2">
         </div>
       </ion-col>
 
-      <ion-col class="power-cell-container">
-        <div class="power-cell level4">
+      <ion-col class="power-cell-container" >
+        <div class="power-cell level4" [hidden]="getLevel(calendarMap[key].totalTime) < 3">
         </div>
+      </ion-col>
+
+      <ion-col>
+        <ion-label fixed style="text-align: center">{{calendarMap[key].totalTime  | duration}}</ion-label>
       </ion-col>
     </ion-row>
 
