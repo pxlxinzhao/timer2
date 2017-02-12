@@ -142,7 +142,7 @@ export class TimerPage {
      */
     this.pouch.setLocal(this.constant.CATEGORY_SELECTED, cat);
 
-    this.extra.refresh();
+    //this.extra.refresh(null);
     this.nav.parent.select(1);
   }
 

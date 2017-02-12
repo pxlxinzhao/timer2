@@ -35,6 +35,8 @@ export class RecordPage {
   toDate: Date;
   isFiltered: boolean = false;
 
+  refreshCallback: any = null;
+
   //@ViewChild('categorySelect') categorySelect:ElementRef;
 
   constructor(public navCtrl:NavController,
@@ -51,16 +53,24 @@ export class RecordPage {
     this.pouch.setDefaultCategory();
     this.currentCategory = this.pouch.getLocal(this.constant.CATEGORY_CURRENT) || this.constant.CATEGORY_DEFAULT;
 
-    this.extra.getEvent.subscribe( (refresh) => {
-      this.refresh();
-    } );
+    //this.extra.getEvent.subscribe( (refresh) => {
+    //  console.log('refresh', refresh);
+    //
+    //  this.refresh();
+    //} );
 
-    this.extra.getEvent.subscribe((refreshWithDate) => {
-      //console.log('here');
-      if (refreshWithDate){
-        this.fromDate = refreshWithDate.fromDate ? refreshWithDate.fromDate : null;
-        this.toDate = refreshWithDate.toDate ? refreshWithDate.toDate : null;
+    this.extra.getEvent.subscribe((data) => {
+      console.log('data', data);
+
+      if (data.fromDate || data.toDate){
+        this.fromDate = data.fromDate ? data.fromDate : null;
+        this.toDate = data.toDate ? data.toDate : null;
       }
+
+      if (data.callback){
+        this.refreshCallback = data.callback;
+      }
+
       this.refresh();
     })
   }
@@ -223,9 +233,9 @@ export class RecordPage {
         let thisDate = this.timeHelper.justDate(records[j].doc.timestamp);
         let prevDate = this.timeHelper.justDate(records[j-1].doc.timestamp);
 
-        console.log('thisDate', new Date(thisDate).toLocaleDateString());
-        console.log('prevDate', new Date(prevDate).toLocaleDateString());
-        console.log(thisDate == prevDate);
+        //console.log('thisDate', new Date(thisDate).toLocaleDateString());
+        //console.log('prevDate', new Date(prevDate).toLocaleDateString());
+        //console.log(thisDate == prevDate);
 
         //console.log(this);
 
@@ -256,6 +266,14 @@ export class RecordPage {
       this.changeCurrentCategory();
 
       this.recordIdSelectedForCategoryChanging = "";
+
+      /**
+       * this is used for calendar page, to refresh record page first and then refresh calendar page itself
+       */
+      if (this.refreshCallback){
+        this.refreshCallback();
+        this.refreshCallback = null;
+      }
     })
   }
 

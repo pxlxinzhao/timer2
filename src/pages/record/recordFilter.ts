@@ -36,7 +36,7 @@ export class RecordFilter {
     }
 
   apply(){
-    this.extra.refreshWithDate({
+    this.extra.refreshRecords({
       fromDate: this.fromDate,
       toDate: this.toDate
     });

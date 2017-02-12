@@ -15,13 +15,13 @@ export class Extra {
     });
   }
 
-  public refresh() {
-    if (this.getEventObserver){
-      this.getEventObserver.next();
-    }
-  }
+  //public refresh(callback: any) {
+  //  if (this.getEventObserver){
+  //    this.getEventObserver.next(callback);
+  //  }
+  //}
 
-  public refreshWithDate(data: any){
+  public refreshRecords(data: any){
     if (this.getEventObserver){
       this.getEventObserver.next(data);
     }

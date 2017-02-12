@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { Extra } from '../helper/extra';
 import { Pouch } from  '../helper/pouch';
 import moment from 'moment';
 
@@ -25,7 +26,32 @@ export class CalendarPage {
   level2: any;
   level3: any;
 
-  constructor(private pouch: Pouch){
+  constructor(private pouch: Pouch,
+  private extra: Extra){
+    this.refresh();
+  }
+
+  ionViewWillEnter() {
+    let self = this;
+
+    this.extra.refreshRecords({
+      callback:function(){
+        self.refresh();
+      }
+    })
+  }
+
+  getDate(record){
+    return moment(record.doc.timestamp/1).format('MMM DD YYYY');
+  }
+
+  getLevel(duration){
+    let result = duration >= this.level3 ? 3 : duration >= this.level2 ? 2 : duration >= this.level1 ? 1 : 0;
+    return result;
+  }
+
+  refresh(){
+    this.calendarMap = {};
     let records = JSON.parse(this.pouch.getLocal("records"));
 
     /**
@@ -67,18 +93,8 @@ export class CalendarPage {
     this.level2 = durationArray[threshold2];
     this.level3 = durationArray[threshold3];
 
-    console.log('this.level1', this.level1);
-    console.log('this.level2', this.level2);
-    console.log('this.level3', this.level3);
+    //console.log('this.level1', this.level1);
+    //console.log('this.level2', this.level2);
+    //console.log('this.level3', this.level3);
   }
-
-  getDate(record){
-    return moment(record.doc.timestamp/1).format('MMM DD YYYY');
-  }
-
-  getLevel(duration){
-    let result = duration >= this.level3 ? 3 : duration >= this.level2 ? 2 : duration >= this.level1 ? 1 : 0;
-    return result;
-  }
-
 }
