@@ -54,9 +54,9 @@ export class CalendarPage {
   refresh(){
     let self = this;
 
-    this.calendarMap = {};
+    let calendarMap = {};
     //let records = JSON.parse(this.pouch.getLocal("records"));
-    this.pouch.getTemp("records", function(docs){
+    this.pouch.getTemp("records", (docs) => {
       let records = docs.value;
       console.log('records', records);
 
@@ -67,18 +67,16 @@ export class CalendarPage {
         let record = records[i];
         let dateStr = self.getDate(record);
 
-        if (!self.calendarMap[dateStr]){
-          self.calendarMap[dateStr] = {
+        if (!calendarMap[dateStr]){
+          calendarMap[dateStr] = {
             totalTime: record.doc.duration/1,
             count: 1
           }
         }else{
-          self.calendarMap[dateStr].totalTime += record.doc.duration/1;
-          self.calendarMap[dateStr].count += 1;
+          calendarMap[dateStr].totalTime += record.doc.duration/1;
+          calendarMap[dateStr].count += 1;
         }
       }
-
-      console.log('calendarMap', self.calendarMap);
 
       /**
        * calculate threshold for power cell
@@ -86,7 +84,7 @@ export class CalendarPage {
       let durationArray = [];
 
       for (let key in self.calendarMap){
-        durationArray.push(self.calendarMap[key].totalTime);
+        durationArray.push(calendarMap[key].totalTime);
       }
 
       durationArray.sort((a, b)=>{return a-b});
@@ -99,11 +97,8 @@ export class CalendarPage {
       self.level1 = durationArray[threshold1];
       self.level2 = durationArray[threshold2];
       self.level3 = durationArray[threshold3];
-    });
 
-    /**
-     * it's like $scope.$apply in angular 1
-     */
-    self.chRef.detectChanges();
+      self.calendarMap = calendarMap;
+    });
   }
 }
