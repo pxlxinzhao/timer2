@@ -79,7 +79,7 @@ export class RecordPage {
     })
   }
 
-  openTitleDialog(id){
+  openTitleDialog(id, title){
     if (this.platform.is('core')){
       console.info('can only change title in a real device');
       return;
@@ -87,7 +87,7 @@ export class RecordPage {
 
     let self = this;
 
-    Dialogs.prompt('', 'New title', ['Ok','Cancel'], '')
+    Dialogs.prompt('', 'New title', ['Ok','Cancel'], title)
       .then(function(result) {
         let input = result.input1;
         // no button = 0, 'OK' = 1, 'Cancel' = 2

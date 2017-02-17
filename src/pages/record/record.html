@@ -41,19 +41,19 @@
       <!--<ion-card-title></ion-card-title>-->
 
       <ion-card-header style="padding: 12px; position: relative">
-        <div class="hoverable category-title" (click)="openTitleDialog(records[key].id)">
+        <div class="category-title" (click)="openTitleDialog(records[key].id, records[key].doc.title)">
           {{records[key].doc.title || "Default Title"}}
         </div>
 
-       <span class="right hoverable" >
+       <span class="right" >
         <ion-icon name="ios-trash-outline" danger (click)="confirmDelete(records[key].id)"></ion-icon>
       </span>
 
-       <span class="right hoverable" style="margin-right: 15px;"  [hidden]="recordIdSelectedForCategoryChanging === records[key].id">
+       <span class="right" style="margin-right: 15px;"  [hidden]="recordIdSelectedForCategoryChanging === records[key].id">
          <ion-icon name="ios-arrow-down-outline" (click) = "showCategoryDropdown(records[key].id)"></ion-icon>
       </span>
 
-       <span class="right hoverable" style="margin-right: 15px;"  [hidden]="recordIdSelectedForCategoryChanging !== records[key].id">
+       <span class="right" style="margin-right: 15px;"  [hidden]="recordIdSelectedForCategoryChanging !== records[key].id">
          <ion-icon name="ios-arrow-up-outline" (click) = "showCategoryDropdown(records[key].id)"></ion-icon>
       </span>
 

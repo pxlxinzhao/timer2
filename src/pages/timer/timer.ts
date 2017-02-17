@@ -118,7 +118,7 @@ export class TimerPage {
     let newRecord =  {
       category: currentCategory || this.constant.CATEGORY_DEFAULT,
       duration: this.timeElapsed,
-      title: 'Record ' + seed,
+      title: currentCategory + ' ' + seed,
       timestamp: this.startTime
     }
 
