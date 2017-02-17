@@ -1,3 +1,4 @@
+import { AdsHelper } from '../pages/helper/ads';
 import { CategoryPage } from '../pages/category/category';
 import { CalendarPage } from '../pages/calendar/calendar'
 import { RecordFilter} from '../pages/record/recordFilter'
@@ -49,6 +50,7 @@ import { TipPage } from '../pages/tips/tip';
     TipPage
   ],
   providers: [
+    AdsHelper,
     Constant,
     DbHelper,
     Extra,

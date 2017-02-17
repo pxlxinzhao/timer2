@@ -3,6 +3,7 @@ import { Constant } from '../helper/constant'
 //import { Extra } from '../helper/extra';
 import { NavController } from 'ionic-angular';
 import { Pouch } from  '../helper/pouch';
+import { AdsHelper} from '../helper/ads';
 
 @Component({
   selector: 'page-timer',
@@ -27,6 +28,7 @@ export class TimerPage {
   redButtonText: string = "";
 
   constructor(
+    private ads: AdsHelper,
     private constant: Constant,
     //private extra: Extra,
     private nav: NavController,
@@ -129,6 +131,8 @@ export class TimerPage {
     this.pouch.add(newRecord).then((response) => {
       this.refresh();
     });
+
+    this.ads.showInterstitial();
   }
 
   switchToCategory(cat){

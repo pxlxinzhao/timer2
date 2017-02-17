@@ -284,7 +284,7 @@ export class RecordPage {
       let totalTime = this.totalTimeByCategoryMap[this.currentCategory].toString();
       let totalCount = this.totalCountByCategoryMap[this.currentCategory].toString();
 
-      //this.pouch.setLocal("totalTime", totalTime);
+      this.pouch.setLocal("totalTime", totalTime);
       this.pouch.setLocal("totalCount",totalCount);
     }
 
