@@ -32,9 +32,9 @@ export class CategoryPage {
       console.info('can only add record in real device');
       return;
     }
-    
+
     let self = this;
-    Dialogs.prompt('Please enter a name', 'New category', ['Ok','Cancel'], '')
+    Dialogs.prompt('', 'New category', ['Ok','Cancel'], '')
       .then(function(result) {
         let input = result.input1;
         // no button = 0, 'OK' = 1, 'Cancel' = 2

@@ -87,7 +87,7 @@ export class RecordPage {
 
     let self = this;
 
-    Dialogs.prompt('Please enter a new title', 'New title', ['Ok','Cancel'], '')
+    Dialogs.prompt('', 'New title', ['Ok','Cancel'], '')
       .then(function(result) {
         let input = result.input1;
         // no button = 0, 'OK' = 1, 'Cancel' = 2
