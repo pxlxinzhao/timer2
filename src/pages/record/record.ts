@@ -179,6 +179,10 @@ export class RecordPage {
        */
       let records = this.pouch.getAsArray(docs);
 
+      records = records.filter((x) => {
+        return x['doc'].category == this.currentCategory;
+      });
+
       /**
        * sort by time
        */
@@ -195,9 +199,8 @@ export class RecordPage {
           /**
            * here we have some weird time zone issue
            * when reading a plain text, it considers it as a ISO time.
-           * we need to do the mannul time zone conversion
+           * we need to do the manul time zone conversion
            */
-
           return (!self.fromDate || self.timeHelper.justDate(time) >= self.timeHelper.convertISOStringToLocalMilliseconds(self.fromDate))
             && (!self.toDate || self.timeHelper.justDate(time)<= self.timeHelper.convertISOStringToLocalMilliseconds(self.toDate));
         })
@@ -242,17 +245,11 @@ export class RecordPage {
         this.categoryByRecordIdMap[records[i].id] = records[i].doc.category;
       }
 
-      /**
-       * set current category for timer page
-       */
-      this.changeCurrentCategory();
-
       this.recordIdSelectedForCategoryChanging = "";
 
       /**
        * this is used for calendar page, to refresh record page first and then refresh calendar page itself
        */
-
       if (this.refreshCallback){
         this.refreshCallback();
         this.refreshCallback = null;
@@ -263,6 +260,7 @@ export class RecordPage {
 
   changeCurrentCategory(){
     this.pouch.setLocal(this.constant.CATEGORY_CURRENT, this.currentCategory);
+    this.refresh();
   }
 
   calculateTotalTimeAndCountTotalRecords(records){
@@ -286,7 +284,7 @@ export class RecordPage {
       let totalTime = this.totalTimeByCategoryMap[this.currentCategory].toString();
       let totalCount = this.totalCountByCategoryMap[this.currentCategory].toString();
 
-      this.pouch.setLocal("totalTime", totalTime);
+      //this.pouch.setLocal("totalTime", totalTime);
       this.pouch.setLocal("totalCount",totalCount);
     }
 

@@ -44,29 +44,19 @@ export class Pouch {
 
   setTemp(id,value){
     let self = this;
-    self._tempDb.get(id, function(err, doc) {
-      /**
-       * if not found just add
-       */
-      if (err) {
-        self._tempDb.put({
-          _id: id,
-          value: value
-        })
-        return;
-      }
 
-      /**
-       * if found delete and then add
-       */
-      self._tempDb.remove(doc, function(err, response) {
-        if (err) { return console.log(err); }
-        // handle response
+    this._tempDb.destroy(function (err, response) {
+      if (err) {
+        return console.log(err);
+      } else {
+        // success
+        self._tempDb = new PouchDB('temp', { adapter: 'websql' });
+
         self._tempDb.put({
           _id: id,
           value: value
         })
-      });
+      }
     });
   }
 
