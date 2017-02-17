@@ -15,6 +15,7 @@ export class Pouch {
 
     window['PouchDB'] = this._db;
     window['PouchCategory'] = this._categroyDb;
+    window['PouchTemp'] = this._tempDb;
   }
 
   getDb(){
@@ -44,7 +45,20 @@ export class Pouch {
   setTemp(id,value){
     let self = this;
     self._tempDb.get(id, function(err, doc) {
-      if (err) { return console.log(err); }
+      /**
+       * if not found just add
+       */
+      if (err) {
+        self._tempDb.put({
+          _id: id,
+          value: value
+        })
+        return;
+      }
+
+      /**
+       * if found delete and then add
+       */
       self._tempDb.remove(doc, function(err, response) {
         if (err) { return console.log(err); }
         // handle response

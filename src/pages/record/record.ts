@@ -173,6 +173,7 @@ export class RecordPage {
      * refresh records
      */
     this.pouch.getAll().then((docs) =>{
+
       /**
        * docs.rows is an array like object, thus use keys pipe to loop
        */
@@ -205,6 +206,8 @@ export class RecordPage {
        * cache records to be used in the calendar page
        */
       this.pouch.setLocal("records", JSON.stringify(records));
+
+      console.log('setting temp');
       this.pouch.setTemp("records", records);
 
       /**
@@ -249,10 +252,12 @@ export class RecordPage {
       /**
        * this is used for calendar page, to refresh record page first and then refresh calendar page itself
        */
+
       if (this.refreshCallback){
         this.refreshCallback();
         this.refreshCallback = null;
       }
+
     })
   }
 
