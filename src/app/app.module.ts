@@ -4,7 +4,6 @@ import { CalendarPage } from '../pages/calendar/calendar'
 import { RecordFilter} from '../pages/record/recordFilter'
 import { Constant } from  '../pages/helper/constant';
 import { DatePipe } from '../pages/pipes/DatePipe';
-import { DbHelper } from '../pages/helper/db';
 import { DurationPipe } from '../pages/pipes/DurationPipe';
 import { Extra } from '../pages/helper/extra';
 import { IonicApp, IonicModule } from 'ionic-angular';
@@ -52,7 +51,6 @@ import { TipPage } from '../pages/tips/tip';
   providers: [
     AdsHelper,
     Constant,
-    DbHelper,
     Extra,
     Pouch,
     TimeHelper

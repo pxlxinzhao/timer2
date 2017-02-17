@@ -1,13 +1,9 @@
 import { ViewController } from 'ionic-angular/index';
 import { Component } from '@angular/core';
-import { DbHelper } from '../helper/db';
 import { TimeHelper } from '../helper/time';
 import { Extra } from '../helper/extra';
 import { Constant } from '../helper/constant'
 import { Pouch } from  '../helper/pouch';
-
-
-//import * as _ from 'underscore';
 
 @Component({
     selector: 'page-popover',
@@ -20,7 +16,7 @@ export class RecordFilter {
     totalTime: any;
     totalCount: any;
 
-    constructor(private dbHelper:DbHelper,
+    constructor(
                 private timeHelper: TimeHelper,
                 private extra: Extra,
                 private viewCtrl: ViewController,

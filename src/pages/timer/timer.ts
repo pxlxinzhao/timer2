@@ -37,8 +37,8 @@ export class TimerPage {
   ) {
     this.setupDefault();
 
-    if (!window.localStorage[this.constant.CATEGORY_SEED]){
-      window.localStorage[this.constant.CATEGORY_SEED] = 1;
+    if (!this.pouch.getLocal[this.constant.CATEGORY_SEED]){
+      this.pouch.setLocal([this.constant.CATEGORY_SEED], 1);
     }
   }
 
@@ -74,7 +74,6 @@ export class TimerPage {
     }, 500)
 
     this.setUpText();
-    //this.ads.showBanner('bottom');
   }
 
   pause(){
@@ -86,13 +85,12 @@ export class TimerPage {
   }
 
   setupDefault(){
-    if (!window.localStorage['categories']) {
-      window.localStorage['categories'] = JSON.stringify(['Uncategorized']);
-    }
-
-    if (!window.localStorage['records']){
-      window.localStorage['records'] = JSON.stringify({});
-    }
+    this.pouch.getAllCategory().then((data)=>{
+      if (data['total_rows'] == 0){
+        this.pouch.addCategory("Uncategorized", null);
+        this.pouch.setLocal(this.constant.CATEGORY_CURRENT, this.constant.CATEGORY_DEFAULT);
+      }
+    })
   }
 
   stop(){
@@ -116,7 +114,7 @@ export class TimerPage {
   }
 
   storeRecords(){
-    let seed = parseInt(window.localStorage[this.constant.CATEGORY_SEED]);
+    let seed = parseInt(this.pouch.getLocal([this.constant.CATEGORY_SEED]));
     let currentCategory = this.pouch.getLocal(this.constant.CATEGORY_CURRENT);
 
     let newRecord =  {

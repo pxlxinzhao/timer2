@@ -1,7 +1,7 @@
 {
-  "name": "ionic-hello-world",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "name": "Activity_timer",
+  "author": "Patrick Pu",
+  "homepage": "http://www.patrickpu.com/",
   "private": true,
   "scripts": {
     "build": "ionic-app-scripts build",
@@ -23,22 +23,19 @@
     "@angular/platform-browser-dynamic": "2.1.1",
     "@angular/platform-server": "2.1.1",
     "@ionic/storage": "1.1.6",
-    "intl": "^1.2.5",
     "ionic-angular": "2.0.0-rc.2",
     "ionic-native": "2.2.3",
-    "ionic2-calendar": "^0.2.3",
     "ionicons": "3.0.0",
     "moment": "^2.15.2",
     "pouchdb": "^6.1.1",
     "rxjs": "5.0.0-beta.12",
-    "underscore": "^1.8.3",
     "zone.js": "0.6.21"
   },
   "devDependencies": {
     "@ionic/app-scripts": "0.0.39",
     "typescript": "2.0.6"
   },
-  "description": "test: An Ionic project",
+  "description": "Smart activity timer",
   "cordovaPlugins": [
     "cordova-plugin-device",
     "cordova-plugin-console",

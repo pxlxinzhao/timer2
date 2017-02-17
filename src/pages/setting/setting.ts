@@ -20,10 +20,6 @@ export class SettingPage {
     private platform: Platform
   ) {
 
-    //this.platform.ready().then(() => {
-    //  this.ads.showBanner('bottom');
-    //})
-
   }
 
   navigateToCategory(){
@@ -36,7 +32,6 @@ export class SettingPage {
 
   reset(){
     this.pouch.reset();
-    //this.ads.showBanner('top');
   }
 
   confirmReset(){
