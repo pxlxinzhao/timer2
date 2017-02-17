@@ -1,3 +1,4 @@
+import { AdsHelper} from '../helper/ads';
 import { CategoryPage } from '../category/category'
 import { TipPage } from '../tips/tip'
 import { Component } from '@angular/core';
@@ -5,7 +6,6 @@ import { Pouch } from  '../helper/pouch';
 import { NavController } from 'ionic-angular';
 import { Dialogs } from 'ionic-native';
 import { Platform } from 'ionic-angular';
-import { Extra } from '../helper/extra';
 
 @Component({
   selector: 'page-setting',
@@ -13,10 +13,16 @@ import { Extra } from '../helper/extra';
 })
 export class SettingPage {
 
-  constructor(public navCtrl: NavController,
-  private pouch: Pouch,
-  private platform: Platform,
-  private extra: Extra) {
+  constructor(
+    private ads: AdsHelper,
+    public navCtrl: NavController,
+    private pouch: Pouch,
+    private platform: Platform
+  ) {
+
+    //this.platform.ready().then(() => {
+    //  this.ads.showBanner('bottom');
+    //})
 
   }
 
@@ -30,6 +36,7 @@ export class SettingPage {
 
   reset(){
     this.pouch.reset();
+    //this.ads.showBanner('top');
   }
 
   confirmReset(){

@@ -15,7 +15,7 @@ export class AdsHelper {
     if(window['AdMob']) {
       AdMob.createBanner({
         adId: this.admobId.banner,
-        autoShow: false
+        autoShow: true
       });
     }
   }

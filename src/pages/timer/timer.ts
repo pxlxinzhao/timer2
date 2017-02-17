@@ -1,9 +1,10 @@
+import { AdsHelper} from '../helper/ads';
 import { Component } from '@angular/core';
 import { Constant } from '../helper/constant'
 //import { Extra } from '../helper/extra';
 import { NavController } from 'ionic-angular';
 import { Pouch } from  '../helper/pouch';
-import { AdsHelper} from '../helper/ads';
+
 
 @Component({
   selector: 'page-timer',
@@ -73,6 +74,7 @@ export class TimerPage {
     }, 500)
 
     this.setUpText();
+    //this.ads.showBanner('bottom');
   }
 
   pause(){
@@ -132,7 +134,9 @@ export class TimerPage {
       this.refresh();
     });
 
-    this.ads.showInterstitial();
+    if ( (seed-1) % 5 === 0){
+      this.ads.showInterstitial();
+    }
   }
 
   switchToCategory(cat){
