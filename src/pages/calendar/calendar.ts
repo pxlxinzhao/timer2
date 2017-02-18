@@ -43,7 +43,7 @@ export class CalendarPage {
   }
 
   getDate(record){
-    return moment(record.doc.timestamp/1).format('MMM DD YYYY');
+    return moment(record.doc.timestamp/1).format('ddd MMM DD YYYY');
   }
 
   getLevel(duration){
