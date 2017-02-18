@@ -54,8 +54,6 @@ export class CalendarPage {
   refresh(){
     let self = this;
 
-    console.log(11);
-
     let calendarMap = {};
     //let records = JSON.parse(this.pouch.getLocal("records"));
     this.pouch.getTemp("records", (docs) => {
