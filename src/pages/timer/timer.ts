@@ -121,9 +121,9 @@ export class TimerPage {
       this.pouch.incrementSeed(this.currentCategory, (seed) => {
 
         let newRecord =  {
-          category: this.currentCategory || this.constant.CATEGORY_DEFAULT,
+          category: this.currentCategory,
           duration: this.timeElapsed,
-          title: this.currentCategory + ' ' + seed,
+          title: this.newTitle,
           timestamp: this.startTime
         }
 
@@ -131,6 +131,8 @@ export class TimerPage {
           callback();
           this.refresh();
         });
+
+        this.newTitle = this.currentCategory + ' ' + (seed + 1);;
       })
     }
   }
@@ -146,15 +148,14 @@ export class TimerPage {
 
   refresh(){
     this.currentCategory = this.pouch.getLocal(this.constant.CATEGORY_CURRENT);
-    this.pouch.getSeed(this.currentCategory, (x) => {
-      this.newTitle = this.currentCategory + ' ' + x;
-    })
+    if (!this.newTitle){
+      this.pouch.getSeed(this.currentCategory, (x) => {
+        this.newTitle = this.currentCategory + ' ' + x;
+      })
+    }
 
 
     this.setUpText();
-
-    console.log('refresh', this.currentCategory);
-
 
     this.pouch.getAll().then((docs) =>{
       /**
