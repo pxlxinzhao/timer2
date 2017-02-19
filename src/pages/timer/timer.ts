@@ -48,10 +48,10 @@ export class TimerPage {
     this.refresh();
   }
 
-  ionViewDidEnter() {
-    let container = document.getElementsByClassName("main-timer-container")[0];
-    this.width = container['offsetWidth'] + 'px';
-  }
+  //ionViewDidEnter() {
+  //  let container = document.getElementsByClassName("main-timer-container")[0];
+  //  this.width = container['offsetWidth'] + 'px';
+  //}
 
   tap(){
     if (this.isStarted && !this.isPaused){
@@ -95,12 +95,12 @@ export class TimerPage {
     })
   }
 
-  save(){
+  save(slidingItem){
     this.storeRecords();
-    this.clear();
+    this.clear(slidingItem);
   }
 
-  clear(){
+  clear(slidingItem){
     clearInterval(this.interval);
 
     this.isPaused = false;
@@ -112,6 +112,7 @@ export class TimerPage {
     this.timeElapsed = 0;
 
     this.setUpText();
+    slidingItem.close();
   }
 
   setUpText(){
@@ -120,27 +121,22 @@ export class TimerPage {
   }
 
   storeRecords(){
-    let seed = parseInt(this.pouch.getLocal([this.constant.CATEGORY_SEED]));
     let currentCategory = this.pouch.getLocal(this.constant.CATEGORY_CURRENT);
 
-    let newRecord =  {
-      category: currentCategory || this.constant.CATEGORY_DEFAULT,
-      duration: this.timeElapsed,
-      title: currentCategory + ' ' + seed,
-      timestamp: this.startTime
-    }
+    this.pouch.getSeed('currentCategory', (seed) => {
+      console.log('seed', seed);
 
-    this.startTime = 0;
+      let newRecord =  {
+        category: currentCategory || this.constant.CATEGORY_DEFAULT,
+        duration: this.timeElapsed,
+        title: currentCategory + ' ' + seed,
+        timestamp: this.startTime
+      }
 
-    this.pouch.setLocal(this.constant.CATEGORY_SEED, ++seed);
-
-    this.pouch.add(newRecord).then((response) => {
-      this.refresh();
-    });
-
-    if ( (seed-1) % 5 === 0){
-      this.ads.showInterstitial();
-    }
+      this.pouch.add(newRecord).then((response) => {
+        this.refresh();
+      });
+    })
   }
 
   switchToCategory(cat){

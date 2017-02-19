@@ -6,15 +6,28 @@ import { Constant } from '../helper/constant'
 export class Pouch {
   private _db;
   private _categroyDb;
+
+  /**
+   * create seed based on activity
+   */
+  private _seedDb;
+
+  /**
+   * This database temporarily sets records
+   * for cross page usage
+   */
   private _tempDb;
+
 
   constructor(private constant: Constant) {
     this._db = new PouchDB('records', { adapter: 'websql' });
     this._categroyDb = new PouchDB('categories', { adapter: 'websql' });
+    this._seedDb = new PouchDB('seed', {adapter: 'websql'});
     this._tempDb = new PouchDB('temp', { adapter: 'websql' });
 
     window['PouchDB'] = this._db;
     window['PouchCategory'] = this._categroyDb;
+    window['PouchSeed'] = this._seedDb;;
     window['PouchTemp'] = this._tempDb;
   }
 
@@ -40,6 +53,29 @@ export class Pouch {
 
   getLocal(id){
     return window.localStorage[id];
+  }
+
+  getSeed(activity, callback){
+    this._seedDb.get(activity, (err, doc) => {
+      if (err && err.status == 404){
+        this._seedDb.put({
+          _id: activity,
+          seed: 2
+        }, function(error, response){
+          if (error) return console.error(error);
+          callback(1);
+        });
+      }else{
+        this._seedDb.put({
+          _id: doc._id,
+          _rev: doc._rev,
+          seed: doc.seed + 1
+        }, function(error, response){
+          if (error) return console.error(error);
+          callback(doc.seed);
+        });
+      }
+    });
   }
 
   setTemp(id,value){
@@ -99,7 +135,7 @@ export class Pouch {
 
   reset(){
     let self = this;
-    let countdown = 1;
+    let countdown = 4;
 
     this.setLocal(this.constant.RECORD_SELECTED_TO_CHANGE_CATEGORY, '');
     this.setLocal(this.constant.CATEGORY_SELECTED, '');
@@ -118,7 +154,7 @@ export class Pouch {
       } else {
         console.info('destroyed records database, recreate one');
         self._db = new PouchDB('records', { adapter: 'websql' });
-        if (countdown-- == 0){
+        if (--countdown == 0){
           window.location.reload();
         }
       }
@@ -129,7 +165,29 @@ export class Pouch {
       } else {
         console.info('destroyed categories database, recreate one');
         self._db = new PouchDB('records', { adapter: 'websql' });
-        if (countdown-- == 0){
+        if (--countdown == 0){
+          window.location.reload();
+        }
+      }
+    });
+    self._tempDb.destroy(function (err, response) {
+      if (err) {
+        return console.log(err);
+      } else {
+        console.info('destroyed temp database, recreate one');
+        self._db = new PouchDB('records', { adapter: 'websql' });
+        if (--countdown == 0){
+          window.location.reload();
+        }
+      }
+    });
+    self._seedDb.destroy(function (err, response) {
+      if (err) {
+        return console.log(err);
+      } else {
+        console.info('destroyed seed database, recreate one');
+        self._db = new PouchDB('records', { adapter: 'websql' });
+        if (--countdown == 0){
           window.location.reload();
         }
       }
