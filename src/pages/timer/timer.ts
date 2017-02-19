@@ -53,11 +53,11 @@ export class TimerPage {
     this.width = container['offsetWidth'] + 'px';
   }
 
-  pauseOrStop(){
-    if (this.isPaused){
-      this.stop();
-    }else{
+  tap(){
+    if (this.isStarted && !this.isPaused){
       this.pause();
+    }else{
+      this.start();
     }
   }
 
@@ -95,9 +95,13 @@ export class TimerPage {
     })
   }
 
-  stop(){
-    clearInterval(this.interval);
+  save(){
     this.storeRecords();
+    this.clear();
+  }
+
+  clear(){
+    clearInterval(this.interval);
 
     this.isPaused = false;
     this.isCounting = false;

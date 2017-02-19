@@ -9,14 +9,14 @@
     <ion-list class="item-borderless">
       <ion-item-sliding #item>
         <ion-item no-lines>
-          <button ion-button color="light" class="main-timer-container-button">{{timeElapsed | duration}}</button>
+          <button ion-button color="light" class="main-timer-container-button" (click)="tap()">{{timeElapsed | duration}}</button>
         </ion-item>
         <ion-item-options side="left">
-          <button ion-button icon-only color="danger"><ion-icon name="trash"></ion-icon></button>
+          <button ion-button icon-only color="danger" (click)="clear()" [disabled]="!isStarted"><ion-icon name="trash"></ion-icon></button>
         </ion-item-options>
 
         <ion-item-options side="right">
-          <button ion-button icon-only><ion-icon name="archive"></ion-icon></button>
+          <button ion-button icon-only (click)="save()" [disabled]="!isStarted"><ion-icon name="archive"></ion-icon></button>
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
