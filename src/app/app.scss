@@ -18,6 +18,7 @@
 //general
 
 $green: #1fc21b;
+$red: #f53d3d;
 
 @font-face {
   font-family: "SegoePrint";
@@ -78,6 +79,19 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
   text-align: center;
   box-shadow: 1px 2px 5px #ddd;
  }
+
+.main-timer-container-button {
+  background-color: #fff;
+  border-radius: 1px;
+  color: #1c1c1c;
+  font-size: 16vw !important;
+  height: 25vw !important;
+  margin: auto;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 1px 2px 5px #ddd;
+  width: 100%;
+}
 
 .main-button-container{
   text-align: center;

@@ -1,8 +1,8 @@
 import { AdsHelper} from '../helper/ads';
-import { Component } from '@angular/core';
+import { Component, ViewChild  } from '@angular/core';
 import { Constant } from '../helper/constant'
 //import { Extra } from '../helper/extra';
-import { NavController } from 'ionic-angular';
+import { NavController, Slides } from 'ionic-angular';
 import { Pouch } from  '../helper/pouch';
 
 
@@ -11,6 +11,8 @@ import { Pouch } from  '../helper/pouch';
   templateUrl: 'timer.html'
 })
 export class TimerPage {
+  @ViewChild(Slides) slides: Slides;
+
   interval: any = null;
   isCounting: boolean = false;
   isPaused: boolean = false;
