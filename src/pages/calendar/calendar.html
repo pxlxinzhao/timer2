@@ -33,14 +33,24 @@
       </ion-col>
 
       <ion-col>
-        <ion-label fixed style="text-align: center">{{calendarMap[key].totalTime  | duration}}</ion-label>
+        <!--<ion-label fixed style="text-align: center">{{calendarMap[key].totalTime  | duration}}</ion-label>-->
+        <div style="width: 120px;">
+          <ion-chip style="margin-top: 7px;">
+            <ion-label>{{calendarMap[key].totalTime  | duration}}</ion-label>
+          </ion-chip>
+
+          <ion-chip style="margin-top: 7px;">
+            <ion-label>{{calendarMap[key].count}}</ion-label>
+          </ion-chip>
+        </div>
+
       </ion-col>
 
-      <ion-col>
-        <ion-chip style="margin-top: 7px;">
-          <ion-label>{{calendarMap[key].count}}</ion-label>
-        </ion-chip>
-      </ion-col>
+      <!--<ion-col style="text-align: right">-->
+        <!--<ion-chip style="margin-top: 7px;">-->
+          <!--<ion-label>{{calendarMap[key].count}}</ion-label>-->
+        <!--</ion-chip>-->
+      <!--</ion-col>-->
 
     </ion-row>
 
