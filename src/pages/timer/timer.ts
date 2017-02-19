@@ -30,6 +30,9 @@ export class TimerPage {
   greenButtonText: string = "";
   redButtonText: string = "";
 
+  currentCategory: string = "";
+  newTitle: String = "";
+
   constructor(
     private ads: AdsHelper,
     private constant: Constant,
@@ -37,21 +40,12 @@ export class TimerPage {
     private nav: NavController,
     private pouch: Pouch
   ) {
-    this.setupDefault();
-
-    if (!this.pouch.getLocal[this.constant.CATEGORY_SEED]){
-      this.pouch.setLocal([this.constant.CATEGORY_SEED], 1);
-    }
+    this.setupDefaultCategory();
   }
 
   ionViewWillEnter() {
     this.refresh();
   }
-
-  //ionViewDidEnter() {
-  //  let container = document.getElementsByClassName("main-timer-container")[0];
-  //  this.width = container['offsetWidth'] + 'px';
-  //}
 
   tap(){
     if (this.isStarted && !this.isPaused){
@@ -68,11 +62,10 @@ export class TimerPage {
     this.isPaused = false;
     this.isCounting = true;
     this.isStarted = true;
-    let self = this;
-    this.interval = setInterval(function () {
-      self.currentTime = new Date().getTime();
-      self.timeElapsed += (self.currentTime - self.prevTime);
-      self.prevTime = self.currentTime;
+    this.interval = setInterval( () => {
+      this.currentTime = new Date().getTime();
+      this.timeElapsed += (this.currentTime - this.prevTime);
+      this.prevTime = this.currentTime;
     }, 500)
 
     this.setUpText();
@@ -86,18 +79,21 @@ export class TimerPage {
     this.setUpText();
   }
 
-  setupDefault(){
+  setupDefaultCategory(){
     this.pouch.getAllCategory().then((data)=>{
+      let defaultCategory = this.constant.CATEGORY_DEFAULT;
+
       if (data['total_rows'] == 0){
-        this.pouch.addCategory("Uncategorized", null);
-        this.pouch.setLocal(this.constant.CATEGORY_CURRENT, this.constant.CATEGORY_DEFAULT);
+        this.pouch.addCategory(defaultCategory, null);
+        this.pouch.setLocal(this.constant.CATEGORY_CURRENT, defaultCategory);
       }
     })
   }
 
   save(slidingItem){
-    this.storeRecords();
-    this.clear(slidingItem);
+    this.storeRecords( () => {
+      this.clear(slidingItem);
+    });
   }
 
   clear(slidingItem){
@@ -120,31 +116,27 @@ export class TimerPage {
     this.redButtonText = this.isPaused ? 'Stop' : 'Pause';
   }
 
-  storeRecords(){
-    let currentCategory = this.pouch.getLocal(this.constant.CATEGORY_CURRENT);
+  storeRecords(callback){
+    if (this.currentCategory){
+      this.pouch.incrementSeed(this.currentCategory, (seed) => {
 
-    this.pouch.getSeed('currentCategory', (seed) => {
-      console.log('seed', seed);
+        let newRecord =  {
+          category: this.currentCategory || this.constant.CATEGORY_DEFAULT,
+          duration: this.timeElapsed,
+          title: this.currentCategory + ' ' + seed,
+          timestamp: this.startTime
+        }
 
-      let newRecord =  {
-        category: currentCategory || this.constant.CATEGORY_DEFAULT,
-        duration: this.timeElapsed,
-        title: currentCategory + ' ' + seed,
-        timestamp: this.startTime
-      }
-
-      this.pouch.add(newRecord).then((response) => {
-        this.refresh();
-      });
-    })
+        this.pouch.add(newRecord).then((response) => {
+          callback();
+          this.refresh();
+        });
+      })
+    }
   }
 
   switchToCategory(cat){
-    /**
-     * recent record is used to change category of the about page
-     */
-    this.pouch.setLocal(this.constant.CATEGORY_SELECTED, cat);
-
+    this.pouch.setLocal(this.constant.CATEGORY_CURRENT, cat);
     this.nav.parent.select(1);
   }
 
@@ -153,7 +145,16 @@ export class TimerPage {
   }
 
   refresh(){
+    this.currentCategory = this.pouch.getLocal(this.constant.CATEGORY_CURRENT);
+    this.pouch.getSeed(this.currentCategory, (x) => {
+      this.newTitle = this.currentCategory + ' ' + x;
+    })
+
+
     this.setUpText();
+
+    console.log('refresh', this.currentCategory);
+
 
     this.pouch.getAll().then((docs) =>{
       /**

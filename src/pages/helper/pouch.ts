@@ -55,7 +55,7 @@ export class Pouch {
     return window.localStorage[id];
   }
 
-  getSeed(activity, callback){
+  incrementSeed(activity, callback){
     this._seedDb.get(activity, (err, doc) => {
       if (err && err.status == 404){
         this._seedDb.put({
@@ -72,8 +72,32 @@ export class Pouch {
           seed: doc.seed + 1
         }, function(error, response){
           if (error) return console.error(error);
+
+          console.log(doc.seed, doc);
           callback(doc.seed);
         });
+      }
+    });
+  }
+
+  getSeed(activity, callback){
+    this._seedDb.get(activity, (err, doc) => {
+      if (err && err.status == 404){
+        console.log(1, err);
+        this._seedDb.put({
+          _id: activity,
+          seed: 1
+        }, function(error, response){
+          console.log(2)
+          if (error) return console.error(error);
+          console.log(3)
+
+          callback(1);
+        });
+      }else{
+        console.log(4, doc)
+
+        callback(doc.seed);
       }
     });
   }

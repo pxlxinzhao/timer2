@@ -6,20 +6,45 @@
   </ion-navbar>
 
   <ion-toolbar>
-    <ion-list class="item-borderless">
-      <ion-item-sliding #slidingItem>
-        <ion-item no-lines>
-          <button ion-button color="light" class="main-timer-container-button" (click)="tap()">{{timeElapsed | duration}}</button>
-        </ion-item>
-        <ion-item-options side="left">
-          <button ion-button icon-only color="danger" (click)="clear(slidingItem)" [disabled]="!isStarted"><ion-icon name="trash"></ion-icon></button>
-        </ion-item-options>
 
-        <ion-item-options side="right">
-          <button ion-button icon-only (click)="save(slidingItem)" [disabled]="!isStarted"><ion-icon name="archive"></ion-icon></button>
-        </ion-item-options>
-      </ion-item-sliding>
-    </ion-list>
+    <ion-card>
+
+      <ion-card-header style="position: relative;">
+        <!--<span style="/*position: absolute; left: 16px; right: 20px; */overflow: hidden; text-overflow: ellipsis;">-->
+          <!--{{newTitle}}-->
+        <!--</span>-->
+
+        <ion-item>
+          <!--<ion-label fixed>Username</ion-label>-->
+          <ion-input type="text" value="" [(ngModel)]="newTitle"></ion-input>
+        </ion-item>
+
+
+
+        <!--<span class="right" style="width: 120px; overflow: hidden; text-overflow: ellipsis; text-align: right; ">{{currentCategory}}</span>-->
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-list class="item-borderless">
+          <ion-item-sliding #slidingItem>
+            <ion-item no-lines>
+              <button ion-button color="light" class="main-timer-container-button" (click)="tap()">{{timeElapsed | duration}}</button>
+            </ion-item>
+            <ion-item-options side="left">
+              <button ion-button icon-only color="danger" (click)="clear(slidingItem)" [disabled]="!isStarted"><ion-icon name="trash"></ion-icon></button>
+            </ion-item-options>
+
+            <ion-item-options side="right">
+              <button ion-button icon-only (click)="save(slidingItem)" [disabled]="!isStarted"><ion-icon name="archive"></ion-icon></button>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+
+      </ion-card-content>
+
+    </ion-card>
+
   </ion-toolbar>
 
   </ion-header>
