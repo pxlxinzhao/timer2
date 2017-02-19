@@ -14,7 +14,7 @@
           <!--{{newTitle}}-->
         <!--</span>-->
 
-        <ion-item>
+        <ion-item no-lines>
           <!--<ion-label fixed>Username</ion-label>-->
           <ion-input type="text" value="" [(ngModel)]="newTitle"></ion-input>
         </ion-item>
@@ -26,9 +26,9 @@
 
       <ion-card-content>
 
-        <ion-list class="item-borderless">
+        <ion-list no-lines>
           <ion-item-sliding #slidingItem>
-            <ion-item no-lines>
+            <ion-item no-lines style="  border-bottom: none;  border-top: none;">
               <button ion-button color="light" class="main-timer-container-button" (click)="tap()">{{timeElapsed | duration}}</button>
             </ion-item>
             <ion-item-options side="left">
