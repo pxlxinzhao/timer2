@@ -12,7 +12,7 @@
 
     <ion-item-sliding  *ngFor="let c of categories">
 
-      <ion-item [hidden]="c.doc.name === 'Uncategorized'">
+      <ion-item>
         <ion-input type="text" value=""
                    [(ngModel)]="categoryNames[c.id]"
                    (focusout) ="changeCategoryName(c.doc.name, c.id)"
@@ -20,11 +20,10 @@
                    [placeholder]="c.doc.name"
                    class="category-edit"
           ></ion-input>
-
       </ion-item>
 
       <ion-item-options>
-        <button ion-button color="danger" (click)="deleteCategory(c.id)"> Delete</button>
+        <button ion-button color="danger" (click)="deleteCategory(c.id)" [disabled]="categories.length <= 1"> Delete</button>
       </ion-item-options>
     </ion-item-sliding>
 

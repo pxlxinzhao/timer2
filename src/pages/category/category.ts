@@ -67,8 +67,15 @@ export class CategoryPage {
   }
 
   deleteCategory(id) {
-    this.pouch.deleteCategory(id, () => {
-      this.refresh();
-    });
+    this.pouch.getAllCategory().then((docs)=>{
+      let categories = this.pouch.getAsArray(docs);
+      if (categories.length > 1){
+        this.pouch.deleteCategory(id, () => {
+          this.refresh();
+        });
+      }else{
+        console.error('You can not delete the last records');
+      }
+    })
   }
 }
