@@ -213,6 +213,11 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
   padding-top: 40px;
 }
 
+.record-chip {
+  font-family: Handlee !important;
+  margin-top: 7px;
+}
+
 //settings
 .category-edit > input {
   &::-webkit-input-placeholder {

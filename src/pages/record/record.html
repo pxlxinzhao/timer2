@@ -6,6 +6,21 @@
     </ion-title>
 
     <ion-buttons end>
+
+
+      <ion-chip class="record-chip">
+        <ion-icon name="ios-timer-outline" style="text-align: center;"></ion-icon>
+        <ion-label>
+          {{totalTime | duration}}
+        </ion-label>
+      </ion-chip>
+      <ion-chip class="record-chip">
+        <ion-icon name="ios-calculator-outline" style="text-align: center;"></ion-icon>
+        <ion-label>
+          {{totalCount}}
+        </ion-label>
+      </ion-chip>
+
       <button ion-button icon-only (click)="presentPopover($event)" (press)="clearFilter()" [ngClass]="{'green': isFiltered}">
         <ion-icon name="ios-options-outline"></ion-icon>
       </button>

@@ -31,6 +31,8 @@ export class RecordPage {
   selectedCategoryId: any = "";
   titles: any = {};
   toDate: Date;
+  totalTime: any;
+  totalCount: any;
   totalCountByCategoryMap: any = {};
   totalTimeByCategoryMap: any = {};
 
@@ -286,6 +288,9 @@ export class RecordPage {
 
       this.pouch.setLocal("totalTime", totalTime);
       this.pouch.setLocal("totalCount",totalCount);
+
+      this.totalTime = totalTime;
+      this.totalCount = totalCount;
     }
 
   }
