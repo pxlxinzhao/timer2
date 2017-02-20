@@ -33,6 +33,7 @@ export class TimerPage {
 
   currentCategory: string = "";
   newTitle: String = "";
+  isGenerated: boolean = true;
 
   constructor(
     private ads: AdsHelper,
@@ -84,16 +85,20 @@ export class TimerPage {
 
   setupDefault(){
     /**
-     * category
+     * set up default category
+     * should only happen once during the app lifecycle
      */
     this.pouch.getAllCategory().then((data)=>{
-      let defaultCategory = this.constant.CATEGORY_DEFAULT;
 
       if (data['total_rows'] == 0){
+        let defaultCategory = this.constant.CATEGORY_DEFAULT;
         this.pouch.addCategory(defaultCategory, null);
         this.pouch.setLocal(this.constant.CATEGORY_CURRENT, defaultCategory);
-        this.refresh();
+      }else if (!this.pouch.getLocal(this.constant.CATEGORY_CURRENT)){
+        this.pouch.setLocal(this.constant.CATEGORY_CURRENT,data['rows'][0].doc.name);
       }
+
+      this.refresh();
     })
 
     /**
@@ -144,10 +149,9 @@ export class TimerPage {
 
         this.pouch.add(newRecord).then((response) => {
           callback();
+          this.isGenerated  = true; // tell refresh to generate a new title
           this.refresh();
         });
-
-        this.newTitle = this.currentCategory + ' ' + (seed + 1);;
       })
     }
   }
@@ -163,9 +167,10 @@ export class TimerPage {
 
   refresh(){
     this.currentCategory = this.pouch.getLocal(this.constant.CATEGORY_CURRENT);
-    if (!this.newTitle){
+    if (this.isGenerated){
       this.pouch.getSeed(this.currentCategory, (x) => {
         this.newTitle = this.currentCategory + ' ' + x;
+        this.isGenerated = true;
       })
     }
 

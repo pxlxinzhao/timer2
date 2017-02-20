@@ -47,8 +47,8 @@ export class RecordPage {
     /**
      * for first time app started,insert into category table with default category
      */
-    this.pouch.setDefaultCategory();
-    this.currentCategory = this.pouch.getLocal(this.constant.CATEGORY_CURRENT) || this.constant.CATEGORY_DEFAULT;
+    //this.pouch.setDefaultCategory();
+    //this.currentCategory = this.pouch.getLocal(this.constant.CATEGORY_CURRENT);// || this.constant.CATEGORY_DEFAULT;
 
     this.extra.getEvent.subscribe((data) => {
       if (data.fromDate || data.toDate){
@@ -146,6 +146,7 @@ export class RecordPage {
   }
 
   refresh(){
+    let self = this;
     this.isFiltered = false;
 
     /**
@@ -153,28 +154,8 @@ export class RecordPage {
      */
     this.pouch.getAllCategory().then((docs) =>{
       this.categories = this.pouch.getAsArray(docs);
-    })
-
-    /**
-     * set up current category
-     * first try to use it from local storage which is passed from the timer page
-     * else if not set use default category
-     */
-    let self = this;
-
-    console.log(1, this.pouch.getLocal(this.constant.CATEGORY_CURRENT))
-    if (this.pouch.getLocal(this.constant.CATEGORY_CURRENT)){
       this.currentCategory = this.pouch.getLocal(this.constant.CATEGORY_CURRENT);
-      console.log('2 set current category to: ', this.currentCategory);
-      /**
-       * clear immediately because it should only be used once after
-       * clicking on home page record
-       */
-      this.pouch.setLocal(this.constant.CATEGORY_CURRENT, '');
-    }else if(this.currentCategory.length === 0 ){
-      console.log(3);
-      this.currentCategory = this.constant.CATEGORY_DEFAULT;
-    }
+    })
 
     /**
      * refresh records
@@ -215,9 +196,6 @@ export class RecordPage {
       /**
        * cache records to be used in the calendar page
        */
-      //this.pouch.setLocal("records", JSON.stringify(records));
-      //console.log('setting temp');
-
       this.pouch.setTemp("records", records);
 
       /**
@@ -248,7 +226,6 @@ export class RecordPage {
        * set value to the 'change category' select
        */
       for (let i=0; i<records.length; i++){
-        //console.log(records[i]);
         this.categoryByRecordIdMap[records[i].id] = records[i].doc.category;
       }
 

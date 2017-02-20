@@ -86,20 +86,14 @@ export class Pouch {
 
     this._seedDb.get(activity, (err, doc) => {
       if (err && err.status == 404){
-        console.log(1, err);
         this._seedDb.put({
           _id: activity,
           seed: 1
         }, function(error, response){
-          console.log(2)
           if (error) return console.error(error);
-          console.log(3)
-
           callback(1);
         });
       }else{
-        console.log(4, doc)
-
         callback(doc.seed);
       }
     });
@@ -141,25 +135,6 @@ export class Pouch {
     return this._categroyDb.allDocs({ include_docs: true})
   }
 
-  setDefaultCategory(){
-    this.getAllCategory().then((docs) => {
-      let hasDefault = false;
-      let categories = this.getAsArray(docs);
-
-      for (let i = 0; i<categories.length; i++){
-        let category = categories[i];
-        if (category.doc.name === this.constant.CATEGORY_DEFAULT){
-          hasDefault = true;
-          break;
-        }
-      }
-
-      if (!hasDefault){
-        this.addCategory(this.constant.CATEGORY_DEFAULT, null);
-      }
-    })
-  }
-
   reset(){
     let self = this;
     let countdown = 4;
@@ -167,7 +142,7 @@ export class Pouch {
     this.setLocal(this.constant.RECORD_SELECTED_TO_CHANGE_CATEGORY, '');
     this.setLocal(this.constant.CATEGORY_SELECTED, '');
     this.setLocal(this.constant.CATEGORY_CURRENT, '');
-    this.setLocal(this.constant.CATEGORY_SEED, 1);
+    //this.setLocal(this.constant.CATEGORY_SEED, 1);
 
     this.setLocal("records", '');
     this.setLocal("totalTime", '');
@@ -233,6 +208,8 @@ export class Pouch {
   }
 
   addCategory(name, callback){
+    if (!name) return;
+
     this._categroyDb.post({
       name: name
     }).then((docs) =>{
@@ -264,27 +241,16 @@ export class Pouch {
 
   /**
    * change category name in setting page
-   * @param newValue
-   * @param oldValue
-   * @param oldId
-   * @param callback
    */
-  updateCategory(newValue, oldValue, oldId, callback){
-    if (!newValue || !oldId) return;
+  updateCategory(id, newValue, callback){
+    if (!newValue || !id) return;
     let self = this;
 
-    //this.deleteCategory(oldId,  function(err, response) {
-    //  if (err) { return console.log(err); }
-    //  // handle response
-    //  self.addCategory(newValue, callback);
-    //  self.updateRecordsCategory(newValue, oldValue);
-    //});
-
-    this._categroyDb.get(oldId, function(err, doc){
+    this._categroyDb.get(id, function(err, doc){
       if (err) return console.log(1, err);
 
       self._categroyDb.put({
-        _id:doc._id,
+        _id: id,
         _rev: doc._rev,
         name: newValue
       }, function(err, res){
@@ -298,8 +264,6 @@ export class Pouch {
 
   /**
    * change all records with old category to new category
-   * @param newValue
-   * @param oldValue
    */
   updateRecordsCategory(newValue, oldValue){
     if (!newValue || !oldValue) return;
@@ -309,8 +273,8 @@ export class Pouch {
       for (let i = 0; i<records.length; i++){
         if (records[i].doc.category === oldValue){
           this._categroyDb.put({
-            _id: records[i].id,
-            _rev: records[i]._rev,
+            _id: records[i].doc._id,
+            _rev: records[i].doc._rev,
             category: newValue
           }, function(err, response){
             if (err) { return console.log(err); }
@@ -322,9 +286,6 @@ export class Pouch {
 
   /**
    * update a single record's title
-   * @param id
-   * @param newTitle
-   * @param callback
    */
   updateRecordTitle(id, newTitle, callback){
     if (!id || !newTitle) return;
@@ -351,8 +312,6 @@ export class Pouch {
 
   /**
    * change a single record's category
-   * @param id
-   * @param newCategory
    */
   updateRecordCategory(id, newCategory, callback){
     if (!id || !newCategory) return;

@@ -57,28 +57,18 @@ export class CategoryPage {
     this.refresh();
   }
 
-  changeCategoryName(oldValue, oldId) {
-    //console.log("1 window.localStorage['currentCategory']", window.localStorage['currentCategory']);
-
+  changeCategoryName(oldValue, id) {
     let self = this;
 
-    if (!oldValue || !oldId) return;
-    let newValue = this.categoryNames[oldId];
+    if (!oldValue || !id) return;
+    let newValue = this.categoryNames[id];
 
-    //console.log('newValue', newValue);
-
-    this.pouch.updateCategory(newValue, oldValue, oldId, function(){
-
-      //console.log("2 window.localStorage['currentCategory']", window.localStorage['currentCategory']);
-      //console.log('self.constant.CATEGORY_CURRENT', self.constant.CATEGORY_CURRENT);
-      //console.log('old', oldValue, self.pouch.getLocal(self.constant.CATEGORY_CURRENT));
+    this.pouch.updateCategory(id, newValue, function(){
 
       if (self.pouch.getLocal(self.constant.CATEGORY_CURRENT) === oldValue){
         self.pouch.setLocal(self.constant.CATEGORY_CURRENT, newValue);
       }
 
-      //console.log('new', self.pouch.getLocal(self.constant.CATEGORY_CURRENT));
-      //console.log("3 window.localStorage['currentCategory']", window.localStorage['currentCategory']);
       self.refresh();
     });
   }
@@ -101,7 +91,7 @@ export class CategoryPage {
           this.refresh();
         });
       }else{
-        console.error('You can not delete the last records');
+        //.error('You can not delete the last records');
       }
     })
   }
