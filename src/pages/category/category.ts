@@ -57,13 +57,21 @@ export class CategoryPage {
 
   changeCategoryName(oldValue, oldId) {
     if (!oldValue || !oldId) return;
-
-    let self = this;
     let newValue = this.categoryNames[oldId];
 
-    this.pouch.updateCategory(newValue, oldValue, oldId, function(){
-      self.refresh();
+    this.pouch.updateCategory(newValue, oldValue, oldId, ()=>{
+      this.refresh();
     });
+  }
+
+  confirmDeletion(id){
+    Dialogs.confirm('Are you sure you want to delete this category?', 'Delete category', ['Ok','Cancel'])
+      .then((result) => {
+        //ok is 1, cancel is 2
+        if (result === 1){
+          this.deleteCategory(id);
+        }
+      })
   }
 
   deleteCategory(id) {

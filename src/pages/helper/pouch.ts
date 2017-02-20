@@ -270,12 +270,24 @@ export class Pouch {
     if (!newValue || !oldId) return;
     let self = this;
 
-    this.deleteCategory(oldId,  function(err, response) {
-      if (err) { return console.log(err); }
-      // handle response
-      self.addCategory(newValue, callback);
-      self.updateRecordsCategory(newValue, oldValue);
-    });
+    //this.deleteCategory(oldId,  function(err, response) {
+    //  if (err) { return console.log(err); }
+    //  // handle response
+    //  self.addCategory(newValue, callback);
+    //  self.updateRecordsCategory(newValue, oldValue);
+    //});
+
+    this._categroyDb.get(oldId, function(err, doc){
+      if (err) return console.log(1, err);
+      self._categroyDb.put({
+        _id:doc._id,
+        _rev: doc._rev,
+        name: newValue
+      }, function(err, res){
+        if (err) return console.log(2, err);
+        //self.updateRecordsCategory(newValue, oldValue);
+      })
+    })
   }
 
 

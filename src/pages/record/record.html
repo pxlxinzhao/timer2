@@ -8,13 +8,13 @@
     <ion-buttons end>
 
 
-      <ion-chip class="record-chip">
+      <ion-chip class="record-chip" [hidden]="!totalTime">
         <ion-icon name="ios-timer-outline" style="text-align: center;"></ion-icon>
         <ion-label>
           {{totalTime | duration}}
         </ion-label>
       </ion-chip>
-      <ion-chip class="record-chip">
+      <ion-chip class="record-chip" [hidden]="!totalCount">
         <ion-icon name="ios-calculator-outline" style="text-align: center;"></ion-icon>
         <ion-label>
           {{totalCount}}

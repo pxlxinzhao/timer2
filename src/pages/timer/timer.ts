@@ -92,6 +92,7 @@ export class TimerPage {
       if (data['total_rows'] == 0){
         this.pouch.addCategory(defaultCategory, null);
         this.pouch.setLocal(this.constant.CATEGORY_CURRENT, defaultCategory);
+        this.refresh();
       }
     })
 
