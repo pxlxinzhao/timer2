@@ -210,9 +210,9 @@ export class RecordPage {
       /**
        * cache records to be used in the calendar page
        */
-      this.pouch.setLocal("records", JSON.stringify(records));
+      //this.pouch.setLocal("records", JSON.stringify(records));
+      //console.log('setting temp');
 
-      console.log('setting temp');
       this.pouch.setTemp("records", records);
 
       /**

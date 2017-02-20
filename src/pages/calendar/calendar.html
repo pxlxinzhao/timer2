@@ -10,6 +10,18 @@
 <ion-content>
   <div *ngFor="let key of calendarMap | keys">
 
+    <div style="text-align: center" [hidden]="calendarMap[key].dayDiff < 1">
+      <ion-chip>
+        <ion-label>    {{calendarMap[key].dayDiff}} day{{calendarMap[key].dayDiff != 1 ? 's' : ''}} off</ion-label>
+      </ion-chip>
+    </div>
+
+    <div style="text-align: center; padding-top: 10px;" [hidden]="!calendarMap[key].streak || calendarMap[key].streak < 2">
+      <ion-chip class="green-background">
+        <ion-label>    {{calendarMap[key].streak}} days streak</ion-label>
+      </ion-chip>
+    </div>
+
     <ion-row>
       <ion-col>
         <ion-label fixed style="text-align: center">{{key}}</ion-label>
@@ -48,27 +60,6 @@
         </ion-chip>
 
       </ion-col>
-
-
-      <!--<ion-col>-->
-        <!--&lt;!&ndash;<ion-label fixed style="text-align: center">{{calendarMap[key].totalTime  | duration}}</ion-label>&ndash;&gt;-->
-        <!--<div style="width: 120px;">-->
-          <!--<ion-chip style="margin-top: 7px;">-->
-            <!--<ion-label>{{calendarMap[key].totalTime  | duration}}</ion-label>-->
-          <!--</ion-chip>-->
-
-          <!--<ion-chip style="margin-top: 7px;">-->
-            <!--<ion-label>{{calendarMap[key].count}}</ion-label>-->
-          <!--</ion-chip>-->
-        <!--</div>-->
-
-      <!--</ion-col>-->
-
-      <!--<ion-col style="text-align: right">-->
-        <!--<ion-chip style="margin-top: 7px;">-->
-          <!--<ion-label>{{calendarMap[key].count}}</ion-label>-->
-        <!--</ion-chip>-->
-      <!--</ion-col>-->
 
     </ion-row>
 
