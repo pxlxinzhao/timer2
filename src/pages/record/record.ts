@@ -68,6 +68,7 @@ export class RecordPage {
    * life cycle events goes first
    */
   ionViewWillEnter() {
+    console.log('refresh??');
     this.refresh();
   }
 
@@ -146,23 +147,6 @@ export class RecordPage {
 
   refresh(){
     this.isFiltered = false;
-    /**
-     * set up current category
-     * first try to use it from local storage which is passed from the timer page
-     * else if not set use default category
-     */
-    let self = this;
-
-    if (this.pouch.getLocal(this.constant.CATEGORY_SELECTED)){
-      this.currentCategory = this.pouch.getLocal(this.constant.CATEGORY_SELECTED);
-      /**
-       * clear immediately because it should only be used once after
-       * clicking on home page record
-       */
-      this.pouch.setLocal(this.constant.CATEGORY_SELECTED, '');
-    }else if(this.currentCategory.length === 0 ){
-      this.currentCategory = this.constant.CATEGORY_DEFAULT;
-    }
 
     /**
      * create category drop down
@@ -170,6 +154,27 @@ export class RecordPage {
     this.pouch.getAllCategory().then((docs) =>{
       this.categories = this.pouch.getAsArray(docs);
     })
+
+    /**
+     * set up current category
+     * first try to use it from local storage which is passed from the timer page
+     * else if not set use default category
+     */
+    let self = this;
+
+    console.log(1, this.pouch.getLocal(this.constant.CATEGORY_CURRENT))
+    if (this.pouch.getLocal(this.constant.CATEGORY_CURRENT)){
+      this.currentCategory = this.pouch.getLocal(this.constant.CATEGORY_CURRENT);
+      console.log('2 set current category to: ', this.currentCategory);
+      /**
+       * clear immediately because it should only be used once after
+       * clicking on home page record
+       */
+      this.pouch.setLocal(this.constant.CATEGORY_CURRENT, '');
+    }else if(this.currentCategory.length === 0 ){
+      console.log(3);
+      this.currentCategory = this.constant.CATEGORY_DEFAULT;
+    }
 
     /**
      * refresh records

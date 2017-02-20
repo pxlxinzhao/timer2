@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Dialogs } from 'ionic-native';
 import { Pouch } from  '../helper/pouch';
+import { Constant } from  '../helper/constant';
 import { Platform } from 'ionic-angular';
 
 
@@ -17,6 +18,7 @@ export class CategoryPage {
   constructor(public navCtrl:NavController,
               public navParams:NavParams,
               private pouch: Pouch,
+              private constant: Constant,
               private platform:Platform) {
     this.refresh();
   }
@@ -56,11 +58,28 @@ export class CategoryPage {
   }
 
   changeCategoryName(oldValue, oldId) {
+    //console.log("1 window.localStorage['currentCategory']", window.localStorage['currentCategory']);
+
+    let self = this;
+
     if (!oldValue || !oldId) return;
     let newValue = this.categoryNames[oldId];
 
-    this.pouch.updateCategory(newValue, oldValue, oldId, ()=>{
-      this.refresh();
+    //console.log('newValue', newValue);
+
+    this.pouch.updateCategory(newValue, oldValue, oldId, function(){
+
+      //console.log("2 window.localStorage['currentCategory']", window.localStorage['currentCategory']);
+      //console.log('self.constant.CATEGORY_CURRENT', self.constant.CATEGORY_CURRENT);
+      //console.log('old', oldValue, self.pouch.getLocal(self.constant.CATEGORY_CURRENT));
+
+      if (self.pouch.getLocal(self.constant.CATEGORY_CURRENT) === oldValue){
+        self.pouch.setLocal(self.constant.CATEGORY_CURRENT, newValue);
+      }
+
+      //console.log('new', self.pouch.getLocal(self.constant.CATEGORY_CURRENT));
+      //console.log("3 window.localStorage['currentCategory']", window.localStorage['currentCategory']);
+      self.refresh();
     });
   }
 

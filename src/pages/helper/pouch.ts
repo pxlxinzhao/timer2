@@ -81,6 +81,9 @@ export class Pouch {
   }
 
   getSeed(activity, callback){
+    console.log('activity', activity);
+    if (!activity) return;
+
     this._seedDb.get(activity, (err, doc) => {
       if (err && err.status == 404){
         console.log(1, err);
@@ -279,6 +282,7 @@ export class Pouch {
 
     this._categroyDb.get(oldId, function(err, doc){
       if (err) return console.log(1, err);
+
       self._categroyDb.put({
         _id:doc._id,
         _rev: doc._rev,
@@ -286,6 +290,7 @@ export class Pouch {
       }, function(err, res){
         if (err) return console.log(2, err);
         //self.updateRecordsCategory(newValue, oldValue);
+        callback();
       })
     })
   }

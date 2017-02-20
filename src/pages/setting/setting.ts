@@ -53,7 +53,7 @@ export class SettingPage {
   }
 
   toggleSafeDeletion(){
-    console.log('safeDeletion', this.safeDeletion);
+    //console.log('safeDeletion', this.safeDeletion);
     this.pouch.setLocal('safeDeletion', this.safeDeletion);
   }
 
