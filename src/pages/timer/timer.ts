@@ -34,6 +34,7 @@ export class TimerPage {
   currentCategory: string = "";
   newTitle: String = "";
   isGenerated: boolean = true;
+  categoryWhenTitleGenerated: any;
 
   constructor(
     private ads: AdsHelper,
@@ -167,10 +168,11 @@ export class TimerPage {
 
   refresh(){
     this.currentCategory = this.pouch.getLocal(this.constant.CATEGORY_CURRENT);
-    if (this.isGenerated){
+    if (this.isGenerated && this.currentCategory !== this.categoryWhenTitleGenerated){
       this.pouch.getSeed(this.currentCategory, (x) => {
         this.newTitle = this.currentCategory + ' ' + x;
         this.isGenerated = true;
+        this.categoryWhenTitleGenerated = this.currentCategory;
       })
     }
 

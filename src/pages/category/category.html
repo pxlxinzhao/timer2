@@ -13,11 +13,13 @@
     <ion-item-sliding  *ngFor="let c of categories">
 
       <!--(focusout) ="changeCategoryName(c.doc.name, c.id)"-->
+      <!--(keyup.enter)="changeCategoryName(c.doc.name, c.id)"-->
+
 
       <ion-item>
         <ion-input type="text" value=""
                    [(ngModel)]="categoryNames[c.id]"
-                   (keyup.enter)="changeCategoryName(c.doc.name, c.id)"
+                   (focusout)="changeCategoryName(c.doc.name, c.id)"
                    [placeholder]="c.doc.name"
                    class="category-edit"
           ></ion-input>
