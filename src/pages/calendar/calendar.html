@@ -10,7 +10,7 @@
 <ion-content>
   <div *ngFor="let key of calendarMap | keys">
 
-    <div style="text-align: center" [hidden]="calendarMap[key].dayDiff < 1">
+    <div style="text-align: center; padding-top: 10px;" [hidden]="calendarMap[key].dayDiff < 1">
       <ion-chip>
         <ion-label>    {{calendarMap[key].dayDiff}} day{{calendarMap[key].dayDiff != 1 ? 's' : ''}} off</ion-label>
       </ion-chip>
