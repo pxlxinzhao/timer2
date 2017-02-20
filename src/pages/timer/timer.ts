@@ -4,6 +4,7 @@ import { Constant } from '../helper/constant'
 //import { Extra } from '../helper/extra';
 import { NavController, Slides } from 'ionic-angular';
 import { Pouch } from  '../helper/pouch';
+import { StatusBar } from 'ionic-native';
 
 
 @Component({
@@ -69,6 +70,7 @@ export class TimerPage {
     }, 500)
 
     this.setUpText();
+    StatusBar.backgroundColorByHexString("#1fc21b");
   }
 
   pause(){
@@ -77,6 +79,7 @@ export class TimerPage {
     clearInterval(this.interval);
 
     this.setUpText();
+    StatusBar.backgroundColorByHexString("#000000");
   }
 
   setupDefault(){
@@ -119,6 +122,7 @@ export class TimerPage {
 
     this.setUpText();
     slidingItem.close();
+    StatusBar.backgroundColorByHexString("#000000");
   }
 
   setUpText(){
