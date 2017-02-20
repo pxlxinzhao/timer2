@@ -103,7 +103,7 @@ export class RecordPage {
   }
 
   confirmDelete(id){
-    if (this.platform.is('core')){
+    if (this.platform.is('core') || !(this.pouch.getLocal('safeDeletion') !== 'false')){
       this.deleteRecord(id);
     }else{
       let self = this;

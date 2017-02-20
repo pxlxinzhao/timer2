@@ -13,13 +13,15 @@ import { Platform } from 'ionic-angular';
 })
 export class SettingPage {
 
+  safeDeletion: boolean = true;
+
   constructor(
     private ads: AdsHelper,
     public navCtrl: NavController,
     private pouch: Pouch,
     private platform: Platform
   ) {
-
+    this.safeDeletion = this.pouch.getLocal('safeDeletion') !== 'false';
   }
 
   navigateToCategory(){
@@ -48,6 +50,11 @@ export class SettingPage {
           }
         })
     }
+  }
+
+  toggleSafeDeletion(){
+    console.log('safeDeletion', this.safeDeletion);
+    this.pouch.setLocal('safeDeletion', this.safeDeletion);
   }
 
 }

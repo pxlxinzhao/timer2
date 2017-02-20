@@ -40,7 +40,7 @@ export class TimerPage {
     private nav: NavController,
     private pouch: Pouch
   ) {
-    this.setupDefaultCategory();
+    this.setupDefault();
   }
 
   ionViewWillEnter() {
@@ -79,7 +79,10 @@ export class TimerPage {
     this.setUpText();
   }
 
-  setupDefaultCategory(){
+  setupDefault(){
+    /**
+     * category
+     */
     this.pouch.getAllCategory().then((data)=>{
       let defaultCategory = this.constant.CATEGORY_DEFAULT;
 
@@ -88,6 +91,13 @@ export class TimerPage {
         this.pouch.setLocal(this.constant.CATEGORY_CURRENT, defaultCategory);
       }
     })
+
+    /**
+     * safe deletion, it is undefined when never set up
+     */
+    if (!this.pouch.getLocal('safeDeletion')){
+      this.pouch.setLocal('safeDeletion', 'true');
+    }
   }
 
   save(slidingItem){

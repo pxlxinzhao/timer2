@@ -20,6 +20,11 @@
       <div class="button-effect"></div>
     </button>
 
+    <ion-item>
+      <ion-label>Safe deletion</ion-label>
+      <ion-toggle [(ngModel)]="safeDeletion" (ngModelChange)="toggleSafeDeletion()"></ion-toggle>
+    </ion-item>
+
     <div class="item" style="text-align: center">
       <button ion-button round color="danger" (click)="confirmReset()" style="width: 94%">Reset</button>
     </div>

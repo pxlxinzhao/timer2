@@ -10,9 +10,44 @@
 <ion-content>
   <ion-list>
 
-      <ion-item text-wrap *ngFor="let tip of tips">
-        {{tip}}
+    <div class="tips-chip-container">
+      <ion-chip>
+        <ion-label>
+          Timer
+        </ion-label>
+      </ion-chip>
+    </div>
+
+
+      <ion-item text-wrap>
+        New record is created under the chosen category which you can change in "Records" tab.
       </ion-item>
+
+    <div class="tips-chip-container">
+      <ion-chip>
+        <ion-label>
+          Records
+        </ion-label>
+      </ion-chip>
+    </div>
+
+
+    <ion-item text-wrap>
+      Date filter icon appears green when records are filtered. Press and hold the icon to clear the date filter.
+    </ion-item>
+
+    <div class="tips-chip-container">
+      <ion-chip>
+        <ion-label>
+          Settings
+        </ion-label>
+      </ion-chip>
+    </div>
+
+
+    <ion-item text-wrap>
+      Turn off safe deletion option and then you can delete records quickly without confirmation.
+    </ion-item>
 
 
   </ion-list>

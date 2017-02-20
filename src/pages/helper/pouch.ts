@@ -171,6 +171,7 @@ export class Pouch {
     this.setLocal("totalCount",'');
     this.setLocal('fromDate', '');
     this.setLocal('toDate', '');
+    this.setLocal('safeDeletion', '');
 
     self._db.destroy(function (err, response) {
       if (err) {
