@@ -35,6 +35,7 @@ export class TimerPage {
   newTitle: String = "";
   isGenerated: boolean = true;
   categoryWhenTitleGenerated: any;
+  setNewTitle: boolean = true; //set to true and call refresh to set a new title
 
   constructor(
     private ads: AdsHelper,
@@ -151,6 +152,7 @@ export class TimerPage {
         this.pouch.add(newRecord).then((response) => {
           callback();
           this.isGenerated  = true; // tell refresh to generate a new title
+          this.setNewTitle = true;
           this.refresh();
         });
       })
@@ -168,11 +170,12 @@ export class TimerPage {
 
   refresh(){
     this.currentCategory = this.pouch.getLocal(this.constant.CATEGORY_CURRENT);
-    if (this.isGenerated && this.currentCategory !== this.categoryWhenTitleGenerated){
+    if ((this.isGenerated && this.currentCategory !== this.categoryWhenTitleGenerated) || this.setNewTitle){
       this.pouch.getSeed(this.currentCategory, (x) => {
         this.newTitle = this.currentCategory + ' ' + x;
         this.isGenerated = true;
         this.categoryWhenTitleGenerated = this.currentCategory;
+        this.setNewTitle = false;
       })
     }
 

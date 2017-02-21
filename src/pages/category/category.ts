@@ -74,6 +74,11 @@ export class CategoryPage {
   }
 
   confirmDeletion(id){
+    if (this.platform.is('core')){
+      this.deleteCategory(id);
+      return;
+    }
+
     Dialogs.confirm('Are you sure you want to delete this category?', 'Delete category', ['Ok','Cancel'])
       .then((result) => {
         //ok is 1, cancel is 2

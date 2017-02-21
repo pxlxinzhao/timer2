@@ -255,7 +255,7 @@ export class Pouch {
         name: newValue
       }, function(err, res){
         if (err) return console.log(2, err);
-        //self.updateRecordsCategory(newValue, oldValue);
+        self.updateRecordsCategory(newValue, doc.name);
         callback();
       })
     })
@@ -268,18 +268,19 @@ export class Pouch {
   updateRecordsCategory(newValue, oldValue){
     if (!newValue || !oldValue) return;
 
+    let self = this;
+
     this.getAll().then((docs) => {
       let records = this.getAsArray(docs);
-      for (let i = 0; i<records.length; i++){
-        if (records[i].doc.category === oldValue){
-          this._categroyDb.put({
-            _id: records[i].doc._id,
-            _rev: records[i].doc._rev,
-            category: newValue
-          }, function(err, response){
-            if (err) { return console.log(err); }
-          })
-        }
+
+      for (let i=0; i<records.length; i++){
+        /**
+         * updateRecordCategory is async process
+         * capture i
+         */
+        (function(i){
+          self.updateRecordCategory(records[i].id, newValue, null);
+        })(i);
       }
     })
   }
