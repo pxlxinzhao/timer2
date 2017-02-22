@@ -7,53 +7,71 @@
 </ion-header>
 
 
-<ion-content>
-  <ion-list>
+<ion-content pager="true">
+    <ion-slides>
 
-    <div class="tips-chip-container">
-      <ion-chip>
-        <ion-label>
-          Timer
-        </ion-label>
-      </ion-chip>
-    </div>
+      <!--slide timer-->
+      <ion-slide #tipSlide>
 
+        <div class="tips-chip-container">
+          <ion-chip>
+            <ion-label>
+              Timer
+            </ion-label>
+          </ion-chip>
+        </div>
 
-      <ion-item text-wrap>
-        New record is created under the chosen category which you can change in "Records" tab.
-      </ion-item>
+        <ion-card>
+          <ion-card-content>
+            New record is created under the chosen category which you can change in the "Records" tab.
+          </ion-card-content>
+        </ion-card>
 
-    <div class="tips-chip-container">
-      <ion-chip>
-        <ion-label>
-          Records
-        </ion-label>
-      </ion-chip>
-    </div>
+      </ion-slide>
 
 
-    <ion-item text-wrap>
-      Date filter icon appears green when records are filtered. Press and hold the icon to clear the date filter.
-    </ion-item>
+      <!--slide records-->
+      <ion-slide>
 
-    <div class="tips-chip-container">
-      <ion-chip>
-        <ion-label>
-          Settings
-        </ion-label>
-      </ion-chip>
-    </div>
+        <div class="tips-chip-container">
+          <ion-chip>
+            <ion-label>
+              Records
+            </ion-label>
+          </ion-chip>
+        </div>
 
-
-    <ion-item text-wrap>
-      Turn off safe deletion option and then you can delete records quickly without confirmation.
-    </ion-item>
-
-    <ion-item text-wrap>
-      Deleting an activity deletes all the records that belong to it.
-    </ion-item>
+        <ion-card>
+          <ion-card-content>
+            Date filter icon appears green when records are filtered. Press and hold the icon to clear the date filter.
+          </ion-card-content>
+        </ion-card>
+      </ion-slide>
 
 
-  </ion-list>
+      <!--slide setting-->
+      <ion-slide>
+
+        <div class="tips-chip-container">
+          <ion-chip>
+            <ion-label>
+              Settings
+            </ion-label>
+          </ion-chip>
+        </div>
+
+        <!--<ion-card>-->
+          <!--<ion-card-content>-->
+            <!--Turn off safe deletion option and then you can delete records quickly without confirmation.-->
+          <!--</ion-card-content>-->
+        <!--</ion-card>-->
+
+        <ion-card>
+          <ion-card-content>
+            Deleting an activity deletes all the records that belong to it.
+          </ion-card-content>
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
 
 </ion-content>
