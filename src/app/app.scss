@@ -46,6 +46,10 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
   opacity: 0.5;
 }
 
+.red {
+  color: $red;
+}
+
 .green {
   color: $green;
 }
@@ -220,6 +224,28 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
 .record-chip {
   font-family: Handlee !important;
   margin-top: 7px;
+}
+
+.toolbar-background-md {
+  border-color: #b2b2b2;
+  background: white;
+}
+
+.footer {
+  opacity: 0;
+}
+
+.footer-text {
+  margin-left: 6px;
+  margin-top: 4px;
+}
+
+.trash-icon {
+  color: $red;
+  font-size: 25px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 12px;
 }
 
 //settings

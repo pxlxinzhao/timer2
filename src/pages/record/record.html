@@ -51,37 +51,45 @@
       </ion-chip>
     </div>
 
-
-    <ion-card  [hidden]="currentCategory !== records[key].doc.category">
+    <!--[hidden]="currentCategory !== records[key].doc.category"-->
+    <ion-card (click)="toggleRecord(records[key].id)">
       <!--<ion-card-title></ion-card-title>-->
 
       <ion-card-header style="padding: 12px; position: relative">
-        <div class="category-title" (click)="openTitleDialog(records[key].id, records[key].doc.title)">
+        <div class="category-title" (click)="openTitleDialog($event, records[key].id, records[key].doc.title)">
           {{records[key].doc.title || "Default Title"}}
         </div>
 
-       <span class="right" >
-        <ion-icon name="ios-trash-outline" danger (click)="confirmDelete(records[key].id)"></ion-icon>
-      </span>
+       <!--<span class="right" >-->
+        <!--<ion-icon name="ios-trash-outline" danger (click)="confirmDelete(records[key].id)"></ion-icon>-->
+      <!--</span>-->
 
-       <span class="right" style="margin-right: 15px;"  [hidden]="recordIdSelectedForCategoryChanging === records[key].id">
-         <ion-icon name="ios-arrow-down-outline" (click) = "showCategoryDropdown(records[key].id)"></ion-icon>
-      </span>
+       <!--<span class="right" style="margin-right: 15px;"  [hidden]="recordIdSelectedForCategoryChanging === records[key].id">-->
+         <!--<ion-icon name="ios-arrow-down-outline" (click) = "showCategoryDropdown(records[key].id)"></ion-icon>-->
+      <!--</span>-->
 
-       <span class="right" style="margin-right: 15px;"  [hidden]="recordIdSelectedForCategoryChanging !== records[key].id">
-         <ion-icon name="ios-arrow-up-outline" (click) = "showCategoryDropdown(records[key].id)"></ion-icon>
-      </span>
+       <!--<span class="right" style="margin-right: 15px;"  [hidden]="recordIdSelectedForCategoryChanging !== records[key].id">-->
+         <!--<ion-icon name="ios-arrow-up-outline" (click) = "showCategoryDropdown(records[key].id)"></ion-icon>-->
+      <!--</span>-->
 
-        <ion-item [hidden]="recordIdSelectedForCategoryChanging !== records[key].id">
-          <ion-label>Change category</ion-label>
-          <ion-select [(ngModel)]="categoryByRecordIdMap[records[key].id]" (ionChange)="changeRecordCategory(records[key].id)">
-            <ion-option value="{{categories[key].doc.name}}" *ngFor="let key of categories | keys">{{categories[key].doc.name}}</ion-option>
-          </ion-select>
-        </ion-item>
+        <!--<ion-item [hidden]="recordIdSelectedForCategoryChanging !== records[key].id">-->
+          <!--<ion-label>Change category</ion-label>-->
+          <!--<ion-select [(ngModel)]="categoryByRecordIdMap[records[key].id]" (ionChange)="changeRecordCategory(records[key].id)">-->
+            <!--<ion-option value="{{categories[key].doc.name}}" *ngFor="let key of categories | keys">{{categories[key].doc.name}}</ion-option>-->
+          <!--</ion-select>-->
+        <!--</ion-item>-->
+
+        <span class="right green" style="margin-right: 15px; font-size: 2rem;" >
+          <ion-icon name="ios-checkmark" [hidden]="!isSelected(records[key].id)"></ion-icon>
+        </span>
+
+        <span class="right" style="margin-right: 0px; font-size: 2rem; color: white" >
+          <ion-icon name="ios-checkmark"></ion-icon>
+        </span>
 
       </ion-card-header>
 
-      <ion-card-content style="position: relative">
+      <ion-card-content style="position: relative" >
         <div style= "margin: auto; text-align: center; font-size: 2rem">
           <strong>
             {{records[key].doc.duration | duration}}
@@ -99,3 +107,45 @@
   </ion-fab>
 
 </ion-content>
+
+
+<ion-footer>
+  <ion-toolbar>
+
+    <ion-row>
+      <ion-col style="padding-top: 15px;">
+
+
+        <div class="footer-text">
+          <!--<ion-icon name="ios-square-outline"></ion-icon>-->
+
+          <ion-row>
+            <ion-col>
+              {{selectedRecords.length}} selected
+            </ion-col>
+            <ion-col>
+              <ion-toggle></ion-toggle>
+            </ion-col>
+          </ion-row>
+
+        </div>
+
+
+      </ion-col>
+
+      <ion-col>
+        <ion-item [ngClass]="{'footer': selectedRecords.length == 0}" >
+          <ion-label>Change category</ion-label>
+          <ion-select [disabled]="selectedRecords.length == 0">
+            <ion-option value="{{categories[key].doc.name}}" *ngFor="let key of categories | keys">{{categories[key].doc.name}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+        <div [ngClass]="{'footer': selectedRecords.length == 0, 'trash-icon': true}">
+          <ion-icon name="ios-trash-outline"></ion-icon>
+        </div>
+    </ion-row>
+
+  </ion-toolbar>
+</ion-footer>

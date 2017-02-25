@@ -35,6 +35,7 @@ export class RecordPage {
   totalCount: any;
   totalCountByCategoryMap: any = {};
   totalTimeByCategoryMap: any = {};
+  selectedRecords: any = [];
 
   constructor(public navCtrl:NavController,
               private constant: Constant,
@@ -82,7 +83,9 @@ export class RecordPage {
     })
   }
 
-  openTitleDialog(id, title){
+  openTitleDialog($event, id, title){
+    $event.stopPropagation();
+
     if (this.platform.is('core')){
       console.info('can only change title in a real device');
       return;
@@ -292,5 +295,18 @@ export class RecordPage {
 
   switchToCalendar(){
     this.navCtrl.push(CalendarPage);
+  }
+
+  toggleRecord(id){
+    let index = this.selectedRecords.indexOf(id);
+    if (index > -1){
+      this.selectedRecords.splice(index, 1);
+    }else{
+      this.selectedRecords.push(id);
+    }
+  }
+
+  isSelected(id){
+    return  this.selectedRecords.indexOf(id) > -1;
   }
 }
