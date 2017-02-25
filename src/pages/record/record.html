@@ -120,11 +120,11 @@
           <!--<ion-icon name="ios-square-outline"></ion-icon>-->
 
           <ion-row>
-            <ion-col style="text-align: center">
+            <ion-col class="records-selected">
               {{selectedRecords.length}} selected
             </ion-col>
             <ion-col style="text-align: center">
-              <ion-toggle (ionChange)="toggleAll()"></ion-toggle>
+              <ion-toggle (ionChange)="toggleAll()" [(ngModel)]="selectAll"></ion-toggle>
             </ion-col>
           </ion-row>
         </div>
@@ -135,7 +135,7 @@
       <ion-col>
         <ion-item [ngClass]="{'footer': selectedRecords.length == 0}" >
           <ion-label>Change category</ion-label>
-          <ion-select [disabled]="selectedRecords.length == 0">
+          <ion-select [(ngModel)]="newCategory" (ionChange)="changeRecordsCategory()" [disabled]="selectedRecords.length == 0">
             <ion-option value="{{categories[key].doc.name}}" *ngFor="let key of categories | keys">{{categories[key].doc.name}}</ion-option>
           </ion-select>
         </ion-item>

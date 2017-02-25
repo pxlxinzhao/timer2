@@ -139,13 +139,27 @@ export class RecordPage {
     this.pouch.setLocal(this.constant.RECORD_SELECTED_TO_CHANGE_CATEGORY, id);
   }
 
-  changeRecordCategory(id){
-    let self = this;
-    let newValue = this.categoryByRecordIdMap[id];
+  //changeRecordCategory(id){
+  //  let self = this;
+  //  let newValue = this.categoryByRecordIdMap[id];
+  //
+  //  this.pouch.updateRecordCategory(id, newValue, function(){
+  //    self.refresh();
+  //  })
+  //}
 
-    this.pouch.updateRecordCategory(id, newValue, function(){
-      self.refresh();
-    })
+  changeRecordsCategory(){
+    if (!this.newCategory) return;
+    let count = this.selectedRecords.length;
+
+    for (let i=0; i<this.selectedRecords.length; i++){
+      let id = this.selectedRecords[i];
+      this.pouch.updateRecordCategory(id, this.newCategory, ()=>{
+        if (--count === 0){
+          this.refresh();
+        }
+      })
+    }
   }
 
   setTitleId(id){
@@ -155,6 +169,8 @@ export class RecordPage {
   refresh(){
     let self = this;
     this.isFiltered = false;
+    this.selectAll = false;
+    this.newCategory = "";
 
     /**
      * create category drop down
@@ -312,13 +328,9 @@ export class RecordPage {
   }
 
   toggleAll(){
-    console.log('toggleAll');
-
-    if (!this.selectAll){
-      this.selectAll=true;
+    if (this.selectAll){
       this.selectedRecords = this.allRecordKeys.slice();
     }else{
-      this.selectAll = false;
       this.selectedRecords = [];
     }
   }
