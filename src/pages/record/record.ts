@@ -10,6 +10,8 @@ import { Pouch } from  '../helper/pouch';
 import { TimeHelper} from '../helper/time';
 import { Platform } from 'ionic-angular';
 import {RecordFilter} from './recordFilter'
+import * as _ from 'underscore'
+
 
 @Component({
   selector: 'page-record',
@@ -36,6 +38,8 @@ export class RecordPage {
   totalCountByCategoryMap: any = {};
   totalTimeByCategoryMap: any = {};
   selectedRecords: any = [];
+  allRecordKeys: any = [];
+  selectAll: boolean = false;
 
   constructor(public navCtrl:NavController,
               private constant: Constant,
@@ -221,6 +225,7 @@ export class RecordPage {
         }
       }
 
+      this.allRecordKeys = _.map(records, (x)=>{return x.id})
       this.records = records;
 
       this.calculateTotalTimeAndCountTotalRecords(records);
@@ -303,6 +308,18 @@ export class RecordPage {
       this.selectedRecords.splice(index, 1);
     }else{
       this.selectedRecords.push(id);
+    }
+  }
+
+  toggleAll(){
+    console.log('toggleAll');
+
+    if (!this.selectAll){
+      this.selectAll=true;
+      this.selectedRecords = this.allRecordKeys.slice();
+    }else{
+      this.selectAll = false;
+      this.selectedRecords = [];
     }
   }
 

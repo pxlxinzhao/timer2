@@ -120,14 +120,13 @@
           <!--<ion-icon name="ios-square-outline"></ion-icon>-->
 
           <ion-row>
-            <ion-col>
+            <ion-col style="text-align: center">
               {{selectedRecords.length}} selected
             </ion-col>
-            <ion-col>
-              <ion-toggle></ion-toggle>
+            <ion-col style="text-align: center">
+              <ion-toggle (ionChange)="toggleAll()"></ion-toggle>
             </ion-col>
           </ion-row>
-
         </div>
 
 
