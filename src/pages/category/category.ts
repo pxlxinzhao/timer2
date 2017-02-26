@@ -79,7 +79,7 @@ export class CategoryPage {
       return;
     }
 
-    Dialogs.confirm('Are you sure you want to delete this category?', 'Delete category', ['Ok','Cancel'])
+    Dialogs.confirm('Are you sure you want to delete this category and all the records under it?', 'Delete category', ['Ok','Cancel'])
       .then((result) => {
         //ok is 1, cancel is 2
         if (result === 1){
