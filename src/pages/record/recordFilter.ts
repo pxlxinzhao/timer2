@@ -48,9 +48,6 @@ export class RecordFilter {
       clear: true
     });
 
-    //?
-    this.pouch.setLocal('fromDate', '');
-    this.pouch.setLocal('toDate', '');
     this.close();
   }
 
