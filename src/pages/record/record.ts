@@ -110,28 +110,33 @@ export class RecordPage {
       });
   }
 
-  confirmDelete(id){
-    if (this.platform.is('core') || !(this.pouch.getLocal('safeDeletion') !== 'false')){
-      this.deleteRecord(id);
-    }else{
-      let self = this;
+  confirmDelete(){
+    // || !(this.pouch.getLocal('safeDeletion') !== 'false')
 
-      Dialogs.confirm('Are you sure you want to delete this record?', 'Delete record', ['Ok','Cancel'])
-        .then(function(result){
+    if (this.platform.is('core')){
+      //this.deleteRecord();
+    }else{
+      let message = 'Are you sure you want to delete ' +this.selectedRecords.length
+        + ' record' + (this.selectedRecords.length > 1 ? 's' : '') + '?';
+
+      Dialogs.confirm(message, 'Delete records', ['Ok','Cancel'])
+        .then((result)=>{
           //ok is 1, cancel is 2
           if (result === 1){
-            self.deleteRecord(id);
+            this.deleteRecord();
           }
         })
     }
   }
 
-  deleteRecord(id) {
-    let self =this;
+  deleteRecord() {
+    for (let i=0; i<this.selectedRecords.length; i++){
+      let id = this.selectedRecords[i];
 
-    this.pouch.deleteRecord(id, function(){
-      self.refresh();
-    })
+      this.pouch.deleteRecord(id,()=>{
+        this.refresh();
+      })
+    }
   }
 
   showCategoryDropdown(id) {

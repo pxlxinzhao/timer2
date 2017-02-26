@@ -110,10 +110,10 @@
 
 
 <ion-footer>
-  <ion-toolbar>
+  <ion-toolbar style="padding: 0px;">
 
     <ion-row>
-      <ion-col style="padding-top: 15px;">
+      <ion-col style="padding-top: 12px;">
 
 
         <div class="footer-text">
@@ -121,10 +121,14 @@
 
           <ion-row>
             <ion-col class="records-selected">
-              {{selectedRecords.length}} selected
-            </ion-col>
-            <ion-col style="text-align: center">
-              <ion-toggle (ionChange)="toggleAll()" [(ngModel)]="selectAll"></ion-toggle>
+              <div class="select-text">
+                     {{selectedRecords.length}} selected
+              </div>
+
+              <!--placeholder-->
+              <div style="display: inline-block; opacity: 0;"></div>
+
+              <ion-toggle (ionChange)="toggleAll()" [(ngModel)]="selectAll" class="select-toggle"></ion-toggle>
             </ion-col>
           </ion-row>
         </div>
@@ -132,9 +136,11 @@
 
       </ion-col>
 
-      <ion-col>
-        <ion-item [ngClass]="{'footer': selectedRecords.length == 0}" >
-          <ion-label>Change category</ion-label>
+      <ion-col style="position: relative">
+        <ion-item no-lines [ngClass]="{'footer': selectedRecords.length == 0, 'folder-item': true}">
+          <ion-label class="folder-icon">
+            <ion-icon name="ios-folder-open-outline"></ion-icon>
+          </ion-label>
           <ion-select [(ngModel)]="newCategory" (ionChange)="changeRecordsCategory()" [disabled]="selectedRecords.length == 0">
             <ion-option value="{{categories[key].doc.name}}" *ngFor="let key of categories | keys">{{categories[key].doc.name}}</ion-option>
           </ion-select>
@@ -142,7 +148,7 @@
       </ion-col>
 
         <div [ngClass]="{'footer': selectedRecords.length == 0, 'trash-icon': true}">
-          <ion-icon name="ios-trash-outline"></ion-icon>
+          <ion-icon name="ios-trash-outline" (click)="confirmDelete()"></ion-icon>
         </div>
     </ion-row>
 
