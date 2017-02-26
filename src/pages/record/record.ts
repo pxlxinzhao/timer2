@@ -114,7 +114,7 @@ export class RecordPage {
     // || !(this.pouch.getLocal('safeDeletion') !== 'false')
 
     if (this.platform.is('core')){
-      //this.deleteRecord();
+      this.deleteRecord();
     }else{
       let message = 'Are you sure you want to delete ' +this.selectedRecords.length
         + ' record' + (this.selectedRecords.length > 1 ? 's' : '') + '?';
@@ -130,12 +130,16 @@ export class RecordPage {
   }
 
   deleteRecord() {
+    let count = this.selectedRecords.length;
+
     for (let i=0; i<this.selectedRecords.length; i++){
       let id = this.selectedRecords[i];
 
       this.pouch.deleteRecord(id,()=>{
-        this.refresh();
-      })
+        if (--count === 0){
+          this.refresh();
+        }
+    })
     }
   }
 
