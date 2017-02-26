@@ -27,7 +27,6 @@ export class RecordPage {
   isCounting: boolean = false;
   isFiltered: boolean = false;
   newCategory: string = "";
-  recordIdSelectedForCategoryChanging: any;
   records:any = {};
   refreshCallback: any = null;
   selectedCategoryId: any = "";
@@ -35,25 +34,17 @@ export class RecordPage {
   toDate: Date;
   totalTime: any;
   totalCount: any;
-  totalCountByCategoryMap: any = {};
-  totalTimeByCategoryMap: any = {};
   selectedRecords: any = [];
   allRecordKeys: any = [];
   selectAll: boolean = false;
 
   constructor(public navCtrl:NavController,
               private constant: Constant,
-              //private dbHelper:DbHelper,
               private timeHelper:TimeHelper,
               private pop: PopoverController,
               private pouch: Pouch,
               private extra: Extra,
               private platform: Platform) {
-    /**
-     * for first time app started,insert into category table with default category
-     */
-    //this.pouch.setDefaultCategory();
-    //this.currentCategory = this.pouch.getLocal(this.constant.CATEGORY_CURRENT);// || this.constant.CATEGORY_DEFAULT;
 
     this.extra.getEvent.subscribe((data) => {
       if (data.fromDate || data.toDate){
@@ -69,9 +60,6 @@ export class RecordPage {
     })
   }
 
-  /**
-   * life cycle events goes first
-   */
   ionViewWillEnter() {
     console.log('refresh??');
     this.refresh();
@@ -143,20 +131,6 @@ export class RecordPage {
     }
   }
 
-  showCategoryDropdown(id) {
-    this.recordIdSelectedForCategoryChanging = id === this.recordIdSelectedForCategoryChanging ? '' : id;
-    this.pouch.setLocal(this.constant.RECORD_SELECTED_TO_CHANGE_CATEGORY, id);
-  }
-
-  //changeRecordCategory(id){
-  //  let self = this;
-  //  let newValue = this.categoryByRecordIdMap[id];
-  //
-  //  this.pouch.updateRecordCategory(id, newValue, function(){
-  //    self.refresh();
-  //  })
-  //}
-
   changeRecordsCategory(){
     if (!this.newCategory) return;
     let count = this.selectedRecords.length;
@@ -219,7 +193,7 @@ export class RecordPage {
           /**
            * here we have some weird time zone issue
            * when reading a plain text, it considers it as a ISO time.
-           * we need to do the manul time zone conversion
+           * we need to do the manual time zone conversion
            */
           return (!self.fromDate || self.timeHelper.justDate(time) >= self.timeHelper.convertISOStringToLocalMilliseconds(self.fromDate))
             && (!self.toDate || self.timeHelper.justDate(time)<= self.timeHelper.convertISOStringToLocalMilliseconds(self.toDate));
@@ -253,7 +227,7 @@ export class RecordPage {
       this.allRecordKeys = _.map(records, (x)=>{return x.id})
       this.records = records;
 
-      this.calculateTotalTimeAndCountTotalRecords(records);
+      this.calculateTotal();
 
       /**
        * set value to the 'change category' select
@@ -261,8 +235,6 @@ export class RecordPage {
       for (let i=0; i<records.length; i++){
         this.categoryByRecordIdMap[records[i].id] = records[i].doc.category;
       }
-
-      this.recordIdSelectedForCategoryChanging = "";
 
       /**
        * this is used for calendar page, to refresh record page first and then refresh calendar page itself
@@ -280,34 +252,17 @@ export class RecordPage {
     this.refresh();
   }
 
-  calculateTotalTimeAndCountTotalRecords(records){
-    this.totalTimeByCategoryMap = {};
+  calculateTotal(){
+    let records = this.records;
+    let totalTime = 0;
 
     for (let k in records){
-      let record = records[k];
-      let duration = record.doc.duration;
-      let category = record.doc.category;
-
-      if (!this.totalTimeByCategoryMap[category]){
-        this.totalTimeByCategoryMap[category] = 0;
-        this.totalCountByCategoryMap[category] = 0;
-      }
-
-      this.totalTimeByCategoryMap[category] += duration;
-      this.totalCountByCategoryMap[category] ++;
+      let duration = records[k].doc.duration;
+      totalTime += duration;
     }
 
-    if (this.totalTimeByCategoryMap[this.currentCategory] && this.totalCountByCategoryMap[this.currentCategory]){
-      let totalTime = this.totalTimeByCategoryMap[this.currentCategory].toString();
-      let totalCount = this.totalCountByCategoryMap[this.currentCategory].toString();
-
-      this.pouch.setLocal("totalTime", totalTime);
-      this.pouch.setLocal("totalCount",totalCount);
-
-      this.totalTime = totalTime;
-      this.totalCount = totalCount;
-    }
-
+    this.totalTime = totalTime;
+    this.totalCount = this.records.length;
   }
 
   presentPopover(myEvent) {
