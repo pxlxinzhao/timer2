@@ -140,6 +140,7 @@
         <ion-item no-lines [ngClass]="{'footer': selectedRecords.length == 0, 'folder-item': true}">
           <ion-label class="folder-icon">
             <ion-icon name="ios-folder-open-outline"></ion-icon>
+            Change category
           </ion-label>
           <ion-select [(ngModel)]="newCategory" (ionChange)="changeRecordsCategory()" [disabled]="selectedRecords.length == 0">
             <ion-option value="{{categories[key].doc.name}}" *ngFor="let key of categories | keys">{{categories[key].doc.name}}</ion-option>
