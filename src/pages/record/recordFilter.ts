@@ -37,8 +37,20 @@ export class RecordFilter {
       toDate: this.toDate
     });
 
+  //?
     this.pouch.setLocal('fromDate', this.fromDate);
     this.pouch.setLocal('toDate', this.toDate);
+    this.close();
+  }
+
+  clear(){
+    this.extra.refreshRecords({
+      clear: true
+    });
+
+    //?
+    this.pouch.setLocal('fromDate', '');
+    this.pouch.setLocal('toDate', '');
     this.close();
   }
 

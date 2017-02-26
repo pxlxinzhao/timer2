@@ -10,7 +10,12 @@
     <ion-datetime displayFormat="MMM DD, YYYY" [(ngModel)]="toDate"></ion-datetime>
   </ion-item>
 
-  <button ion-button round style="width: 90%;  text-align: center;  margin-left: 5%;" (click)="apply()">Apply</button>
+  <!--<button ion-button round style="width: 90%;  text-align: center;  margin-left: 5%;" (click)="apply()">Apply</button>-->
+
+  <button ion-button clear class="right" (click)="apply()">Apply</button>
+
+  <button ion-button clear color="danger" (click)="clear()">Cancel</button>
+
 
   <!--<ion-item>-->
     <!--<ion-label fixed>Records</ion-label>-->

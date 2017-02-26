@@ -47,6 +47,11 @@ export class RecordPage {
               private platform: Platform) {
 
     this.extra.getEvent.subscribe((data) => {
+      if (data.clear){
+        this.fromDate = null;
+        this.toDate = null;
+      }
+
       if (data.fromDate || data.toDate){
         this.fromDate = data.fromDate ? data.fromDate : null;
         this.toDate = data.toDate ? data.toDate : null;
@@ -139,6 +144,7 @@ export class RecordPage {
       let id = this.selectedRecords[i];
       this.pouch.updateRecordCategory(id, this.newCategory, ()=>{
         if (--count === 0){
+          this.selectedRecords = [];
           this.refresh();
         }
       })
@@ -272,11 +278,11 @@ export class RecordPage {
     })
   }
 
-  clearFilter(){
-    this.fromDate = null;
-    this.toDate = null;
-    this.refresh();
-  }
+  //clearFilter(){
+  //  this.fromDate = null;
+  //  this.toDate = null;
+  //  this.refresh();
+  //}
 
   switchToCalendar(){
     this.navCtrl.push(CalendarPage);
