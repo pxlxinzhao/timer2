@@ -234,6 +234,17 @@ export class Pouch {
       if (err) { return console.log(err); }
       self._categroyDb.remove(doc, function(err, response) {
         if (err) { return console.log(err); }
+
+        self.getAll().then((docs) => {
+          let records = self.getAsArray(docs);
+
+          for (let i=0; i<records.length; i++) {
+            if (records[i].doc.category === doc.name){
+              self.deleteRecord(records[i].doc._id, null);
+            }
+          }
+        })
+
         if (callback) callback();
       });
     });

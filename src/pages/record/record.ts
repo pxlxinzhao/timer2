@@ -112,7 +112,9 @@ export class RecordPage {
       let message = 'Are you sure you want to delete ' +this.selectedRecords.length
         + ' record' + (this.selectedRecords.length > 1 ? 's' : '') + '?';
 
-      Dialogs.confirm(message, 'Delete records', ['Ok','Cancel'])
+      let title =  'Delete record' + (this.selectedRecords.length > 1 ? 's' : '');
+
+      Dialogs.confirm(message, title, ['Ok','Cancel'])
         .then((result)=>{
           //ok is 1, cancel is 2
           if (result === 1){
