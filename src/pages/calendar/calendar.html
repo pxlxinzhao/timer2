@@ -12,6 +12,8 @@
 
   <div *ngFor="let key of calendarMap | keys">
 
+    <div class="calendar-placeholder" [hidden]="calendarMap[key].dayDiff < 1"></div>
+
     <div class="off-container" [hidden]="calendarMap[key].dayDiff < 1">
       <ion-chip>
         <ion-label>    {{calendarMap[key].dayDiff}} day{{calendarMap[key].dayDiff != 1 ? 's' : ''}} off</ion-label>
@@ -24,9 +26,11 @@
       </ion-chip>
     </div>
 
+    <div class="calendar-placeholder" [hidden]="!calendarMap[key].streak"></div>
+
     <ion-row class="power-row-container">
       <ion-col>
-        <ion-label fixed style="width: 110px;">{{key}}</ion-label>
+        <ion-label fixed class="date-label">{{key}}</ion-label>
       </ion-col>
       <ion-col class="power-cell-container">
         <div class="power-cell level1">

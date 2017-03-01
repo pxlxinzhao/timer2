@@ -365,22 +365,29 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
 
 //calendar
 
+.date-label {
+  width: 1000px;
+  display: flex;
+  justify-content: space-around;
+  font-size: 13px;
+}
+
 .calendar-placeholder{
   height: 10px;
 }
 
 .streak-container {
   text-align: center;
-  padding: 10px;
+  padding: 5px;
 }
 
 .off-container {
   text-align: center;
-  padding: 10px;
+  padding: 5px 0px 0px 0px;
 }
 
 .power-row-container {
-  padding: 10px;
+  padding: 0px 5px;
 }
 
 .power-cell-container {
@@ -390,7 +397,7 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
 .power-cell {
   border-radius: 30px;
   height: 10px;
-  margin-top: 17px;
+  margin-top: 16px;
 
   &.level1{
     background-color: #ed6000;
