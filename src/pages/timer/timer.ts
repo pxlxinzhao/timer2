@@ -26,6 +26,7 @@ export class TimerPage {
   prevTime: number;
   records: any = {};
   hasMoreRecords: boolean = false;
+  isEmpty: boolean = true;
 
   width: any;
   greenButtonText: string = "";
@@ -182,11 +183,16 @@ export class TimerPage {
 
     this.setUpText();
 
+    this.isEmpty = true;
     this.pouch.getAll().then((docs) =>{
       /**
        * docs.rows is an array list object, thus use keys pipe to loop
        */
       let records = this.pouch.getAsArray(docs);
+      if (records.length){
+        this.isEmpty = false;
+      }
+
       records.sort((a, b) => b['doc'].timestamp -  a['doc'].timestamp);
 
       if (records.length > 10){

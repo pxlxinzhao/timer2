@@ -106,7 +106,7 @@
   </ion-fab>
 
 
-  <ion-fab right bottom>
+  <ion-fab right bottom [hidden]="!records.length">
     <button ion-fab mini (click)="switchToCalendar()"><ion-icon name="ios-calendar-outline"></ion-icon></button>
   </ion-fab>
 

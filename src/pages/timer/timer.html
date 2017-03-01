@@ -29,7 +29,14 @@
         <ion-list no-lines>
           <ion-item-sliding #slidingItem>
             <ion-item no-lines style="  border-bottom: none;  border-top: none;">
-              <button ion-button color="light" class="main-timer-container-button" (click)="tap()">{{timeElapsed | duration}}</button>
+              <button ion-button color="light" class="main-timer-container-button" (click)="tap()">
+                <div>
+                  {{timeElapsed | duration}}
+                </div>
+                <div class="swipe" [hidden]="!isEmpty"> Swipe to save or cancel </div>
+                <div class="swipe-top" [hidden]="!isEmpty"> Tap to start or pause</div>
+              </button>
+
             </ion-item>
             <ion-item-options side="left">
               <button ion-button icon-only color="danger" (click)="clear(slidingItem)" [disabled]="!isStarted"><ion-icon name="trash"></ion-icon></button>
@@ -40,6 +47,8 @@
             </ion-item-options>
           </ion-item-sliding>
         </ion-list>
+
+
 
       </ion-card-content>
 

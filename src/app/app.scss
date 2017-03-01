@@ -107,6 +107,19 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
   width: 100%;
 }
 
+.swipe-top{
+  text-align: center;
+  font-size: 1rem;
+  position: absolute;
+  top: 0px;
+}
+.swipe {
+  text-align: center;
+  font-size: 1rem;
+  position: absolute;
+  bottom: 0px;
+}
+
 .main-button-container{
   text-align: center;
   display: inline-block;
@@ -351,6 +364,24 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
 }
 
 //calendar
+
+.calendar-placeholder{
+  height: 10px;
+}
+
+.streak-container {
+  text-align: center;
+  padding: 10px;
+}
+
+.off-container {
+  text-align: center;
+  padding: 10px;
+}
+
+.power-row-container {
+  padding: 10px;
+}
 
 .power-cell-container {
   padding-left: 0px;
