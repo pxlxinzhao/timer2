@@ -1,4 +1,5 @@
 import { CalendarPage } from '../calendar/calendar'
+import { CategoryPage } from '../category/category'
 import { Component} from '@angular/core';
 import { Constant } from '../helper/constant'
 //import { DbHelper } from '../helper/db';
@@ -139,7 +140,7 @@ export class RecordPage {
   }
 
   changeRecordsCategory(){
-    if (!this.newCategory) return;
+    if (!this.newCategory || this.newCategory == this.currentCategory) return;
     let count = this.selectedRecords.length;
 
     for (let i=0; i<this.selectedRecords.length; i++){
@@ -169,6 +170,7 @@ export class RecordPage {
     this.pouch.getAllCategory().then((docs) =>{
       this.categories = this.pouch.getAsArray(docs);
       this.currentCategory = this.pouch.getLocal(this.constant.CATEGORY_CURRENT);
+      this.newCategory = this.currentCategory;
     })
 
     /**
@@ -288,6 +290,10 @@ export class RecordPage {
 
   switchToCalendar(){
     this.navCtrl.push(CalendarPage);
+  }
+
+  manageCategory(){
+    this.navCtrl.push(CategoryPage);
   }
 
   toggleRecord(id){

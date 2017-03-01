@@ -19,6 +19,7 @@
 
 $green: #1fc21b;
 $red: #f53d3d;
+$dark: rgba(0, 0, 0, 0.87);
 
 //@font-face {
 //  font-family: "SegoePrint";
@@ -54,8 +55,13 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
   color: $green;
 }
 
+.dark {
+  color: dark;
+}
+
 .green-background {
   background-color: lighten($green, 0%) !important;
+  color: white;
 }
 
 .right-align-ion-input > input {
@@ -290,6 +296,34 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
     max-width: 45px;
     opacity: 0;
   }
+}
+
+.chip-md > ion-icon {
+  color: #fff;
+  background-color: rgb(240,240,240);
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.chip-md.record-chip > ion-label {
+  margin: 0px 10px 0px 0px;
+}
+
+.fab-md {
+  background-color: rgb(240,240,240);
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.alert-md .alert-button {
+  position: relative;
+  overflow: hidden;
+  margin: 0 8px 0 0;
+  padding: 10px;
+  border-radius: 2px;
+  font-weight: 500;
+  text-align: right;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.87);
+  background-color: transparent;
 }
 
 //settings

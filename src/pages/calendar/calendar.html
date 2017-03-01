@@ -16,9 +16,9 @@
       </ion-chip>
     </div>
 
-    <div style="text-align: center; padding-top: 10px;" [hidden]="!calendarMap[key].streak || calendarMap[key].streak < 2">
+    <div style="text-align: center; padding-top: 10px;" [hidden]="!calendarMap[key].streak">
       <ion-chip class="green-background">
-        <ion-label>    {{calendarMap[key].streak}} days streak</ion-label>
+        <ion-label>    {{calendarMap[key].streak}} day{{calendarMap[key].streak == 1 ? '':'s'}} streak</ion-label>
       </ion-chip>
     </div>
 

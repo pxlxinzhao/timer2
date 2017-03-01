@@ -101,6 +101,10 @@
   </div>
 
 
+  <ion-fab left top edge>
+    <button ion-fab mini (click)="manageCategory()"><ion-icon name="ios-expand-outline"></ion-icon></button>
+  </ion-fab>
+
 
   <ion-fab right bottom>
     <button ion-fab mini (click)="switchToCalendar()"><ion-icon name="ios-calendar-outline"></ion-icon></button>
@@ -139,17 +143,17 @@
       <ion-col style="position: relative">
         <ion-item no-lines [ngClass]="{'footer': selectedRecords.length == 0, 'folder-item': true}">
           <ion-label class="folder-icon">
-            <ion-icon name="ios-folder-open-outline"></ion-icon>
+            <ion-icon name="ios-folder-open-outline" class="dark"></ion-icon>
             Change category
           </ion-label>
-          <ion-select [(ngModel)]="newCategory" (ionChange)="changeRecordsCategory()" [disabled]="selectedRecords.length == 0">
+          <ion-select style="color:white;" [(ngModel)]="newCategory" (ionChange)="changeRecordsCategory()" [disabled]="selectedRecords.length == 0">
             <ion-option value="{{categories[key].doc.name}}" *ngFor="let key of categories | keys">{{categories[key].doc.name}}</ion-option>
           </ion-select>
         </ion-item>
       </ion-col>
 
         <div [ngClass]="{'footer': selectedRecords.length == 0, 'trash-icon': true}">
-          <ion-icon name="ios-trash-outline" (click)="confirmDelete()"></ion-icon>
+          <ion-icon name="ios-trash-outline" class="dark" (click)="confirmDelete()"></ion-icon>
         </div>
     </ion-row>
 
