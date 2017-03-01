@@ -30,6 +30,7 @@ export class CalendarPage {
   level3: any;
 
   displayCategory: any;
+  showDetail: boolean = false;
 
   constructor(private pouch: Pouch,
   private extra: Extra,
@@ -175,5 +176,9 @@ export class CalendarPage {
 
       self.calendarMap = calendarMap;
     });
+  }
+
+  toggleDetail(){
+    this.showDetail = !this.showDetail;
   }
 }

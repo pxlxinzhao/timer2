@@ -322,8 +322,10 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
 }
 
 .fab-md {
-  background-color: rgb(240,240,240);
-  color: rgba(0, 0, 0, 0.87);
+  //background-color: rgb(240,240,240);
+  //color: rgba(0, 0, 0, 0.87);
+  background-color: $green;
+  color: white;
 }
 
 .alert-md .alert-button {
@@ -387,7 +389,7 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
 }
 
 .power-row-container {
-  padding: 0px 5px;
+  padding: 0px 10px;
 }
 
 .power-cell-container {
@@ -396,8 +398,8 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
 
 .power-cell {
   border-radius: 30px;
-  height: 10px;
-  margin-top: 16px;
+  height: 15px;
+  margin-top: 14px;
 
   &.level1{
     background-color: #ed6000;
