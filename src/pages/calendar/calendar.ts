@@ -1,7 +1,9 @@
-import { Component, ChangeDetectorRef } from "@angular/core";
+import { Component } from "@angular/core";
+import { Constant } from '../helper/constant'
 import { Extra } from '../helper/extra';
 import { TimeHelper } from '../helper/time';
 import { Pouch } from  '../helper/pouch';
+import { NavController } from 'ionic-angular';
 import moment from 'moment';
 
 @Component({
@@ -27,14 +29,26 @@ export class CalendarPage {
   level2: any;
   level3: any;
 
+  displayCategory: any;
+
   constructor(private pouch: Pouch,
   private extra: Extra,
-  private chRef: ChangeDetectorRef,
-  private timeHelper: TimeHelper){
+  private timeHelper: TimeHelper,
+  private constant: Constant,
+  private navCtrl: NavController){
     this.refresh();
   }
 
   ionViewWillEnter() {
+
+    if (this.displayCategory
+      && this.displayCategory !== this.pouch.getLocal(this.constant.CATEGORY_CURRENT)){
+      this.navCtrl.pop();
+      return;
+    }
+
+    this.displayCategory = this.pouch.getLocal(this.constant.CATEGORY_CURRENT);
+
     let self = this;
 
     this.extra.refreshRecords({
