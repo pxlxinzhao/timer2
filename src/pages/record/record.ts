@@ -2,7 +2,6 @@ import { CalendarPage } from '../calendar/calendar'
 import { CategoryPage } from '../category/category'
 import { Component} from '@angular/core';
 import { Constant } from '../helper/constant'
-//import { DbHelper } from '../helper/db';
 import { Dialogs } from 'ionic-native';
 import { Extra } from '../helper/extra';
 import { NavController } from 'ionic-angular';
@@ -281,12 +280,6 @@ export class RecordPage {
       ev: myEvent
     })
   }
-
-  //clearFilter(){
-  //  this.fromDate = null;
-  //  this.toDate = null;
-  //  this.refresh();
-  //}
 
   switchToCalendar(){
     this.navCtrl.push(CalendarPage);
