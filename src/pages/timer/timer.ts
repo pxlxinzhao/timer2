@@ -4,7 +4,7 @@ import { Constant } from '../helper/constant'
 //import { Extra } from '../helper/extra';
 import { NavController, Slides } from 'ionic-angular';
 import { Pouch } from  '../helper/pouch';
-import { StatusBar } from 'ionic-native';
+import { StatusBar, Keyboard  } from 'ionic-native';
 
 
 @Component({
@@ -46,6 +46,10 @@ export class TimerPage {
     private pouch: Pouch
   ) {
     this.setupDefault();
+    Keyboard.disableScroll(true);
+    //if(window['cordova'] && window['cordova']['plugins']['Keyboard']) {
+    //  window['cordova']['plugins']['Keyboard']['disableScroll'](true);
+    //}
   }
 
   ionViewWillEnter() {
