@@ -58,22 +58,6 @@ export class CategoryPage {
     this.refresh();
   }
 
-  changeCategoryName(oldValue, id) {
-    let self = this;
-
-    if (!oldValue || !id) return;
-    let newValue = this.categoryNames[id];
-
-    this.pouch.updateCategory(id, newValue, function(){
-
-      if (self.pouch.getLocal(self.constant.CATEGORY_CURRENT) === oldValue){
-        self.pouch.setLocal(self.constant.CATEGORY_CURRENT, newValue);
-      }
-
-      self.refresh();
-    });
-  }
-
   confirmDeletion(id){
     if (this.platform.is('core')){
       this.deleteCategory(id);
@@ -102,9 +86,9 @@ export class CategoryPage {
     })
   }
 
-  openFilters() {
+  addNewCategory() {
     let alert = this.alertCtrl.create({
-      title: 'New category',
+      title: 'New Category',
       inputs: [
         {
           name: 'newCategory',
@@ -124,6 +108,48 @@ export class CategoryPage {
           handler: data => {
             if (data.newCategory){
               this.addCategory(data.newCategory);
+            }
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  changeCategoryName(c) {
+    let alert = this.alertCtrl.create({
+      title: 'Rename',
+      inputs: [
+        {
+          name: 'newName',
+          placeholder: ''
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: data => {
+            //console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'OK',
+          handler: data => {
+            if (data.newName){
+              //this.addCategory(data.newCategory);
+              let id = c.id;
+              let oldValue = c.doc.name;
+              let newValue = data.newName;
+
+              this.pouch.updateCategory(id, newValue, ()=>{
+
+                if (this.pouch.getLocal(this.constant.CATEGORY_CURRENT) === oldValue){
+                  this.pouch.setLocal(this.constant.CATEGORY_CURRENT, newValue);
+                }
+
+                this.refresh();
+              });
             }
           }
         }

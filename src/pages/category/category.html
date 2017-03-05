@@ -12,17 +12,8 @@
 
     <ion-item-sliding  *ngFor="let c of categories">
 
-      <!--(focusout) ="changeCategoryName(c.doc.name, c.id)"-->
-      <!--(keyup.enter)="changeCategoryName(c.doc.name, c.id)"-->
-
-
-      <ion-item>
-        <ion-input type="text" value=""
-                   [(ngModel)]="categoryNames[c.id]"
-                   (focusout)="changeCategoryName(c.doc.name, c.id)"
-                   [placeholder]="c.doc.name"
-                   class="category-edit"
-          ></ion-input>
+      <ion-item (click)="changeCategoryName(c)">
+        {{c.doc.name}}
       </ion-item>
 
       <ion-item-options>
@@ -33,7 +24,7 @@
   </ion-list>
 
   <ion-fab right top edge>
-    <button ion-fab mini (click)="openFilters()"><ion-icon name="add"></ion-icon></button>
+    <button ion-fab mini (click)="addNewCategory()"><ion-icon name="add"></ion-icon></button>
 
   </ion-fab>
 
