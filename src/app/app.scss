@@ -252,11 +252,11 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
 }
 
 .trash-icon {
-  color: $red;
-  font-size: 22px;
-  margin-left: 10px;
-  margin-right: 20px;
-  margin-top: 9px;
+  color: #f53d3d;
+  font-size: 20px;
+  position: absolute;
+  right: 60px;
+  top: 11px;
 }
 
 .records-selected {

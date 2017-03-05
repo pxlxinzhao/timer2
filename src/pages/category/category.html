@@ -3,6 +3,13 @@
     <ion-title>
       Activities
     </ion-title>
+
+    <ion-buttons end>
+      <button  ion-fab mini  (click)="addNewCategory()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+
   </ion-navbar>
 </ion-header>
 
@@ -23,9 +30,9 @@
 
   </ion-list>
 
-  <ion-fab right top edge>
-    <button ion-fab mini (click)="addNewCategory()"><ion-icon name="add"></ion-icon></button>
+  <!--<ion-fab right top edge>-->
+    <!--&lt;!&ndash;<button ion-fab mini (click)="addNewCategory()"><ion-icon name="add"></ion-icon></button>&ndash;&gt;-->
 
-  </ion-fab>
+  <!--</ion-fab>-->
 
 </ion-content>

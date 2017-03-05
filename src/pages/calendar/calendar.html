@@ -3,6 +3,12 @@
     <ion-title>
       Calendar
     </ion-title>
+
+    <ion-buttons end>
+        <button ion-fab mini (click)="toggleDetail()"  [hidden]="!showDetail"><ion-icon name="md-arrow-dropright"></ion-icon></button>
+        <button ion-fab mini (click)="toggleDetail()" [hidden]="showDetail"><ion-icon name="md-arrow-dropleft" ></ion-icon></button>
+    </ion-buttons>
+
   </ion-navbar>
 </ion-header>
 
@@ -70,15 +76,5 @@
     </ion-row>
 
   </div>
-
-  <ion-fab right top edge [hidden]="!showDetail">
-    <button ion-fab mini (click)="toggleDetail()"><ion-icon name="md-arrow-dropright"></ion-icon></button>
-
-  </ion-fab>
-
-  <ion-fab right top edge [hidden]="showDetail">
-    <button ion-fab mini (click)="toggleDetail()"><ion-icon name="md-arrow-dropleft"></ion-icon></button>
-
-  </ion-fab>
 
 </ion-content>
