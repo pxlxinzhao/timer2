@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { Dialogs } from 'ionic-native';
 import { Pouch } from  '../helper/pouch';
 import { Constant } from  '../helper/constant';
@@ -19,7 +19,8 @@ export class CategoryPage {
               public navParams:NavParams,
               private pouch: Pouch,
               private constant: Constant,
-              private platform:Platform) {
+              private platform:Platform,
+              private alertCtrl: AlertController) {
     this.refresh();
   }
 
@@ -99,5 +100,35 @@ export class CategoryPage {
         //.error('You can not delete the last records');
       }
     })
+  }
+
+  openFilters() {
+    let alert = this.alertCtrl.create({
+      title: 'New category',
+      inputs: [
+        {
+          name: 'newCategory',
+          placeholder: ''
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: data => {
+            //console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'OK',
+          handler: data => {
+            if (data.newCategory){
+              this.addCategory(data.newCategory);
+            }
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 }
