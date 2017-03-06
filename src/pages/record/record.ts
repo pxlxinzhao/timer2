@@ -160,7 +160,7 @@ export class RecordPage {
   refresh(){
     let self = this;
     this.isFiltered = false;
-    this.selectAll = false;
+    //this.selectAll = false;
     this.newCategory = "";
 
     /**
