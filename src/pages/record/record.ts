@@ -4,7 +4,7 @@ import { Component} from '@angular/core';
 import { Constant } from '../helper/constant'
 import { Dialogs } from 'ionic-native';
 import { Extra } from '../helper/extra';
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 import { PopoverController } from 'ionic-angular';
 import { Pouch } from  '../helper/pouch';
 import { TimeHelper} from '../helper/time';
@@ -44,7 +44,8 @@ export class RecordPage {
               private pop: PopoverController,
               private pouch: Pouch,
               private extra: Extra,
-              private platform: Platform) {
+              private platform: Platform,
+              private alertCtrl: AlertController) {
 
     this.extra.getEvent.subscribe((data) => {
       if (data.clear){
@@ -103,25 +104,50 @@ export class RecordPage {
       });
   }
 
-  confirmDelete(){
-    // || !(this.pouch.getLocal('safeDeletion') !== 'false')
+  //confirmDelete(){
+  //  // || !(this.pouch.getLocal('safeDeletion') !== 'false')
+  //
+  //  if (this.platform.is('core')){
+  //    this.deleteRecord();
+  //  }else{
+  //    let message = 'Are you sure you want to delete ' +this.selectedRecords.length
+  //      + ' record' + (this.selectedRecords.length > 1 ? 's' : '') + '?';
+  //
+  //    let title =  'Delete record' + (this.selectedRecords.length > 1 ? 's' : '');
+  //
+  //    Dialogs.confirm(message, title, ['Ok','Cancel'])
+  //      .then((result)=>{
+  //        //ok is 1, cancel is 2
+  //        if (result === 1){
+  //          this.deleteRecord();
+  //        }
+  //      })
+  //  }
+  //}
 
-    if (this.platform.is('core')){
-      this.deleteRecord();
-    }else{
-      let message = 'Are you sure you want to delete ' +this.selectedRecords.length
-        + ' record' + (this.selectedRecords.length > 1 ? 's' : '') + '?';
-
-      let title =  'Delete record' + (this.selectedRecords.length > 1 ? 's' : '');
-
-      Dialogs.confirm(message, title, ['Ok','Cancel'])
-        .then((result)=>{
-          //ok is 1, cancel is 2
-          if (result === 1){
+  confirmDelete() {
+    let alert = this.alertCtrl.create({
+      title:  'Delete record' + (this.selectedRecords.length > 1 ? 's' : ''),
+      message: 'Are you sure you want to delete ' +this.selectedRecords.length
+      + ' record' + (this.selectedRecords.length > 1 ? 's' : '') + '?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            //console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Delete',
+          handler: () => {
+            //console.log('Buy clicked');
             this.deleteRecord();
           }
-        })
-    }
+        }
+      ]
+    });
+    alert.present();
   }
 
   deleteRecord() {
@@ -131,7 +157,9 @@ export class RecordPage {
       let id = this.selectedRecords[i];
 
       this.pouch.deleteRecord(id,()=>{
+        //console.log('count', count);
         if (--count === 0){
+          //console.log('count refresh');
           this.refresh();
         }
     })
@@ -162,6 +190,11 @@ export class RecordPage {
     this.isFiltered = false;
     //this.selectAll = false;
     this.newCategory = "";
+    this.selectedRecords = [];
+
+    if (this.selectAll){
+      this.toggleAll();
+    }
 
     /**
      * create category drop down
