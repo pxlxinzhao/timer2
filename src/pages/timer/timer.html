@@ -60,8 +60,8 @@
 
 <ion-content padding >
 
-  <div class="swipe" [hidden]="!isEmpty"> Tap to start or pause</div>
-  <div class="swipe" [hidden]="!isEmpty"> Swipe to save or cancel </div>
+  <div [ngClass]="{'swipe': true, 'swipe-show': isEmpty}" [hidden]="!isEmpty"> {{tip1}}</div>
+  <div [ngClass]="{'swipe': true, 'swipe-show': isEmpty}" [hidden]="!isEmpty"> {{tip2}} </div>
 
   <div>
     <ion-list>

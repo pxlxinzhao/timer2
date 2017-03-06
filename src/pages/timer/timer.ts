@@ -38,6 +38,9 @@ export class TimerPage {
   categoryWhenTitleGenerated: any;
   setNewTitle: boolean = true; //set to true and call refresh to set a new title
 
+  tip1: string = "";
+  tip2: string = "";
+
   constructor(
     private ads: AdsHelper,
     private constant: Constant,
@@ -188,6 +191,9 @@ export class TimerPage {
     this.setUpText();
 
     this.isEmpty = true;
+    this.tip1 = '';
+    this.tip2 = '';
+
     this.pouch.getAll().then((docs) =>{
       /**
        * docs.rows is an array list object, thus use keys pipe to loop
@@ -195,6 +201,9 @@ export class TimerPage {
       let records = this.pouch.getAsArray(docs);
       if (records.length){
         this.isEmpty = false;
+      }else{
+        this.tip1 = 'Tap to start or pause';
+        this.tip2 = 'Swipe to save or cancel';
       }
 
       records.sort((a, b) => b['doc'].timestamp -  a['doc'].timestamp);

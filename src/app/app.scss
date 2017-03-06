@@ -109,7 +109,10 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
 
 .swipe {
   text-align: center;
-  opacity: 0.7;
+  opacity: 0;
+  &.swipe-show{
+    opacity: 0.7;
+  }
 }
 
 .main-button-container{
@@ -253,10 +256,10 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
 
 .trash-icon {
   color: #f53d3d;
-  font-size: 20px;
+  font-size: 19px;
   position: absolute;
   right: 60px;
-  top: 11px;
+  top: 12px;
 }
 
 .records-selected {
@@ -391,7 +394,7 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
 .power-cell {
   border-radius: 30px;
   height: 15px;
-  margin-top: 14px;
+  margin-top: 13px;
 
   &.level1{
     background-color: #ed6000;
