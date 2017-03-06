@@ -52,7 +52,7 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
 }
 
 .green {
-  color: $green;
+  color: $green !important;
 }
 
 .dark {
@@ -259,7 +259,7 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
   font-size: 19px;
   position: absolute;
   right: 60px;
-  top: 12px;
+  top: 6px;
 }
 
 .records-selected {
@@ -273,11 +273,15 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
   .select-text {
     display: inline-block;
     position: absolute;
-    left: 75px;
+    left: 53px;
     top: 20px;
   }
   .select-toggle {
-    bottom: 12px;
+    position: absolute;
+    bottom: 4px;
+    left: 20px;
+    font-size: 30px;
+    color: #999999;
   }
 }
 
@@ -289,7 +293,7 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
 .folder-item {
   position: absolute;
   right: -8px;
-  top: 5px;
+  top: -1px;
 
   max-width: 60px;
   .label-md {

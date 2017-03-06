@@ -100,6 +100,7 @@
 
           <ion-row>
             <ion-col class="records-selected">
+
               <div class="select-text">
                      {{selectedRecords.length}} selected
               </div>
@@ -107,7 +108,10 @@
               <!--placeholder-->
               <div style="display: inline-block; opacity: 0;"></div>
 
-              <ion-toggle (ionChange)="toggleAll()" [(ngModel)]="selectAll" class="select-toggle"></ion-toggle>
+              <!--<ion-toggle (ionChange)="toggleAll()" [(ngModel)]="selectAll" class="select-toggle"></ion-toggle>-->
+
+              <ion-icon name="ios-done-all-outline" (click)="toggleAll()" [ngClass]="{'select-toggle': true, 'green': selectAll}"></ion-icon>
+
             </ion-col>
           </ion-row>
         </div>

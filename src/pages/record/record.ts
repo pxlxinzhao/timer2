@@ -300,9 +300,13 @@ export class RecordPage {
 
   toggleAll(){
     if (this.selectAll){
-      this.selectedRecords = this.allRecordKeys.slice();
-    }else{
+      this.selectAll = false;
       this.selectedRecords = [];
+
+    }else{
+      this.selectAll = true;
+      this.selectedRecords = this.allRecordKeys.slice();
+
     }
   }
 
