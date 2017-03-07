@@ -66,7 +66,7 @@ export class RecordPage {
   }
 
   ionViewWillEnter() {
-    console.log('refresh??');
+    this.pouch.setLocal(this.constant.FORCE_QUIT, false);
     this.refresh();
   }
 

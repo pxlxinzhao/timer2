@@ -4,6 +4,8 @@ export class Constant{
   CATEGORY_DEFAULT = "New activity";
   CATEGORY_CURRENT = "currentCategory";
 
+  FORCE_QUIT = "force_quit";
+
   TAB_TIMER: number = 0;
   TAB_RECORD: number = 1;
   TAB_SETTING: number = 2;

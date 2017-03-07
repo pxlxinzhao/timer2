@@ -1,7 +1,6 @@
 import { AdsHelper} from '../helper/ads';
 import { Component, ViewChild  } from '@angular/core';
 import { Constant } from '../helper/constant'
-//import { Extra } from '../helper/extra';
 import { NavController, Slides } from 'ionic-angular';
 import { Pouch } from  '../helper/pouch';
 import { StatusBar, Keyboard  } from 'ionic-native';
@@ -44,15 +43,11 @@ export class TimerPage {
   constructor(
     private ads: AdsHelper,
     private constant: Constant,
-    //private extra: Extra,
     private nav: NavController,
     private pouch: Pouch
   ) {
     this.setupDefault();
     Keyboard.disableScroll(true);
-    //if(window['cordova'] && window['cordova']['plugins']['Keyboard']) {
-    //  window['cordova']['plugins']['Keyboard']['disableScroll'](true);
-    //}
   }
 
   ionViewWillEnter() {
@@ -169,6 +164,7 @@ export class TimerPage {
 
   switchToCategory(cat){
     this.pouch.setLocal(this.constant.CATEGORY_CURRENT, cat);
+    this.pouch.setLocal(this.constant.FORCE_QUIT, true);
     this.nav.parent.select(1);
   }
 

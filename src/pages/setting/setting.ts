@@ -57,4 +57,86 @@ export class SettingPage {
     this.pouch.setLocal('safeDeletion', this.safeDeletion);
   }
 
+  importTestData(){
+    this.pouch.addCategory('Test1', null);
+    this.pouch.addCategory('Test2', null);
+
+    let newRecords = [{
+      category: 'Test1',
+      duration: 20000,
+      title: 'Test1 1',
+      timestamp: new Date('2017-03-01').getTime()
+    },{
+      category: 'Test1',
+      duration: 30000,
+      title: 'Test1 2',
+      timestamp: new Date('2017-03-01').getTime()
+    },{
+      category: 'Test1',
+      duration: 40000,
+      title: 'Test1 3',
+      timestamp: new Date('2017-03-01').getTime()
+    },{
+      category: 'Test1',
+      duration: 20000,
+      title: 'Test1 4',
+      timestamp: new Date('2017-03-02').getTime()
+    },{
+      category: 'Test1',
+      duration: 30000,
+      title: 'Test1 5',
+      timestamp: new Date('2017-03-02').getTime()
+    },{
+      category: 'Test1',
+      duration: 40000,
+      title: 'Test1 6',
+      timestamp: new Date('2017-03-03').getTime()
+    },{
+      category: 'Test1',
+      duration: 40000,
+      title: 'Test1 7',
+      timestamp: new Date('2017-03-03').getTime()
+    },{
+      category: 'Test1',
+      duration: 20000,
+      title: 'Test1 8',
+      timestamp: new Date('2017-03-07').getTime()
+    },{
+      category: 'Test1',
+      duration: 30000,
+      title: 'Test1 9',
+      timestamp: new Date('2017-03-07').getTime()
+    },{
+      category: 'Test1',
+      duration: 40000,
+      title: 'Test1 10',
+      timestamp: new Date('2017-03-07 23:59:59').getTime()
+    },{
+      category: 'Test2',
+      duration: 40000,
+      title: 'Test2 1',
+      timestamp: new Date('2017-03-03').getTime()
+    },{
+      category: 'Test2',
+      duration: 20000,
+      title: 'Test2 2',
+      timestamp: new Date('2017-03-07').getTime()
+    },{
+      category: 'Test2',
+      duration: 30000,
+      title: 'Test2 3',
+      timestamp: new Date('2017-03-07').getTime()
+    },{
+      category: 'Test2',
+      duration: 40000,
+      title: 'Test2 4',
+      timestamp: new Date('2017-03-07 23:59:59').getTime()
+    }
+    ]
+
+    for (let i=0; i<newRecords.length; i++){
+      this.pouch.add(newRecords[i]);
+    }
+  }
+
 }

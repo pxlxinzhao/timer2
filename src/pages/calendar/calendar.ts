@@ -15,10 +15,7 @@ export class CalendarPage {
   /**
    * key is the date
    * value is
-   * {
-   *  totalTime,
-   *  count
-   * }
+   * { totalTime, count}
    */
   calendarMap: Object = {};
 
@@ -41,9 +38,8 @@ export class CalendarPage {
   }
 
   ionViewWillEnter() {
-
-    if (this.displayCategory
-      && this.displayCategory !== this.pouch.getLocal(this.constant.CATEGORY_CURRENT)){
+    console.log(1, this.pouch.getLocal(this.constant.FORCE_QUIT));
+    if (this.pouch.getLocal(this.constant.FORCE_QUIT) === 'true'){
       this.navCtrl.pop();
       return;
     }
@@ -72,12 +68,8 @@ export class CalendarPage {
     let self = this;
 
     let calendarMap = {};
-    //let records = JSON.parse(this.pouch.getLocal("records"));
     this.pouch.getTemp("records", (docs) => {
       let records = docs.value;
-
-      //console.log(12)
-      //console.log('records', records);
 
       /**
        * records are already sorted

@@ -281,8 +281,9 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
 }
 
 .trash-icon {
-  color: #f53d3d;
+  //color: #f53d3d;
   font-size: 19px;
+  color: $green;
   position: absolute;
   right: 60px;
   top: 6px;
@@ -353,42 +354,42 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
   color: white;
 }
 
-.alert-md .alert-button {
-  position: relative;
-  overflow: hidden;
-  margin: 0 8px 0 0;
-  padding: 10px;
-  border-radius: 2px;
-  font-weight: 500;
-  text-align: right;
-  text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.87);
-  background-color: transparent;
-}
+//.alert-md .alert-button {
+//  position: relative;
+//  overflow: hidden;
+//  margin: 0 8px 0 0;
+//  padding: 10px;
+//  border-radius: 2px;
+//  font-weight: 500;
+//  text-align: right;
+//  text-transform: uppercase;
+//  color: rgba(0, 0, 0, 0.87);
+//  background-color: transparent;
+//}
 
 //settings
-.category-edit > input {
-  &::-webkit-input-placeholder {
-    color: #1c1c1c;
-  }
-
-  &:-moz-placeholder { /* Firefox 18- */
-    color: #1c1c1c;
-  }
-
-  &::-moz-placeholder {  /* Firefox 19+ */
-    color: #1c1c1c;
-  }
-
-  &:-ms-input-placeholder {
-    color: #1c1c1c;
-  }
-}
-
-.change-category-header {
-  color: black;
-  font-size: 22px;
-}
+//.category-edit > input {
+//  &::-webkit-input-placeholder {
+//    color: #1c1c1c;
+//  }
+//
+//  &:-moz-placeholder { /* Firefox 18- */
+//    color: #1c1c1c;
+//  }
+//
+//  &::-moz-placeholder {  /* Firefox 19+ */
+//    color: #1c1c1c;
+//  }
+//
+//  &:-ms-input-placeholder {
+//    color: #1c1c1c;
+//  }
+//}
+//
+//.change-category-header {
+//  color: black;
+//  font-size: 22px;
+//}
 
 //calendar
 

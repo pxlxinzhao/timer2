@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
-import { Dialogs } from 'ionic-native';
+//import { Dialogs } from 'ionic-native';
 import { Pouch } from  '../helper/pouch';
 import { Constant } from  '../helper/constant';
 import { Platform } from 'ionic-angular';
@@ -24,9 +24,16 @@ export class CategoryPage {
     this.refresh();
   }
 
+  ionViewWillEnter() {
+    if (this.pouch.getLocal(this.constant.FORCE_QUIT) === 'true'){
+      this.navCtrl.pop();
+      return;
+    }
+  }
+
   refresh() {
     this.pouch.getAllCategory().then((docs) => {
-      this.categories = this.pouch.getAsArray(docs).sort();
+      this.categories = this.pouch.getAsArray(docs).sort((a,b)=>{return a['doc'].name.localeCompare(b['doc'].name)});
       this.categoryNames = [];
 
       for (let i=0; i<this.categories.length; i++){
@@ -47,25 +54,25 @@ export class CategoryPage {
     })
   }
 
-  showCategoryDialog(){
-    if (this.platform.is('core')){
-      console.info('can only add record in real device');
-      return;
-    }
-
-    let self = this;
-    Dialogs.prompt('', 'New category', ['Ok','Cancel'], '')
-      .then(function(result) {
-        let input = result.input1;
-        // no button = 0, 'OK' = 1, 'Cancel' = 2
-        let btnIndex = result.buttonIndex;
-
-        if(btnIndex === 1){
-          self.addCategory(input);
-          self.refresh();
-        }
-      });
-  }
+  //showCategoryDialog(){
+  //  if (this.platform.is('core')){
+  //    console.info('can only add record in real device');
+  //    return;
+  //  }
+  //
+  //  let self = this;
+  //  Dialogs.prompt('', 'New category', ['Ok','Cancel'], '')
+  //    .then(function(result) {
+  //      let input = result.input1;
+  //      // no button = 0, 'OK' = 1, 'Cancel' = 2
+  //      let btnIndex = result.buttonIndex;
+  //
+  //      if(btnIndex === 1){
+  //        self.addCategory(input);
+  //        self.refresh();
+  //      }
+  //    });
+  //}
 
   addCategory(input) {
 
@@ -124,7 +131,6 @@ export class CategoryPage {
           text: 'Cancel',
           role: 'cancel',
           handler: data => {
-            //console.log('Cancel clicked');
           }
         },
         {
@@ -154,14 +160,12 @@ export class CategoryPage {
           text: 'Cancel',
           role: 'cancel',
           handler: data => {
-            //console.log('Cancel clicked');
           }
         },
         {
           text: 'OK',
           handler: data => {
             if (data.newName){
-              //this.addCategory(data.newCategory);
               let id = c.id;
               let oldValue = c.doc.name;
               let newValue = data.newName;
