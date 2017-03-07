@@ -182,6 +182,27 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
 //}
 
 //records
+.expand-button {
+  position: absolute;
+  left: 10px;
+  top: 0px;
+}
+
+.category-select {
+  position: absolute;
+  left: 60px;
+  right: 70px;
+  top: 0px;
+  width: inherit;
+}
+
+.calendar-button {
+  position: absolute;
+  right: 5px;
+  top: 0px;
+}
+
+
 .alert-md .alert-message, .alert-md .alert-input-group {
   padding: 0 24px 24px 24px;
   color: black;

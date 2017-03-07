@@ -27,13 +27,17 @@
 
   </ion-navbar>
 
-  <ion-toolbar>
-    <ion-item>
+  <ion-toolbar style="position: relative">
+    <button class="expand-button" ion-fab mini (click)="manageCategory()"><ion-icon name="ios-expand-outline"></ion-icon></button>
+
+    <ion-item class="category-select">
       <ion-label>Choose Activity</ion-label>
       <ion-select [(ngModel)]="currentCategory" (ionChange)="changeCurrentCategory()">
         <ion-option value="{{categories[key].doc.name}}" *ngFor="let key of categories | keys">{{categories[key].doc.name}}</ion-option>
       </ion-select>
     </ion-item>
+
+    <button class="calendar-button" ion-fab mini (click)="switchToCalendar()"><ion-icon name="ios-calendar-outline"></ion-icon></button>
   </ion-toolbar>
 
 </ion-header>
@@ -77,14 +81,12 @@
   </div>
 
 
-  <ion-fab left top edge>
-    <button ion-fab mini (click)="manageCategory()"><ion-icon name="ios-expand-outline"></ion-icon></button>
-  </ion-fab>
+  <!--<ion-fab left top edge>-->
+  <!--</ion-fab>-->
 
 
-  <ion-fab right top edge [hidden]="!records.length">
-    <button ion-fab mini (click)="switchToCalendar()"><ion-icon name="ios-calendar-outline"></ion-icon></button>
-  </ion-fab>
+  <!--<ion-fab right top edge [hidden]="!records.length">-->
+  <!--</ion-fab>-->
 
   <!--<div style="height: 50px;"></div>-->
 
