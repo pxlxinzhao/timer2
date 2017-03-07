@@ -2,7 +2,6 @@ import { CalendarPage } from '../calendar/calendar'
 import { CategoryPage } from '../category/category'
 import { Component} from '@angular/core';
 import { Constant } from '../helper/constant'
-import { Dialogs } from 'ionic-native';
 import { Extra } from '../helper/extra';
 import { NavController, AlertController } from 'ionic-angular';
 import { PopoverController } from 'ionic-angular';
@@ -84,50 +83,39 @@ export class RecordPage {
   openTitleDialog($event, id, title){
     $event.stopPropagation();
 
-    if (this.platform.is('core')){
-      console.info('can only change title in a real device');
-      return;
-    }
-
-    let self = this;
-
-    Dialogs.prompt('', 'New title', ['Ok','Cancel'], title)
-      .then(function(result) {
-        let input = result.input1;
-        // no button = 0, 'OK' = 1, 'Cancel' = 2
-        let btnIndex = result.buttonIndex;
-
-        if(btnIndex === 1){
-          self.changeTitle(id, input);
-          self.refresh();
+    let alert = this.alertCtrl.create({
+      title: 'Rename',
+      inputs: [
+        {
+          name: 'newName',
+          placeholder: title
         }
-      });
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: data => {
+            //console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'OK',
+          handler: data => {
+            if (data.newName) {
+              this.changeTitle(id, data.newName);
+              this.refresh();
+            }
+          }
+        }
+      ]
+    });
+    alert.present();
   }
-
-  //confirmDelete(){
-  //  // || !(this.pouch.getLocal('safeDeletion') !== 'false')
-  //
-  //  if (this.platform.is('core')){
-  //    this.deleteRecord();
-  //  }else{
-  //    let message = 'Are you sure you want to delete ' +this.selectedRecords.length
-  //      + ' record' + (this.selectedRecords.length > 1 ? 's' : '') + '?';
-  //
-  //    let title =  'Delete record' + (this.selectedRecords.length > 1 ? 's' : '');
-  //
-  //    Dialogs.confirm(message, title, ['Ok','Cancel'])
-  //      .then((result)=>{
-  //        //ok is 1, cancel is 2
-  //        if (result === 1){
-  //          this.deleteRecord();
-  //        }
-  //      })
-  //  }
-  //}
 
   confirmDelete() {
     let alert = this.alertCtrl.create({
-      title:  'Delete record' + (this.selectedRecords.length > 1 ? 's' : ''),
+      title:  'Delete Record' + (this.selectedRecords.length > 1 ? 's' : ''),
       message: 'Are you sure you want to delete ' +this.selectedRecords.length
       + ' record' + (this.selectedRecords.length > 1 ? 's' : '') + '?',
       buttons: [

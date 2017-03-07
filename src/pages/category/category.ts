@@ -11,7 +11,7 @@ import { Platform } from 'ionic-angular';
 })
 export class CategoryPage {
   categories:any;
-  categoryNames:any = {};
+  categoryNames:any = [];
   isAdding:boolean = false;
   newCategory:string = "";
 
@@ -27,6 +27,23 @@ export class CategoryPage {
   refresh() {
     this.pouch.getAllCategory().then((docs) => {
       this.categories = this.pouch.getAsArray(docs).sort();
+      this.categoryNames = [];
+
+      for (let i=0; i<this.categories.length; i++){
+        this.categoryNames.push(this.categories[i].doc.name);
+      }
+
+      /**
+       * if current category get deleted,
+       * then use the first category as current
+       * @type {*}
+       */
+      let current = this.pouch.getLocal(this.constant.CATEGORY_CURRENT);
+      //console.log(1, current, this.categoryNames);
+      if (this.categoryNames.indexOf(current) === -1){
+        //console.log('setting current category', this.categoryNames[0]);
+        this.pouch.setLocal(this.constant.CATEGORY_CURRENT, this.categoryNames[0]);
+      }
     })
   }
 
@@ -59,18 +76,25 @@ export class CategoryPage {
   }
 
   confirmDeletion(id){
-    if (this.platform.is('core')){
-      this.deleteCategory(id);
-      return;
-    }
-
-    Dialogs.confirm('Are you sure you want to delete this category and all the records under it?', 'Delete category', ['Ok','Cancel'])
-      .then((result) => {
-        //ok is 1, cancel is 2
-        if (result === 1){
-          this.deleteCategory(id);
+    let alert = this.alertCtrl.create({
+      title:  'Delete Category',
+      message: 'Are you sure you want to delete this category and all the records under it?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Delete',
+          handler: () => {
+            this.deleteCategory(id);
+          }
         }
-      })
+      ]
+    });
+    alert.present();
   }
 
   deleteCategory(id) {
@@ -122,7 +146,7 @@ export class CategoryPage {
       inputs: [
         {
           name: 'newName',
-          placeholder: ''
+          placeholder:  c.doc.name
         }
       ],
       buttons: [
