@@ -125,12 +125,12 @@
       <ion-col style="position: relative">
 
         <div [ngClass]="{'footer': selectedRecords.length == 0, 'trash-icon': true}">
-          <ion-icon name="ios-trash-outline" class="dark" (click)="confirmDelete()"></ion-icon>
+          <ion-icon name="md-trash" class="dark" (click)="confirmDelete()"></ion-icon>
         </div>
 
         <ion-item no-lines [ngClass]="{'footer': selectedRecords.length == 0, 'folder-item': true}">
           <ion-label class="folder-icon">
-            <ion-icon name="ios-folder-open-outline" class="dark"></ion-icon>
+            <ion-icon name="md-folder" class="dark"></ion-icon>
             Change Activity
           </ion-label>
           <ion-select style="color:white;" [(ngModel)]="newCategory" (ionChange)="changeRecordsCategory()" [disabled]="selectedRecords.length == 0">

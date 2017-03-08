@@ -165,10 +165,25 @@ export class CategoryPage {
         {
           text: 'OK',
           handler: data => {
-            if (data.newName){
+            if (data.newName && data.newName !== c.doc.name){
               let id = c.id;
               let oldValue = c.doc.name;
               let newValue = data.newName;
+
+              for (let i=0; i<this.categories.length; i++){
+                if (newValue === this.categories[i].doc.name){
+                  console.log('duplicated category', newValue, this.categories[i].doc.name);
+
+                  let alert = this.alertCtrl.create({
+                    title: '',
+                    subTitle: newValue + ' already exists',
+                    buttons: ['OK']
+                  });
+                  alert.present();
+
+                  return;
+                }
+              }
 
               this.pouch.updateCategory(id, newValue, ()=>{
 

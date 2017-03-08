@@ -277,6 +277,7 @@ export class Pouch {
    * change all records with old category to new category
    */
   updateRecordsCategory(newValue, oldValue){
+    console.log('updateRecordsCategory',newValue,oldValue );
     if (!newValue || !oldValue) return;
 
     let self = this;
@@ -285,13 +286,9 @@ export class Pouch {
       let records = this.getAsArray(docs);
 
       for (let i=0; i<records.length; i++){
-        /**
-         * updateRecordCategory is async process
-         * capture i
-         */
-        (function(i){
+        if (records[i].doc.category === oldValue){
           self.updateRecordCategory(records[i].id, newValue, null);
-        })(i);
+        }
       }
     })
   }
