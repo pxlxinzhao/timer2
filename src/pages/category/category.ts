@@ -137,7 +137,22 @@ export class CategoryPage {
           text: 'OK',
           handler: data => {
             if (data.newCategory){
+              let newValue = data.newCategory;
+              for (let i=0; i<this.categories.length; i++){
+                if (newValue === this.categories[i].doc.name){
+                  let alert = this.alertCtrl.create({
+                    title: '',
+                    subTitle: newValue + ' already exists',
+                    buttons: ['OK']
+                  });
+                  alert.present();
+
+                  return;
+                }
+              }
+
               this.addCategory(data.newCategory);
+
             }
           }
         }
@@ -172,8 +187,6 @@ export class CategoryPage {
 
               for (let i=0; i<this.categories.length; i++){
                 if (newValue === this.categories[i].doc.name){
-                  console.log('duplicated category', newValue, this.categories[i].doc.name);
-
                   let alert = this.alertCtrl.create({
                     title: '',
                     subTitle: newValue + ' already exists',
