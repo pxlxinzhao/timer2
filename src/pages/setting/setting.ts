@@ -3,7 +3,7 @@ import { CategoryPage } from '../category/category'
 import { TipPage } from '../tips/tip'
 import { Component } from '@angular/core';
 import { Pouch } from  '../helper/pouch';
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 import { Toast } from 'ionic-native';
 import { Platform } from 'ionic-angular';
 
@@ -19,7 +19,8 @@ export class SettingPage {
     private ads: AdsHelper,
     public navCtrl: NavController,
     private pouch: Pouch,
-    private platform: Platform
+    private platform: Platform,
+    private alertCtrl: AlertController
   ) {
     this.safeDeletion = this.pouch.getLocal('safeDeletion') !== 'false';
   }
@@ -127,4 +128,54 @@ export class SettingPage {
     }
   }
 
+  stress(){
+
+    let alert = this.alertCtrl.create({
+      title: 'STRESS TEST',
+      inputs: [
+        {
+          name: 'title',
+          placeholder: 'title'
+        },
+        {
+          name: 'number',
+          placeholder: 'number'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: data => {
+            //console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'OK',
+          handler: data => {
+            if (data.title && data.number) {
+              this.pouch.addCategory(data.title, null);
+              let today = new Date();
+
+              for (let i=0; i<data.number/1; i++){
+                this.pouch.add({
+                  category: data.title,
+                  duration: 40000,
+                  title: data.title + ' ' + (i+1),
+                  timestamp: this.addDays(today, i).getTime()
+                });
+              }
+            }
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  addDays(date, days) {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  }
 }

@@ -169,6 +169,7 @@ export class TimerPage {
   }
 
   showMore(){
+    this.pouch.setLocal(this.constant.FORCE_QUIT, true);
     this.nav.parent.select(1);
   }
 
