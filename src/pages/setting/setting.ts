@@ -155,14 +155,14 @@ export class SettingPage {
           handler: data => {
             if (data.title && data.number) {
               this.pouch.addCategory(data.title, null);
-              let today = new Date();
+              let base = new Date(new Date().getTime() - 3650 * 24 *60 * 60 * 1000);
 
               for (let i=0; i<data.number/1; i++){
                 this.pouch.add({
                   category: data.title,
                   duration: 40000,
                   title: data.title + ' ' + (i+1),
-                  timestamp: this.addDays(today, i).getTime()
+                  timestamp: this.addDays(base, i).getTime()
                 });
               }
             }
