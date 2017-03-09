@@ -31,7 +31,7 @@
     <button class="expand-button" ion-fab mini (click)="manageCategory()"><ion-icon name="ios-expand-outline"></ion-icon></button>
 
     <ion-item class="category-select">
-      <ion-label>Choose Activity</ion-label>
+      <ion-label>Choose Category</ion-label>
       <ion-select [(ngModel)]="currentCategory" (ionChange)="changeCurrentCategory()">
         <ion-option value="{{categories[key].doc.name}}" *ngFor="let key of categories | keys">{{categories[key].doc.name}}</ion-option>
       </ion-select>
@@ -131,7 +131,7 @@
         <ion-item no-lines [ngClass]="{'footer': selectedRecords.length == 0, 'folder-item': true}">
           <ion-label class="folder-icon">
             <ion-icon name="md-folder" class="dark"></ion-icon>
-            Change Activity
+            Change Category
           </ion-label>
           <ion-select style="color:white;" [(ngModel)]="newCategory" (ionChange)="changeRecordsCategory()" [disabled]="selectedRecords.length == 0">
             <ion-option value="{{categories[key].doc.name}}" *ngFor="let key of categories | keys">{{categories[key].doc.name}}</ion-option>
