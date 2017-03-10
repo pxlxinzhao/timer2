@@ -37,6 +37,10 @@ export class RecordPage {
   selectedRecords: any = [];
   allRecordKeys: any = [];
   selectAll: boolean = false;
+  cache: any = [];
+  perPage: number = 20;
+  curPage: number = 0;
+  inifinite: any;
 
   constructor(public navCtrl:NavController,
               private constant: Constant,
@@ -186,6 +190,12 @@ export class RecordPage {
       this.toggleAll();
     }
 
+    //reset pagination
+    if (this.inifinite){
+      this.inifinite.enable(true);
+    }
+
+    this.curPage = this.perPage;
     /**
      * create category drop down
      */
@@ -229,7 +239,11 @@ export class RecordPage {
       /**
        * cache records to be used in the calendar page
        */
-      this.pouch.setTemp("records", records);
+      console.log('for calendar', records.length);
+
+      var temp = [];
+      //copay records by value
+      this.pouch.setTemp("records", temp.concat(records));
 
       /**
        * calculate if a record is on a new date
@@ -252,9 +266,12 @@ export class RecordPage {
       }
 
       this.allRecordKeys = _.map(records, (x)=>{return x.id})
-      this.records = records;
+      this.calculateTotal(records);
 
-      this.calculateTotal();
+      this.cache = records;
+      this.records = this.cache.splice(0, this.curPage);
+
+
 
       /**
        * set value to the 'change category' select
@@ -279,8 +296,7 @@ export class RecordPage {
     this.refresh();
   }
 
-  calculateTotal(){
-    let records = this.records;
+  calculateTotal(records){
     let totalTime = 0;
 
     for (let k in records){
@@ -289,7 +305,7 @@ export class RecordPage {
     }
 
     this.totalTime = totalTime;
-    this.totalCount = this.records.length;
+    this.totalCount = records.length;
   }
 
   presentPopover(myEvent) {
@@ -334,5 +350,25 @@ export class RecordPage {
 
   displayTime(record){
     return moment(record.doc.timestamp).format('HH:mm');
+  }
+
+  loadMore(infiniteScroll) {
+    if (!this.inifinite) {
+      this.inifinite = infiniteScroll;
+    }
+
+    console.log('scroll', this.curPage, this.cache.length);
+    if (this.cache.length <= 0) {
+      infiniteScroll.enable(false);
+      return;
+    }
+
+    setTimeout(() => {
+      this.curPage = this.curPage + this.perPage;
+      this.records = this.records.concat(this.cache.splice(0, this.curPage));
+
+      infiniteScroll.complete();
+
+    }, 500);
   }
 }

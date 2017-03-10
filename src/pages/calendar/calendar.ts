@@ -69,7 +69,9 @@ export class CalendarPage {
 
     let calendarMap = {};
     this.pouch.getTemp("records", (docs) => {
+
       let records = docs.value;
+      console.log('in calendar', records.length, records);
 
       /**
        * records are already sorted

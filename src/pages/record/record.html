@@ -84,6 +84,10 @@
     </ion-card>
   </div>
 
+  <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
 </ion-content>
 
 <!--[hidden]="!records.length"-->

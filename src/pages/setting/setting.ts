@@ -165,6 +165,8 @@ export class SettingPage {
                   timestamp: this.addDays(base, i).getTime()
                 });
               }
+
+              this.confirm();
             }
           }
         }
@@ -177,5 +179,20 @@ export class SettingPage {
     var result = new Date(date);
     result.setDate(result.getDate() + days);
     return result;
+  }
+
+  confirm(){
+    let alert = this.alertCtrl.create({
+      title:  'Import Finish',
+      message: 'Good to go',
+      buttons: [
+        {
+          text: 'Ok',
+          handler: () => {
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 }

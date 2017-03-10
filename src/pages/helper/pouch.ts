@@ -100,6 +100,8 @@ export class Pouch {
   }
 
   setTemp(id,value){
+    console.log('set temp1', value.length);
+
     let self = this;
 
     this._tempDb.destroy(function (err, response) {
@@ -109,6 +111,8 @@ export class Pouch {
         // success
         self._tempDb = new PouchDB('temp', { adapter: 'websql' });
 
+
+        console.log('set temp2', value.length);
         self._tempDb.put({
           _id: id,
           value: value
