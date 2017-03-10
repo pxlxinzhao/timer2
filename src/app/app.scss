@@ -454,3 +454,14 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
   text-align: center;
   margin-top: 10px;
 }
+
+//category
+.loading-md .loading-wrapper {
+  padding: 24px;
+  max-width: 280px;
+  max-height: 90%;
+  border-radius: 2px;
+  color: rgba(0, 0, 0, 1);
+  background: #fafafa;
+  box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
+}

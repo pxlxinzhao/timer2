@@ -246,18 +246,19 @@ export class Pouch {
         self.getAll().then((docs) => {
           let records = self.getAsArray(docs);
 
-          records = _.filter(records, (x)=>{return x.doc.category === doc.name});
+          records = _.filter(records, (x)=>{return x['doc'].category === doc.name});
 
-          console.log('records to delete', records);
           let count = records.length;
+          let size = records.length;
+          let node = document.getElementsByClassName("loading-wrapper")[0];
 
           for (let i=0; i<records.length; i++) {
             self.deleteRecord(records[i].id, ()=>{
-              console.log('count', count);
               if (--count === 0) {
-                this.loading.hide();
+                self.loading.hide();
                 console.log('Deleted');
               }
+              node.textContent = (size - count) + '/' + size;
             });
           }
         })
