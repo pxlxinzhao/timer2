@@ -59,14 +59,13 @@
           {{records[key].doc.title || "Default Title"}}
         </div>
 
-        <span class="right green" style="margin-right: 15px; font-size: 2rem;" >
-          <ion-icon name="ios-checkmark" [hidden]="!isSelected(records[key].id)"></ion-icon>
+        <span class="right record-time">
+          {{displayTime(records[key])}}
         </span>
 
-        <span class="right" style="margin-right: 0px; font-size: 2rem; color: white" >
-          <ion-icon name="ios-checkmark"></ion-icon>
-        </span>
-
+        <!--<span class="right" style="margin-right: 0px; font-size: 2rem; color: white" >-->
+          <!--<ion-icon name="ios-checkmark"></ion-icon>-->
+        <!--</span>-->
       </ion-card-header>
 
       <ion-card-content style="position: relative" >
@@ -74,21 +73,16 @@
           <strong>
             {{records[key].doc.duration | duration}}
           </strong>
+
+        <span class="right green record-check" >
+          <ion-icon name="ios-checkmark" [hidden]="!isSelected(records[key].id)"></ion-icon>
+        </span>
+
         </div>
       </ion-card-content>
 
     </ion-card>
   </div>
-
-
-  <!--<ion-fab left top edge>-->
-  <!--</ion-fab>-->
-
-
-  <!--<ion-fab right top edge [hidden]="!records.length">-->
-  <!--</ion-fab>-->
-
-  <!--<div style="height: 50px;"></div>-->
 
 </ion-content>
 

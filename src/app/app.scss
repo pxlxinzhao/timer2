@@ -169,19 +169,19 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
   box-sizing: border-box;
 }
 
-//.list-md > .item-block:last-child, .list-md > .item-wrapper:last-child .item-block {
-//  border-bottom: none;
-//}
-//
-//.list-md > .item-block:first-child {
-//  border-top: none;
-//}
-//
-//.list-md > .item-block:last-child {
-//  border-bottom: none;
-//}
-
 //records
+.record-check {
+  font-size: 4rem;
+  position: absolute;
+  right: 10px;
+  bottom: -25px;
+}
+
+.record-time {
+  opacity: 0.6;
+  font-size: 1.3rem;
+}
+
 .expand-button {
   position: absolute;
   left: 10px;

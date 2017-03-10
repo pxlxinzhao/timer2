@@ -9,6 +9,7 @@ import { Pouch } from  '../helper/pouch';
 import { TimeHelper} from '../helper/time';
 import { Platform } from 'ionic-angular';
 import {RecordFilter} from './recordFilter'
+import moment from 'moment';
 import * as _ from 'underscore'
 
 
@@ -333,5 +334,9 @@ export class RecordPage {
 
   isSelected(id){
     return  this.selectedRecords.indexOf(id) > -1;
+  }
+
+  displayTime(record){
+    return moment(record.doc.timestamp).format('HH:mm');
   }
 }

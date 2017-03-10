@@ -43,39 +43,15 @@ export class CategoryPage {
       /**
        * if current category get deleted,
        * then use the first category as current
-       * @type {*}
        */
       let current = this.pouch.getLocal(this.constant.CATEGORY_CURRENT);
-      //console.log(1, current, this.categoryNames);
       if (this.categoryNames.indexOf(current) === -1){
-        //console.log('setting current category', this.categoryNames[0]);
         this.pouch.setLocal(this.constant.CATEGORY_CURRENT, this.categoryNames[0]);
       }
     })
   }
 
-  //showCategoryDialog(){
-  //  if (this.platform.is('core')){
-  //    console.info('can only add record in real device');
-  //    return;
-  //  }
-  //
-  //  let self = this;
-  //  Dialogs.prompt('', 'New category', ['Ok','Cancel'], '')
-  //    .then(function(result) {
-  //      let input = result.input1;
-  //      // no button = 0, 'OK' = 1, 'Cancel' = 2
-  //      let btnIndex = result.buttonIndex;
-  //
-  //      if(btnIndex === 1){
-  //        self.addCategory(input);
-  //        self.refresh();
-  //      }
-  //    });
-  //}
-
   addCategory(input) {
-
     if (!input) return;
 
     this.pouch.addCategory(input, null);
@@ -112,7 +88,6 @@ export class CategoryPage {
           this.refresh();
         });
       }else{
-        //.error('You can not delete the last records');
       }
     })
   }
