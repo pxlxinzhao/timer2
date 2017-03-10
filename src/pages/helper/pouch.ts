@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import * as PouchDB from 'pouchdb';
 import { Constant } from '../helper/constant'
+import { LoadingHelper } from '../helper/loading'
+import * as _ from 'underscore'
 
 @Injectable()
 export class Pouch {
@@ -19,7 +21,7 @@ export class Pouch {
   private _tempDb;
 
 
-  constructor(private constant: Constant) {
+  constructor(private constant: Constant, private loading: LoadingHelper) {
     this._db = new PouchDB('records', { adapter: 'websql' });
     this._categroyDb = new PouchDB('categories', { adapter: 'websql' });
     this._seedDb = new PouchDB('seed', {adapter: 'websql'});
@@ -233,6 +235,8 @@ export class Pouch {
   }
 
   deleteCategory(id, callback){
+    this.loading.show();
+
     let self = this;
     self._categroyDb.get(id, function(err, doc) {
       if (err) { return console.log(err); }
@@ -242,10 +246,19 @@ export class Pouch {
         self.getAll().then((docs) => {
           let records = self.getAsArray(docs);
 
+          records = _.filter(records, (x)=>{return x.doc.category === doc.name});
+
+          console.log('records to delete', records);
+          let count = records.length;
+
           for (let i=0; i<records.length; i++) {
-            if (records[i].doc.category === doc.name){
-              self.deleteRecord(records[i].doc._id, null);
-            }
+            self.deleteRecord(records[i].id, ()=>{
+              console.log('count', count);
+              if (--count === 0) {
+                this.loading.hide();
+                console.log('Deleted');
+              }
+            });
           }
         })
 

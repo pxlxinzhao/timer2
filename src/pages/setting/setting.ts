@@ -156,6 +156,7 @@ export class SettingPage {
             if (data.title && data.number) {
               this.pouch.addCategory(data.title, null);
               let base = new Date(new Date().getTime() - 3650 * 24 *60 * 60 * 1000);
+              let count = data.number/1;
 
               for (let i=0; i<data.number/1; i++){
                 this.pouch.add({
@@ -163,10 +164,8 @@ export class SettingPage {
                   duration: 40000,
                   title: data.title + ' ' + (i+1),
                   timestamp: this.addDays(base, i).getTime()
-                });
+                }).then(()=>{if(--count === 0) this.confirm();});
               }
-
-              this.confirm();
             }
           }
         }

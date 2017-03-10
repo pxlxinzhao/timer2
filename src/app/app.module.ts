@@ -1,4 +1,5 @@
 import { AdsHelper } from '../pages/helper/ads';
+import { LoadingHelper } from '../pages/helper/loading';
 import { CategoryPage } from '../pages/category/category';
 import { CalendarPage } from '../pages/calendar/calendar'
 import { RecordFilter} from '../pages/record/recordFilter'
@@ -53,7 +54,8 @@ import { TipPage } from '../pages/tips/tip';
     Constant,
     Extra,
     Pouch,
-    TimeHelper
+    TimeHelper,
+    LoadingHelper
   ]
 })
 export class AppModule {}
