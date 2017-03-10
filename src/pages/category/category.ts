@@ -142,7 +142,8 @@ export class CategoryPage {
       inputs: [
         {
           name: 'newName',
-          placeholder:  c.doc.name
+          value:  c.doc.name,
+          placeholder: c.doc.name
         }
       ],
       buttons: [

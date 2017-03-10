@@ -89,6 +89,7 @@ export class RecordPage {
       inputs: [
         {
           name: 'newName',
+          value: title,
           placeholder: title
         }
       ],
