@@ -16,7 +16,7 @@
 <ion-content>
   <div class="calendar-placeholder"></div>
 
-  <div *ngFor="let key of calendarMap | keys">
+  <div *ngFor="let key of calendarMap | keys; let i = index" [hidden]="i>curPage">
 
     <div class="calendar-placeholder" [hidden]="calendarMap[key].dayDiff < 1"></div>
 
@@ -76,5 +76,9 @@
     </ion-row>
 
   </div>
+
+  <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 </ion-content>

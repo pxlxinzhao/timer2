@@ -357,7 +357,6 @@ export class RecordPage {
       this.inifinite = infiniteScroll;
     }
 
-    console.log('scroll', this.curPage, this.cache.length);
     if (this.cache.length <= 0) {
       infiniteScroll.enable(false);
       return;
@@ -369,6 +368,10 @@ export class RecordPage {
 
       infiniteScroll.complete();
 
-    }, 500);
+      if (this.cache.length <= 0) {
+        infiniteScroll.enable(false);
+        return;
+      }
+    }, 0);
   }
 }

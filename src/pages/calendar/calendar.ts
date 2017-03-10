@@ -17,7 +17,11 @@ export class CalendarPage {
    * value is
    * { totalTime, count}
    */
-  calendarMap: Object = {};
+  calendarMap: any = {};
+  calendarMapCache: any;
+  keyCache = [];
+  curPage: number = 0;
+  perPage: number = 20;
 
   /**
    * 4 power cell only have 3 levels
@@ -66,8 +70,9 @@ export class CalendarPage {
 
   refresh(){
     let self = this;
-
     let calendarMap = {};
+    this.curPage = this.perPage;
+
     this.pouch.getTemp("records", (docs) => {
 
       let records = docs.value;
@@ -155,6 +160,7 @@ export class CalendarPage {
 
       for (let key in calendarMap){
         durationArray.push(calendarMap[key].totalTime);
+        this.keyCache.push(key);
       }
 
       durationArray.sort((a, b)=>{return a-b});
@@ -174,5 +180,23 @@ export class CalendarPage {
 
   toggleDetail(){
     this.showDetail = !this.showDetail;
+  }
+
+  loadMore(infiniteScroll) {
+    if (this.curPage >= this.keyCache.length) {
+      infiniteScroll.enable(false);
+      return;
+    }
+
+    setTimeout(() => {
+      infiniteScroll.complete();
+      this.curPage += this.perPage
+
+      if (this.curPage >= this.keyCache.length) {
+        infiniteScroll.enable(false);
+        return;
+      }
+
+    }, 0);
   }
 }
