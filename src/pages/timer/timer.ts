@@ -31,11 +31,10 @@ export class TimerPage {
   greenButtonText: string = "";
   redButtonText: string = "";
 
+  startCategory: string = "";
   currentCategory: string = "";
   newTitle: String = "";
-  isGenerated: boolean = true;
-  categoryWhenTitleGenerated: any;
-  setNewTitle: boolean = true; //set to true and call refresh to set a new title
+  setNewTitle: boolean = false;
 
   tip1: string = "";
   tip2: string = "";
@@ -63,6 +62,9 @@ export class TimerPage {
   }
 
   start(){
+    if (this.timeElapsed === 0){
+      this.startCategory = this.currentCategory;
+    }
     this.startTime = new Date().getTime();
     this.prevTime = new Date().getTime();
     this.isCounting = true;
@@ -134,6 +136,9 @@ export class TimerPage {
     this.setUpText();
     slidingItem.close();
     StatusBar.backgroundColorByHexString("#000000");
+
+    this.setNewTitle = true;
+    this.refresh();
   }
 
   setUpText(){
@@ -143,18 +148,18 @@ export class TimerPage {
 
   storeRecords(callback){
     if (this.currentCategory){
-      this.pouch.incrementSeed(this.currentCategory, (seed) => {
+      this.pouch.incrementSeed(this.startCategory, (seed) => {
 
         let newRecord =  {
-          category: this.currentCategory,
+          category: this.startCategory,
           duration: this.timeElapsed,
           title: this.newTitle,
-          timestamp: this.startTime
+          timestamp: this.startTime,
+          endTime: new Date().getTime()
         }
 
         this.pouch.add(newRecord).then((response) => {
           callback();
-          this.isGenerated  = true; // tell refresh to generate a new title
           this.setNewTitle = true;
           this.refresh();
         });
@@ -174,19 +179,17 @@ export class TimerPage {
   }
 
   refresh(){
+    let prevCategory = this.currentCategory;
     this.currentCategory = this.pouch.getLocal(this.constant.CATEGORY_CURRENT);
-    if ((this.isGenerated && this.currentCategory !== this.categoryWhenTitleGenerated) || this.setNewTitle){
+
+    if (!prevCategory || this.setNewTitle || (!this.isStarted && this.currentCategory !== prevCategory)){
       this.pouch.getSeed(this.currentCategory, (x) => {
         this.newTitle = this.currentCategory + ' ' + x;
-        this.isGenerated = true;
-        this.categoryWhenTitleGenerated = this.currentCategory;
         this.setNewTitle = false;
       })
     }
 
-
     this.setUpText();
-
     this.isEmpty = true;
     this.tip1 = '';
     this.tip2 = '';

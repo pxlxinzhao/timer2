@@ -221,13 +221,8 @@ export class RecordPage {
         records =  records.filter(function(it){
           let time = it['doc'].timestamp;
 
-          /**
-           * here we have some weird time zone issue
-           * when reading a plain text, it considers it as a ISO time.
-           * we need to do the manual time zone conversion
-           */
-          return (!self.fromDate || self.timeHelper.justDate(time) >= self.timeHelper.convertISOStringToLocalMilliseconds(self.fromDate))
-            && (!self.toDate || self.timeHelper.justDate(time)<= self.timeHelper.convertISOStringToLocalMilliseconds(self.toDate));
+          return (!self.fromDate || self.timeHelper.justDate(time) >= self.timeHelper.convertISO(self.fromDate))
+            && (!self.toDate || self.timeHelper.justDate(time)<= self.timeHelper.convertISO(self.toDate));
         })
       }
       /**
