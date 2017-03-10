@@ -5,6 +5,7 @@ import { TimeHelper } from '../helper/time';
 import { Pouch } from  '../helper/pouch';
 import { NavController } from 'ionic-angular';
 import moment from 'moment';
+import { LoadingHelper } from '../helper/loading'
 
 @Component({
   templateUrl: 'calendar.html'
@@ -37,12 +38,14 @@ export class CalendarPage {
   private extra: Extra,
   private timeHelper: TimeHelper,
   private constant: Constant,
-  private navCtrl: NavController){
-    this.refresh();
+  private navCtrl: NavController,
+  private loading: LoadingHelper){
+    //this.refresh();
   }
 
   ionViewWillEnter() {
-    console.log(1, this.pouch.getLocal(this.constant.FORCE_QUIT));
+    this.loading.show();
+    //console.log(1, this.pouch.getLocal(this.constant.FORCE_QUIT));
     if (this.pouch.getLocal(this.constant.FORCE_QUIT) === 'true'){
       this.navCtrl.pop();
       return;
@@ -72,11 +75,14 @@ export class CalendarPage {
     let self = this;
     let calendarMap = {};
     this.curPage = this.perPage;
+    this.keyCache = [];
+
+    //console.log('fresh meat');
 
     this.pouch.getTemp("records", (docs) => {
 
       let records = docs.value;
-      console.log('in calendar', records.length, records);
+      //console.log('in calendar', records.length, records);
 
       /**
        * records are already sorted
@@ -174,7 +180,10 @@ export class CalendarPage {
       self.level2 = durationArray[threshold2];
       self.level3 = durationArray[threshold3];
 
+      this.loading.hide();
+
       self.calendarMap = calendarMap;
+
     });
   }
 
@@ -189,8 +198,11 @@ export class CalendarPage {
     }
 
     setTimeout(() => {
-      infiniteScroll.complete();
       this.curPage += this.perPage
+
+      infiniteScroll.complete();
+
+      //console.log('curPage length', this.curPage, this.keyCache.length);
 
       if (this.curPage >= this.keyCache.length) {
         infiniteScroll.enable(false);

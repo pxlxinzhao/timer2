@@ -239,7 +239,7 @@ export class RecordPage {
       /**
        * cache records to be used in the calendar page
        */
-      console.log('for calendar', records.length);
+      //console.log('for calendar', records.length);
 
       var temp = [];
       //copay records by value
@@ -367,6 +367,7 @@ export class RecordPage {
       this.records = this.records.concat(this.cache.splice(0, this.curPage));
 
       infiniteScroll.complete();
+
 
       if (this.cache.length <= 0) {
         infiniteScroll.enable(false);

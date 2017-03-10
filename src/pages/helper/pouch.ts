@@ -75,7 +75,7 @@ export class Pouch {
         }, function(error, response){
           if (error) return console.error(error);
 
-          console.log(doc.seed, doc);
+          //console.log(doc.seed, doc);
           callback(doc.seed);
         });
       }
@@ -83,7 +83,7 @@ export class Pouch {
   }
 
   getSeed(activity, callback){
-    console.log('activity', activity);
+    //console.log('activity', activity);
     if (!activity) return;
 
     this._seedDb.get(activity, (err, doc) => {
@@ -102,7 +102,7 @@ export class Pouch {
   }
 
   setTemp(id,value){
-    console.log('set temp1', value.length);
+    //console.log('set temp1', value.length);
 
     let self = this;
 
@@ -114,7 +114,7 @@ export class Pouch {
         self._tempDb = new PouchDB('temp', { adapter: 'websql' });
 
 
-        console.log('set temp2', value.length);
+        //console.log('set temp2', value.length);
         self._tempDb.put({
           _id: id,
           value: value
@@ -256,7 +256,7 @@ export class Pouch {
             self.deleteRecord(records[i].id, ()=>{
               if (--count === 0) {
                 self.loading.hide();
-                console.log('Deleted');
+                //console.log('Deleted');
               }
               node.textContent = (size - count) + '/' + size;
             });
@@ -295,7 +295,7 @@ export class Pouch {
    * change all records with old category to new category
    */
   updateRecordsCategory(newValue, oldValue){
-    console.log('updateRecordsCategory',newValue,oldValue );
+    //console.log('updateRecordsCategory',newValue,oldValue );
     if (!newValue || !oldValue) return;
 
     let self = this;
