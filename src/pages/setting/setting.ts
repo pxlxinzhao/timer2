@@ -6,6 +6,7 @@ import { Pouch } from  '../helper/pouch';
 import { NavController, AlertController } from 'ionic-angular';
 import { Toast } from 'ionic-native';
 import { Platform } from 'ionic-angular';
+import { LoadingHelper } from '../helper/loading'
 
 @Component({
   selector: 'page-setting',
@@ -20,7 +21,8 @@ export class SettingPage {
     public navCtrl: NavController,
     private pouch: Pouch,
     private platform: Platform,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private loading: LoadingHelper
   ) {
     this.safeDeletion = this.pouch.getLocal('safeDeletion') !== 'false';
   }
@@ -109,12 +111,12 @@ export class SettingPage {
       category: 'Test2',
       duration: 20000,
       title: 'Test2 2',
-      timestamp: new Date('2017-03-07').getTime()
+      timestamp: new Date('2017-03-07 05:01:00').getTime()
     },{
       category: 'Test2',
       duration: 30000,
       title: 'Test2 3',
-      timestamp: new Date('2017-03-07').getTime()
+      timestamp: new Date('2017-03-07 00:01:00').getTime()
     },{
       category: 'Test2',
       duration: 40000,
@@ -153,10 +155,14 @@ export class SettingPage {
         {
           text: 'OK',
           handler: data => {
+            this.loading.show();
+
             if (data.title && data.number) {
               this.pouch.addCategory(data.title, null);
               let base = new Date(new Date().getTime() - 3650 * 24 *60 * 60 * 1000);
               let count = data.number/1;
+              let size = data.number/1;
+              let node = document.getElementsByClassName("loading-wrapper")[0];
 
               for (let i=0; i<data.number/1; i++){
                 this.pouch.add({
@@ -164,7 +170,11 @@ export class SettingPage {
                   duration: 40000,
                   title: data.title + ' ' + (i+1),
                   timestamp: this.addDays(base, i).getTime()
-                }).then(()=>{if(--count === 0) this.confirm();});
+                }).then(()=>{if(--count === 0){
+                  this.loading.hide();
+                  }
+                  node.textContent = (size - count) + '/' + size;
+                });
               }
             }
           }
@@ -178,20 +188,5 @@ export class SettingPage {
     var result = new Date(date);
     result.setDate(result.getDate() + days);
     return result;
-  }
-
-  confirm(){
-    let alert = this.alertCtrl.create({
-      title:  'Import Finish',
-      message: 'Good to go',
-      buttons: [
-        {
-          text: 'Ok',
-          handler: () => {
-          }
-        }
-      ]
-    });
-    alert.present();
   }
 }
