@@ -46,9 +46,10 @@ export class CalendarPage {
   }
 
   ionViewWillEnter() {
+    this.loading.show();
+
     GoogleAnalytics.trackView('Calendar', '', false);
 
-    this.loading.show();
     //console.log(1, this.pouch.getLocal(this.constant.FORCE_QUIT));
     if (this.pouch.getLocal(this.constant.FORCE_QUIT) === 'true'){
       this.navCtrl.pop();
@@ -76,6 +77,7 @@ export class CalendarPage {
   }
 
   refresh(){
+
     GoogleAnalytics.trackEvent('Calendar', 'Refresh', 'Refresh label', 1, false);
 
     let self = this;
@@ -88,6 +90,12 @@ export class CalendarPage {
     this.pouch.getTemp("records", (docs) => {
 
       let records = docs.value;
+
+      if (!records.length) {
+        this.loading.hide();
+        return;
+      }
+
       //console.log('in calendar', records.length, records);
 
       /**

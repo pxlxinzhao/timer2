@@ -37,7 +37,7 @@
       </ion-select>
     </ion-item>
 
-    <button class="calendar-button" ion-fab mini (click)="switchToCalendar()"><ion-icon name="ios-calendar-outline"></ion-icon></button>
+    <button [disabled]="!records.length" class="calendar-button" ion-fab mini (click)="switchToCalendar()"><ion-icon name="ios-calendar-outline"></ion-icon></button>
   </ion-toolbar>
 
 </ion-header>
