@@ -239,13 +239,13 @@ export class TimerPage {
 
       records.sort((a, b) => b['doc'].timestamp -  a['doc'].timestamp);
 
-      if (records.length > 10){
+      if (records.length > this.constant.FIRST_PAGE_RECORDS){
         this.hasMoreRecords = true;
       }else{
         this.hasMoreRecords = false;
       }
 
-      records = records.slice(0, 10);
+      records = records.slice(0, this.constant.FIRST_PAGE_RECORDS);
       this.records = records;
     })
   }

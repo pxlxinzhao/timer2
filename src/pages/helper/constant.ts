@@ -10,6 +10,7 @@ export class Constant{
   CATEGORY_DEFAULT = "New Record";
   CATEGORY_CURRENT = "currentCategory";
 
+  FIRST_PAGE_RECORDS= 20;
   FORCE_QUIT = "force_quit";
 
   TAB_TIMER: number = 0;

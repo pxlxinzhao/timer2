@@ -236,10 +236,10 @@ export class Pouch {
 
   deleteCategory(id, callback){
     this.loading.show();
-
     let self = this;
     self._categroyDb.get(id, function(err, doc) {
       if (err) { return console.log(err); }
+
       self._categroyDb.remove(doc, function(err, response) {
         if (err) { return console.log(err); }
 
@@ -247,6 +247,11 @@ export class Pouch {
           let records = self.getAsArray(docs);
 
           records = _.filter(records, (x)=>{return x['doc'].category === doc.name});
+
+          if (!records.length){
+            self.loading.hide();
+            return;
+          }
 
           let count = records.length;
           let size = records.length;
@@ -256,7 +261,6 @@ export class Pouch {
             self.deleteRecord(records[i].id, ()=>{
               if (--count === 0) {
                 self.loading.hide();
-                //console.log('Deleted');
               }
               node.textContent = (size - count) + '/' + size;
             });
