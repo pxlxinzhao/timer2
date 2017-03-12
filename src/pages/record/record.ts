@@ -9,6 +9,7 @@ import { Pouch } from  '../helper/pouch';
 import { TimeHelper} from '../helper/time';
 import { Platform } from 'ionic-angular';
 import {RecordFilter} from './recordFilter'
+import { LoadingHelper } from '../helper/loading'
 import moment from 'moment';
 import * as _ from 'underscore'
 
@@ -49,7 +50,8 @@ export class RecordPage {
               private pouch: Pouch,
               private extra: Extra,
               private platform: Platform,
-              private alertCtrl: AlertController) {
+              private alertCtrl: AlertController,
+              private loading: LoadingHelper) {
 
     this.extra.getEvent.subscribe((data) => {
       if (data.clear){
@@ -145,32 +147,42 @@ export class RecordPage {
   }
 
   deleteRecord() {
+    this.loading.show();
     let count = this.selectedRecords.length;
+    let size = this.selectedRecords.length;
+    let node = document.getElementsByClassName("loading-wrapper")[0];
 
     for (let i=0; i<this.selectedRecords.length; i++){
       let id = this.selectedRecords[i];
 
       this.pouch.deleteRecord(id,()=>{
-        //console.log('count', count);
         if (--count === 0){
-          //console.log('count refresh');
+          this.loading.hide();
           this.refresh();
         }
-    })
+        node.textContent = (size - count) + '/' + size;
+      })
     }
   }
 
   changeRecordsCategory(){
     if (!this.newCategory || this.newCategory == this.currentCategory) return;
+
+    this.loading.show();
+
     let count = this.selectedRecords.length;
+    let size = this.selectedRecords.length;
+    let node = document.getElementsByClassName("loading-wrapper")[0];
 
     for (let i=0; i<this.selectedRecords.length; i++){
       let id = this.selectedRecords[i];
       this.pouch.updateRecordCategory(id, this.newCategory, ()=>{
         if (--count === 0){
           this.selectedRecords = [];
+          this.loading.hide();
           this.refresh();
         }
+        node.textContent = (size - count) + '/' + size;
       })
     }
   }
