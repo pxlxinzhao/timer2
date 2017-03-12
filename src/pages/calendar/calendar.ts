@@ -6,6 +6,8 @@ import { Pouch } from  '../helper/pouch';
 import { NavController } from 'ionic-angular';
 import moment from 'moment';
 import { LoadingHelper } from '../helper/loading'
+import { GoogleAnalytics } from 'ionic-native';
+
 
 @Component({
   templateUrl: 'calendar.html'
@@ -44,6 +46,8 @@ export class CalendarPage {
   }
 
   ionViewWillEnter() {
+    GoogleAnalytics.trackView('Calendar', '', false);
+
     this.loading.show();
     //console.log(1, this.pouch.getLocal(this.constant.FORCE_QUIT));
     if (this.pouch.getLocal(this.constant.FORCE_QUIT) === 'true'){
@@ -72,6 +76,8 @@ export class CalendarPage {
   }
 
   refresh(){
+    GoogleAnalytics.trackEvent('Calendar', 'Refresh', 'Refresh label', 1, false);
+
     let self = this;
     let calendarMap = {};
     this.curPage = this.perPage;

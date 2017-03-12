@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, Platform } from 'ionic-angular';
 //import { Dialogs } from 'ionic-native';
 import { Pouch } from  '../helper/pouch';
 import { Constant } from  '../helper/constant';
-import { Platform } from 'ionic-angular';
+import { GoogleAnalytics } from 'ionic-native';
+
 
 
 @Component({
@@ -25,6 +26,8 @@ export class CategoryPage {
   }
 
   ionViewWillEnter() {
+    GoogleAnalytics.trackView('Category', '', false);
+
     if (this.pouch.getLocal(this.constant.FORCE_QUIT) === 'true'){
       this.navCtrl.pop();
       return;
@@ -32,6 +35,8 @@ export class CategoryPage {
   }
 
   refresh() {
+    GoogleAnalytics.trackEvent('Category', 'Refresh', 'Refresh label', 1, false);
+
     this.pouch.getAllCategory().then((docs) => {
       this.categories = this.pouch.getAsArray(docs).sort((a,b)=>{return a['doc'].name.localeCompare(b['doc'].name)});
       this.categoryNames = [];
@@ -53,6 +58,8 @@ export class CategoryPage {
 
   addCategory(input) {
     if (!input) return;
+
+    GoogleAnalytics.trackEvent('Category', 'Add Category', 'Add Category label', 1, false);
 
     this.pouch.addCategory(input, null);
     this.refresh();
@@ -81,6 +88,8 @@ export class CategoryPage {
   }
 
   deleteCategory(id) {
+    GoogleAnalytics.trackEvent('Category', 'Delete Category', 'Delete Category label', 1, false);
+
     this.pouch.getAllCategory().then((docs)=>{
       let categories = this.pouch.getAsArray(docs);
       if (categories.length > 1){
@@ -137,6 +146,8 @@ export class CategoryPage {
   }
 
   changeCategoryName(c) {
+    GoogleAnalytics.trackEvent('Category', 'Rename Category', 'Rename Category label', 1, false);
+
     let alert = this.alertCtrl.create({
       title: 'Rename',
       inputs: [

@@ -145,7 +145,7 @@ export class Pouch {
     let self = this;
     let countdown = 4;
 
-    this.setLocal(this.constant.RECORD_SELECTED_TO_CHANGE_CATEGORY, '');
+    //this.setLocal(this.constant.RECORD_SELECTED_TO_CHANGE_CATEGORY, '');
     this.setLocal(this.constant.CATEGORY_SELECTED, '');
     this.setLocal(this.constant.CATEGORY_CURRENT, '');
     //this.setLocal(this.constant.CATEGORY_SEED, 1);

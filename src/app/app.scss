@@ -170,6 +170,15 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
 }
 
 //records
+.category-select>.item-inner>.input-wrapper>.label-md{
+  color: white;
+}
+
+.category-select>.item-inner>.input-wrapper>ion-select>.select-text{
+  position: absolute;
+  left: 25px;
+}
+
 .record-check {
   font-size: 4rem;
   position: absolute;

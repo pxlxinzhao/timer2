@@ -4,6 +4,8 @@ import { TimerPage } from '../timer/timer';
 import { RecordPage } from '../record/record';
 import { SettingPage } from '../setting/setting';
 
+import { Constant } from '../helper/constant'
+
 @Component({
   templateUrl: 'tabs.html'
 })
@@ -14,7 +16,9 @@ export class TabsPage {
   tab2Root: any = RecordPage;
   tab3Root: any = SettingPage;
 
-  constructor() {
+  debugMode: boolean = false;
 
+  constructor(private constant: Constant) {
+    this.debugMode = this.constant.DEBUG_MODE;
   }
 }

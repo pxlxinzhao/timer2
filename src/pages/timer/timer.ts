@@ -1,9 +1,9 @@
 import { AdsHelper} from '../helper/ads';
 import { Component, ViewChild  } from '@angular/core';
 import { Constant } from '../helper/constant'
-import { NavController, Slides } from 'ionic-angular';
+import { NavController, Slides, Platform } from 'ionic-angular';
 import { Pouch } from  '../helper/pouch';
-import { StatusBar, Keyboard  } from 'ionic-native';
+import { StatusBar, Keyboard, GoogleAnalytics } from 'ionic-native';
 
 
 @Component({
@@ -43,13 +43,27 @@ export class TimerPage {
     private ads: AdsHelper,
     private constant: Constant,
     private nav: NavController,
-    private pouch: Pouch
+    private pouch: Pouch,
+    private platform: Platform
   ) {
+    platform.ready().then(() => {
+      GoogleAnalytics.startTrackerWithId(this.constant.ANALYTICS_ID)
+        .then(() => {
+          console.log('Google analytics is ready now');
+          // Tracker is ready
+          // You can now track pages or set additional information such as AppVersion or UserId
+          GoogleAnalytics.setAppVersion(this.constant.APP_VERSION);
+          GoogleAnalytics.setAllowIDFACollection(true);
+        })
+        .catch(e => console.log('Error starting GoogleAnalytics', e));
+    });
+
     this.setupDefault();
     Keyboard.disableScroll(true);
   }
 
   ionViewWillEnter() {
+    GoogleAnalytics.trackView('Timer', '', false);
     this.refresh();
   }
 
@@ -62,6 +76,8 @@ export class TimerPage {
   }
 
   start(){
+    GoogleAnalytics.trackEvent('Timer', 'Start', 'Start label', 1, false);
+
     if (this.timeElapsed === 0){
       this.startCategory = this.currentCategory;
     }
@@ -82,6 +98,8 @@ export class TimerPage {
   }
 
   pause(){
+    GoogleAnalytics.trackEvent('Timer', 'Pause', 'Pause label', 1, false);
+
     this.isPaused = true;
     this.isCounting = false;
     clearInterval(this.interval);
@@ -117,12 +135,16 @@ export class TimerPage {
   }
 
   save(slidingItem){
+    GoogleAnalytics.trackEvent('Timer', 'Save', 'Save label', 1, false);
+
     this.storeRecords( () => {
       this.clear(slidingItem);
     });
   }
 
   clear(slidingItem){
+    GoogleAnalytics.trackEvent('Timer', 'Clear', 'Clear label', 1, false);
+
     clearInterval(this.interval);
 
     this.isPaused = false;
@@ -164,6 +186,13 @@ export class TimerPage {
           this.refresh();
         });
       })
+
+      this.pouch.incrementSeed(this.constant.CATEGORY_SEED, (seed)=>{
+        console.log('seed', seed);
+        if (seed % this.constant.ADS_FREQUENCEY === 0){
+          this.ads.showInterstitial();
+        }
+      })
     }
   }
 
@@ -179,6 +208,8 @@ export class TimerPage {
   }
 
   refresh(){
+    GoogleAnalytics.trackEvent('Timer', 'Refresh', 'Refresh label', 1, false);
+
     let prevCategory = this.currentCategory;
     this.currentCategory = this.pouch.getLocal(this.constant.CATEGORY_CURRENT);
 

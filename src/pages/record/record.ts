@@ -10,6 +10,8 @@ import { TimeHelper} from '../helper/time';
 import { Platform } from 'ionic-angular';
 import {RecordFilter} from './recordFilter'
 import { LoadingHelper } from '../helper/loading'
+import { GoogleAnalytics } from 'ionic-native';
+
 import moment from 'moment';
 import * as _ from 'underscore'
 
@@ -73,12 +75,15 @@ export class RecordPage {
   }
 
   ionViewWillEnter() {
+    GoogleAnalytics.trackView('Record', '', false);
     this.pouch.setLocal(this.constant.FORCE_QUIT, false);
     this.refresh();
   }
 
   changeTitle(id, value){
     if (!value) return;
+
+    GoogleAnalytics.trackEvent('Record', 'Change Title', 'Change Title label', 1, false);
 
     let self = this;
 
@@ -147,6 +152,8 @@ export class RecordPage {
   }
 
   deleteRecord() {
+    GoogleAnalytics.trackEvent('Record', 'Delete Records', 'Delete Records label', 1, false);
+
     this.loading.show();
     let count = this.selectedRecords.length;
     let size = this.selectedRecords.length;
@@ -167,6 +174,7 @@ export class RecordPage {
 
   changeRecordsCategory(){
     if (!this.newCategory || this.newCategory == this.currentCategory) return;
+    GoogleAnalytics.trackEvent('Record', 'Change Category', 'Change Category label', 1, false);
 
     this.loading.show();
 
@@ -192,6 +200,8 @@ export class RecordPage {
   }
 
   refresh(){
+    GoogleAnalytics.trackEvent('Record', 'Refresh', 'Refresh label', 1, false);
+
     let self = this;
     this.isFiltered = false;
     //this.selectAll = false;
