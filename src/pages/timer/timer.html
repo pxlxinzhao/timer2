@@ -16,7 +16,7 @@
 
         <ion-item no-lines>
           <!--<ion-label fixed>Username</ion-label>-->
-          <ion-input type="text" value="" [(ngModel)]="newTitle"></ion-input>
+          <ion-input type="text" value="" [(ngModel)]="newTitle" placeholder="No Title"></ion-input>
         </ion-item>
 
 
@@ -68,7 +68,7 @@
       <button ion-item *ngFor="let key of records | keys" (click)="switchToCategory(records[key].doc.category)">
         <div>
           <div class="timer-record-title">
-            {{records[key].doc.title || 'Default title'}}
+            {{records[key].doc.title || 'No Title'}}
           </div>
           <div class="timer-record-time">
             {{records[key].doc.duration | duration}}
