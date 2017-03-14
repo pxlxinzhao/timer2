@@ -3,7 +3,7 @@ import { Component, ViewChild  } from '@angular/core';
 import { Constant } from '../helper/constant'
 import { NavController, Slides, Platform } from 'ionic-angular';
 import { Pouch } from  '../helper/pouch';
-import { StatusBar, Keyboard, GoogleAnalytics } from 'ionic-native';
+import { StatusBar, Keyboard, GoogleAnalytics, Splashscreen } from 'ionic-native';
 
 
 @Component({
@@ -209,6 +209,7 @@ export class TimerPage {
 
   refresh(){
     GoogleAnalytics.trackEvent('Timer', 'Refresh', 'Refresh label', 1, false);
+    this.hideSplashScreen();
 
     let prevCategory = this.currentCategory;
     this.currentCategory = this.pouch.getLocal(this.constant.CATEGORY_CURRENT);
@@ -248,5 +249,13 @@ export class TimerPage {
       records = records.slice(0, this.constant.FIRST_PAGE_RECORDS);
       this.records = records;
     })
+  }
+
+  hideSplashScreen() {
+    if (Splashscreen) {
+      setTimeout(() => {
+        Splashscreen.hide();
+      }, 100);
+    }
   }
 }
