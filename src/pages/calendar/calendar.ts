@@ -53,6 +53,7 @@ export class CalendarPage {
     //console.log(1, this.pouch.getLocal(this.constant.FORCE_QUIT));
     if (this.pouch.getLocal(this.constant.FORCE_QUIT) === 'true'){
       this.navCtrl.pop();
+      this.loading.hide();
       return;
     }
 
