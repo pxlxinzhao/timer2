@@ -132,10 +132,17 @@ export class TimerPage {
     if (!this.pouch.getLocal('safeDeletion')){
       this.pouch.setLocal('safeDeletion', 'true');
     }
+
+    //flags for calendar
+    this.pouch.setLocal("initCalendar", false);
+    this.pouch.setLocal("hasNewRecord", false);
   }
 
   save(slidingItem){
     GoogleAnalytics.trackEvent('Timer', 'Save', 'Save label', 1, false);
+
+    //this flag is used in calendar page to decide refresh or not
+    this.pouch.setLocal("hasNewRecord", true);
 
     this.storeRecords( () => {
       this.clear(slidingItem);

@@ -101,7 +101,7 @@ export class Pouch {
     });
   }
 
-  setTemp(id,value){
+  setTemp(id,value, callback){
     //console.log('set temp1', value.length);
 
     let self = this;
@@ -118,6 +118,8 @@ export class Pouch {
         self._tempDb.put({
           _id: id,
           value: value
+        }).then(()=>{
+          if (callback) callback();
         })
       }
     });

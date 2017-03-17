@@ -265,7 +265,16 @@ export class RecordPage {
 
       var temp = [];
       //copay records by value
-      this.pouch.setTemp("records", temp.concat(records));
+      this.pouch.setTemp("records", temp.concat(records), ()=>{
+
+        /**
+         * this is used for calendar page, to refresh record page first and then refresh calendar page itself
+         */
+        if (this.refreshCallback){
+          this.refreshCallback();
+          this.refreshCallback = null;
+        }
+      });
 
       /**
        * calculate if a record is on a new date
@@ -302,14 +311,6 @@ export class RecordPage {
         this.categoryByRecordIdMap[records[i].id] = records[i].doc.category;
       }
 
-      /**
-       * this is used for calendar page, to refresh record page first and then refresh calendar page itself
-       */
-      if (this.refreshCallback){
-        this.refreshCallback();
-        this.refreshCallback = null;
-      }
-
     })
   }
 
@@ -338,6 +339,7 @@ export class RecordPage {
   }
 
   switchToCalendar(){
+    this.pouch.setLocal("initCalendar", true);
     this.navCtrl.push(CalendarPage);
   }
 

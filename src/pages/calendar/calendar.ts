@@ -43,13 +43,10 @@ export class CalendarPage {
   private navCtrl: NavController,
   private loading: LoadingHelper){
     //this.refresh();
+
   }
 
   ionViewWillEnter() {
-    this.loading.show();
-
-    GoogleAnalytics.trackView('Calendar', '', false);
-
     //console.log(1, this.pouch.getLocal(this.constant.FORCE_QUIT));
     if (this.pouch.getLocal(this.constant.FORCE_QUIT) === 'true'){
       this.navCtrl.pop();
@@ -57,9 +54,26 @@ export class CalendarPage {
       return;
     }
 
+    //if (this.pouch.getLocal("initCalendar") == 'true'){
+    //  this.loading.show();
+    //  this.pouch.setLocal("initCalendar", false);
+    //}
+
+    if (this.pouch.getLocal("initCalendar") != 'true' && this.pouch.getLocal("hasNewRecord") != 'true'){
+      return;
+    }
+
+    this.loading.show();
+
+    GoogleAnalytics.trackView('Calendar', '', false);
+
     this.displayCategory = this.pouch.getLocal(this.constant.CATEGORY_CURRENT);
 
     let self = this;
+
+    //hasNewRecord
+    this.pouch.setLocal("initCalendar", false);
+    this.pouch.setLocal("hasNewRecord", false);
 
     this.extra.refreshRecords({
       callback:function(){
@@ -91,6 +105,7 @@ export class CalendarPage {
     this.pouch.getTemp("records", (docs) => {
 
       let records = docs.value;
+      console.log("records.length", records.length);
 
       if (!records.length) {
         this.loading.hide();

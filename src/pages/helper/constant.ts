@@ -1,5 +1,5 @@
 export class Constant{
-  DEBUG_MODE = false;
+  DEBUG_MODE = true;
   APP_VERSION = 'beta 0.1';
 
   ADS_FREQUENCEY = 100;

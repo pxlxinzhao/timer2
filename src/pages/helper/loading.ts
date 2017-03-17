@@ -12,7 +12,8 @@ export class LoadingHelper{
   show(){
     this.loading = this.loadingCtrl.create({
       //spinner: 'hide',
-      content: ''
+      content: '',
+      duration: 60000
     });
 
     this.loading.present();
