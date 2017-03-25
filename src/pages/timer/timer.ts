@@ -39,6 +39,8 @@ export class TimerPage {
   tip1: string = "";
   tip2: string = "";
 
+  isLoading: boolean = false;
+
   constructor(
     private ads: AdsHelper,
     private constant: Constant,
@@ -215,6 +217,8 @@ export class TimerPage {
   }
 
   refresh(){
+    this.isLoading = true;
+
     GoogleAnalytics.trackEvent('Timer', 'Refresh', 'Refresh label', 1, false);
     this.hideSplashScreen();
 
@@ -255,6 +259,8 @@ export class TimerPage {
 
       records = records.slice(0, this.constant.FIRST_PAGE_RECORDS);
       this.records = records;
+
+      this.isLoading = false;
     })
   }
 

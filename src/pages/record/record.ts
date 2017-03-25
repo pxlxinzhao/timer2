@@ -44,6 +44,8 @@ export class RecordPage {
   perPage: number = 20;
   curPage: number = 0;
   inifinite: any;
+  isReady: boolean = true;
+  noLoading: boolean = false;
 
   constructor(public navCtrl:NavController,
               private constant: Constant,
@@ -70,6 +72,7 @@ export class RecordPage {
         this.refreshCallback = data.callback;
       }
 
+      this.noLoading = true;
       this.refresh();
     })
   }
@@ -200,6 +203,11 @@ export class RecordPage {
   }
 
   refresh(){
+    if (!this.noLoading){
+      this.loading.show();
+    }
+
+    this.isReady = false;
     GoogleAnalytics.trackEvent('Record', 'Refresh', 'Refresh label', 1, false);
 
     let self = this;
@@ -302,7 +310,10 @@ export class RecordPage {
       this.cache = records;
       this.records = this.cache.splice(0, this.curPage);
 
-
+      if (!this.noLoading) {
+        this.loading.hide();
+      }
+      this.isReady = true;
 
       /**
        * set value to the 'change category' select
@@ -310,6 +321,8 @@ export class RecordPage {
       for (let i=0; i<records.length; i++){
         this.categoryByRecordIdMap[records[i].id] = records[i].doc.category;
       }
+
+      this.noLoading = false;
 
     })
   }
@@ -339,6 +352,8 @@ export class RecordPage {
   }
 
   switchToCalendar(){
+    if (!this.isReady) return;
+
     this.pouch.setLocal("initCalendar", true);
     this.navCtrl.push(CalendarPage);
   }
@@ -357,6 +372,8 @@ export class RecordPage {
   }
 
   toggleAll(){
+    if (!this.isReady) return;
+
     if (this.selectAll){
       this.selectAll = false;
       this.selectedRecords = [];

@@ -73,6 +73,18 @@ body, span, button, h1, h2, h3, h4, h5, h6, div {
 }
 
 // timer page
+.timer-loading {
+  width: 15px;
+  height:10px;
+  text-align: center;
+  margin-top: auto;
+  margin-right: auto;
+  margin-bottom: 12px;
+  margin-left: auto;
+
+  background-image: url("../assets/icon/ajax-loader.gif");
+}
+
 .buttons-row{
   text-align: center;
 }

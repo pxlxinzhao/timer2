@@ -60,6 +60,9 @@
 
 <ion-content padding >
 
+  <div class="timer-loading" [hidden]="!isLoading">
+  </div>
+
   <div [ngClass]="{'swipe': true, 'swipe-show': isEmpty}" [hidden]="!isEmpty"> {{tip1}}</div>
   <div [ngClass]="{'swipe': true, 'swipe-show': isEmpty}" [hidden]="!isEmpty"> {{tip2}} </div>
 

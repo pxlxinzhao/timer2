@@ -302,16 +302,36 @@ export class Pouch {
    */
   updateRecordsCategory(newValue, oldValue){
     //console.log('updateRecordsCategory',newValue,oldValue );
-    if (!newValue || !oldValue) return;
+    this.loading.show();
 
-    let self = this;
+    if (!newValue || !oldValue) return;
 
     this.getAll().then((docs) => {
       let records = this.getAsArray(docs);
 
+      records = _.filter(records, (x)=>{
+        return x.doc.category === oldValue;
+      })
+
+      let count = records.length;
+      let size = records.length;
+      let node = document.getElementsByClassName("loading-wrapper")[0];
+
+      console.log(records, count, size);
+
+      if (!size){
+        this.loading.hide();
+        return;
+      }
+
       for (let i=0; i<records.length; i++){
         if (records[i].doc.category === oldValue){
-          self.updateRecordCategory(records[i].id, newValue, null);
+          this.updateRecordCategory(records[i].id, newValue, ()=>{
+            if (--count === 0){
+              this.loading.hide();
+            }
+            node.textContent = (size - count) + '/' + size;
+          });
         }
       }
     })
