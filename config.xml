@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.ionicframework.test576667" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Daily Timer</name>
-  <description>Records time spent on different activities everyday</description>
+  <description>This app is a smart daily timer that can records your time spent on your daily activities. The timer can be categorized for different activity and viewed in a daily manner.</description>
   <author email="pxlxinzhao@gmail.com" href="http://www.patrickpu.com/">Patrick Pu</author>
   <content src="index.html"/>
   <access origin="*"/>
