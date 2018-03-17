@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as PouchDB from 'pouchdb';
+import PouchDB from 'pouchdb';
 import { Constant } from '../helper/constant'
 import { LoadingHelper } from '../helper/loading'
 import * as _ from 'underscore'
